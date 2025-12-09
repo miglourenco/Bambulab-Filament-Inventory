@@ -5,6 +5,8 @@ import cryptoRandomString from 'crypto-random-string';
 import jwt from 'jsonwebtoken';
 import fs from 'fs/promises';
 import cors from 'cors';
+import axios from 'axios';
+import * as cheerio from 'cheerio';
 import db from './src/database.js';
 import materialsDB from './src/materials-db.js';
 import './src/hass-sync.js';
@@ -400,6 +402,102 @@ app.delete('/ams-config/:amsId', async (req, res) => {
     res.json({ message: 'AMS configuration deleted successfully' });
   } catch (error) {
     console.error('Delete AMS config error:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// Scrape product info from product-search.net
+app.get('/product-info/:ean', async (req, res) => {
+  try {
+    const { ean } = req.params;
+
+    // Fetch the product page
+    const { data: html } = await axios.get(`https://pt.product-search.net/?q=${ean}`, {
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
+      }
+    });
+
+    // Load HTML into cheerio
+    const $ = cheerio.load(html);
+
+    // Try to find the product title - adjust selector based on actual HTML structure
+    // Common selectors for product titles
+    let productTitle = $('h1.product-title').text().trim() ||
+                      $('h1[itemprop="name"]').text().trim() ||
+                      $('h1').first().text().trim() ||
+                      $('title').text().trim();
+
+    if (!productTitle) {
+      return res.status(404).json({ error: 'Product not found' });
+    }
+
+    // Parse the title to extract manufacturer, type, and colorname
+    // Example format: "Bambu Lab ASA - Grey - 1.75mm"
+    const parseProductTitle = (title) => {
+      // Remove extra info in parentheses and after commas
+      title = title.split('(')[0].trim();
+      title = title.split(',')[0].trim();
+
+      // Split by " - " or similar delimiters
+      const parts = title.split(/\s*-\s*/);
+
+      let manufacturer = '';
+      let type = '';
+      let colorname = '';
+
+      if (parts.length >= 1) {
+        // First part usually contains manufacturer and material type
+        const firstPart = parts[0].trim();
+
+        // Try to extract manufacturer and type
+        // Look for common material types
+        const materialTypes = ['PLA', 'ABS', 'PETG', 'TPU', 'ASA', 'PC', 'PA', 'PP', 'PVA', 'HIPS', 'Nylon', 'PLA Basic', 'PLA Matte', 'PLA Silk'];
+
+        let foundType = null;
+        for (const matType of materialTypes) {
+          const regex = new RegExp(`\\b${matType}\\b`, 'i');
+          if (regex.test(firstPart)) {
+            foundType = matType;
+            type = matType;
+            // Extract manufacturer (everything before the material type)
+            const manufacturerMatch = firstPart.match(new RegExp(`(.+?)\\s+${matType}`, 'i'));
+            if (manufacturerMatch) {
+              manufacturer = manufacturerMatch[1].trim();
+            }
+            break;
+          }
+        }
+
+        // If no type found in first part, use the whole first part as manufacturer
+        if (!foundType && parts.length > 1) {
+          manufacturer = firstPart;
+        }
+      }
+
+      // Second part is usually the colorname
+      if (parts.length >= 2) {
+        colorname = parts[1].trim();
+        // Remove size info like "1.75mm"
+        colorname = colorname.replace(/\d+(\.\d+)?\s*mm/gi, '').trim();
+      }
+
+      return { manufacturer, type, colorname };
+    };
+
+    const productInfo = parseProductTitle(productTitle);
+
+    res.json({
+      rawTitle: productTitle,
+      manufacturer: productInfo.manufacturer || '',
+      type: productInfo.type || '',
+      colorname: productInfo.colorname || ''
+    });
+  } catch (error) {
+    console.error('Product info scraping error:', error);
+    if (error.response) {
+      return res.status(error.response.status).json({ error: 'Failed to fetch product page' });
+    }
     res.status(500).json({ error: 'Internal server error' });
   }
 });

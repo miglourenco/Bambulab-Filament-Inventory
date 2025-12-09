@@ -466,8 +466,36 @@ const handleCodeScanned = async (code) => {
     toast.success('Filamento encontrado!');
     filamentDetails.value.open(result.filaments);
   } else {
-    toast.info('Filamento não encontrado. Adicione um novo.');
-    openAddDialog.value = true;
+    // Filament not found, try to fetch product info from barcode
+    try {
+      toast.info('Buscando informações do produto...');
+      const response = await axios.get(`/product-info/${code}`);
+
+      if (response.data) {
+        // Auto-fill the form with scraped data
+        addModel.value.manufacturer = response.data.manufacturer || '';
+        addModel.value.type = response.data.type || '';
+        addModel.value.colorname = response.data.colorname || '';
+        addModel.value.name = response.data.type || '';
+
+        // If BambuLab manufacturer and type, load colors
+        if (isBambuLab.value && addModel.value.type) {
+          await onMaterialTypeChange();
+
+          // If colorname was found, try to auto-fill the color hex
+          if (addModel.value.colorname) {
+            await onColorNameChange();
+          }
+        }
+
+        toast.success('Produto identificado! Complete os dados.');
+        openAddDialog.value = true;
+      }
+    } catch (error) {
+      console.error('Error fetching product info:', error);
+      toast.info('Filamento não encontrado. Adicione um novo.');
+      openAddDialog.value = true;
+    }
   }
 };
 </script>
