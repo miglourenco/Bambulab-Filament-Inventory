@@ -12,6 +12,20 @@
         </v-form>
 
         <v-alert type="error" v-if="error" class="mt-2">{{ error }}</v-alert>
+
+        <v-divider class="my-4"></v-divider>
+
+        <div class="text-center">
+          <span class="text-body-2">{{ t('$vuetify.loginPage.noAccount') }}</span>
+          <v-btn
+            variant="text"
+            color="primary"
+            @click="$router.push({ name: 'Register' })"
+            class="ml-1"
+          >
+            {{ t('$vuetify.loginPage.registerLink') }}
+          </v-btn>
+        </div>
       </v-card-text>
     </v-card>
   </div>
