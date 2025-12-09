@@ -109,16 +109,22 @@
                 <v-chip size="small" color="blue">{{ item.type }}</v-chip>
               </template>
 
+              <!-- Colorname Column -->
+              <template v-slot:item.colorname="{ item }">
+                <span>{{ item.colorname || '-' }}</span>
+              </template>
+
               <!-- Color Column -->
               <template v-slot:item.color="{ item }">
-                <div class="d-flex align-center">
-                  <v-avatar
-                    :style="{ backgroundColor: item.color }"
-                    size="24"
-                    class="mr-2"
-                  ></v-avatar>
-                  <span class="text-caption">{{ item.colorname || item.color }}</span>
-                </div>
+                <v-avatar
+                  :style="{ backgroundColor: item.color }"
+                  size="32"
+                ></v-avatar>
+              </template>
+
+              <!-- Size Column -->
+              <template v-slot:item.size="{ item }">
+                <span>{{ item.size }}g</span>
               </template>
 
               <!-- Remaining Column -->
@@ -135,6 +141,14 @@
               <!-- Weight Column -->
               <template v-slot:item.weight="{ item }">
                 <span class="font-weight-medium">{{ item.weight }}g</span>
+              </template>
+
+              <!-- Spool Count Column -->
+              <template v-slot:item.spoolCount="{ item }">
+                <v-chip size="small" color="indigo" variant="outlined">
+                  <v-icon start size="small">mdi-album</v-icon>
+                  {{ item.spoolCount }}
+                </v-chip>
               </template>
 
               <!-- Serial Number Column -->
@@ -234,28 +248,56 @@
             </v-list-item>
 
             <v-list-item>
-              <v-list-item-title class="text-caption text-grey">{{ t('$vuetify.filamentDetails.remaining') }}</v-list-item-title>
+              <v-list-item-title class="text-caption text-grey">{{ t('$vuetify.stockTotal.spoolCount') }}</v-list-item-title>
               <v-list-item-subtitle>
-                <v-chip :color="getRemainColor(selectedFilament.remain)" size="small">
-                  {{ selectedFilament.remain }}% ({{ selectedFilament.weight }}g)
-                </v-chip>
-              </v-list-item-subtitle>
-            </v-list-item>
-
-            <v-list-item v-if="selectedFilament.serialNumber">
-              <v-list-item-title class="text-caption text-grey">{{ t('$vuetify.stockTotal.serialNumber') }}</v-list-item-title>
-              <v-list-item-subtitle>
-                <v-chip size="small" variant="outlined">
-                  <v-icon start size="small">mdi-barcode</v-icon>
-                  {{ selectedFilament.serialNumber }}
+                <v-chip color="indigo" size="small" variant="outlined">
+                  <v-icon start size="small">mdi-album</v-icon>
+                  {{ selectedFilament.spoolCount }} {{ selectedFilament.spoolCount === 1 ? 'spool' : 'spools' }}
                 </v-chip>
               </v-list-item-subtitle>
             </v-list-item>
 
             <v-list-item>
-              <v-list-item-title class="text-caption text-grey">{{ t('$vuetify.stockTotal.tagUid') }}</v-list-item-title>
+              <v-list-item-title class="text-caption text-grey">{{ t('$vuetify.stockTotal.totalWeight') }}</v-list-item-title>
+              <v-list-item-subtitle class="text-h6">{{ selectedFilament.weight }}g</v-list-item-subtitle>
+            </v-list-item>
+
+            <v-list-item>
+              <v-list-item-title class="text-caption text-grey">{{ t('$vuetify.stockTotal.averageRemain') }}</v-list-item-title>
               <v-list-item-subtitle>
-                <code class="text-caption">{{ selectedFilament.tag_uid }}</code>
+                <v-chip :color="getRemainColor(selectedFilament.remain)" size="small">
+                  {{ selectedFilament.remain }}%
+                </v-chip>
+              </v-list-item-subtitle>
+            </v-list-item>
+
+            <v-divider class="my-3"></v-divider>
+
+            <v-list-item>
+              <v-list-item-title class="text-subtitle-2 font-weight-bold mb-2">
+                {{ t('$vuetify.stockTotal.spoolDetails') }}
+              </v-list-item-title>
+            </v-list-item>
+
+            <v-list-item
+              v-for="(spool, index) in selectedFilament.spools"
+              :key="spool.tag_uid"
+              class="border-t"
+            >
+              <v-list-item-subtitle>
+                <div class="d-flex flex-column gap-1">
+                  <div class="d-flex align-center gap-2">
+                    <v-chip size="x-small" color="grey">Spool {{ index + 1 }}</v-chip>
+                    <span v-if="spool.serialNumber" class="text-caption">
+                      <v-icon size="x-small">mdi-barcode</v-icon>
+                      {{ spool.serialNumber }}
+                    </span>
+                    <span v-else class="text-caption text-grey">Manual</span>
+                  </div>
+                  <div class="text-caption">
+                    {{ spool.remain }}% remaining • {{ Math.round(spool.size * spool.remain / 100) }}g
+                  </div>
+                </div>
               </v-list-item-subtitle>
             </v-list-item>
           </v-list>
@@ -297,9 +339,12 @@ const headers = computed(() => [
   { title: t('$vuetify.homeView.form.manufacturer'), key: 'manufacturer', sortable: true },
   { title: t('$vuetify.homeView.form.type'), key: 'type', sortable: true },
   { title: t('$vuetify.homeView.form.name'), key: 'name', sortable: true },
+  { title: t('$vuetify.homeView.form.colorname'), key: 'colorname', sortable: true },
   { title: t('$vuetify.homeView.form.color'), key: 'color', sortable: false },
+  { title: t('$vuetify.homeView.form.size'), key: 'size', sortable: true },
   { title: t('$vuetify.homeView.form.remain'), key: 'remain', sortable: true },
   { title: t('$vuetify.stockTotal.weight'), key: 'weight', sortable: true },
+  { title: t('$vuetify.stockTotal.spoolCount'), key: 'spoolCount', sortable: true },
   { title: t('$vuetify.stockTotal.serialNumber'), key: 'serialNumber', sortable: true },
   { title: t('$vuetify.homeView.form.actions'), key: 'actions', sortable: false, align: 'center' }
 ]);
@@ -363,20 +408,42 @@ const viewDetails = (filament) => {
 
 // Load all filaments with viewAll flag
 onMounted(async () => {
-  // Set viewAll to true temporarily to fetch all filaments
-  const previousViewAll = store.viewAll;
-  store.viewAll = true;
-  await store.getFilaments();
+  // Force viewAll and fetch all filaments
+  store.setViewAll(true);
 
-  // Transform filaments to include owner username and calculated weight
-  allFilaments.value = store.filaments.map(f => ({
-    ...f,
-    owner: f.username || 'Unknown',
-    weight: Math.round(f.size * f.remain / 100)
-  }));
+  // Group filaments by owner + type + manufacturer + name + color + colorname + size
+  const grouped = {};
 
-  // Restore previous viewAll state
-  store.viewAll = previousViewAll;
+  store.filaments.forEach(f => {
+    const key = `${f.userId}_${f.type}_${f.manufacturer}_${f.name}_${f.color}_${f.colorname}_${f.size}`;
+
+    if (!grouped[key]) {
+      grouped[key] = {
+        ...f,
+        owner: f.username || 'Unknown',
+        spools: [f],
+        spoolCount: 1,
+        totalWeight: Math.round(f.size * f.remain / 100),
+        weight: Math.round(f.size * f.remain / 100)
+      };
+    } else {
+      grouped[key].spools.push(f);
+      grouped[key].spoolCount++;
+      grouped[key].totalWeight += Math.round(f.size * f.remain / 100);
+      grouped[key].weight = grouped[key].totalWeight;
+
+      // Update remain to average
+      const totalRemain = grouped[key].spools.reduce((sum, spool) => sum + spool.remain, 0);
+      grouped[key].remain = Math.round(totalRemain / grouped[key].spoolCount);
+
+      // If any spool has serial number, show the first one
+      if (f.serialNumber && !grouped[key].serialNumber) {
+        grouped[key].serialNumber = f.serialNumber;
+      }
+    }
+  });
+
+  allFilaments.value = Object.values(grouped);
 });
 </script>
 

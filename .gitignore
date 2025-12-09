@@ -3,6 +3,7 @@ hass-data.json
 # Node.js
 node_modules/
 .env
+data/
 
 # macOS
 .DS_Store

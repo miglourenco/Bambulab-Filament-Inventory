@@ -10,8 +10,30 @@ import './src/hass-sync.js';
 
 const app = express();
 
-// Generate a random secret for JWT signing
-const secret = process.env.DEBUG ? 'unsecure' : cryptoRandomString({ length: 64 });
+// Generate or load JWT secret
+let secret = process.env.JWT_SECRET;
+
+if (!secret) {
+  try {
+    const secretFile = './data/jwt-secret.txt';
+    try {
+      secret = await fs.readFile(secretFile, 'utf8');
+      console.log('Using existing JWT secret from file');
+    } catch (e) {
+      // File doesn't exist, generate new secret
+      secret = process.env.DEBUG ? 'unsecure' : cryptoRandomString({ length: 64 });
+      try {
+        await fs.writeFile(secretFile, secret);
+        console.log('Generated new JWT secret and saved to file');
+      } catch (writeError) {
+        console.error('Could not save JWT secret to file:', writeError);
+      }
+    }
+  } catch (e) {
+    console.error('Error handling JWT secret:', e);
+    secret = process.env.DEBUG ? 'unsecure' : cryptoRandomString({ length: 64 });
+  }
+}
 
 // Add json body parser
 app.use(express.json());

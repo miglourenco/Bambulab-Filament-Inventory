@@ -126,7 +126,11 @@ language.stockTotal = {
   serialNumber: 'Serial Number',
   manual: 'Manual',
   noData: 'No filaments available',
-  tagUid: 'Tag UID'
+  tagUid: 'Tag UID',
+  spoolCount: 'Spools',
+  totalWeight: 'Total Weight',
+  averageRemain: 'Average Remaining',
+  spoolDetails: 'Individual Spools'
 };
 
 language.loginPage.noAccount = "Don't have an account?";

@@ -55,7 +55,9 @@ export const useAppStore = defineStore('app', {
     },
     setViewAll(value) {
       this.viewAll = value;
-      this.getFilaments();
+      if (this.isLoggedIn) {
+        this.getFilaments();
+      }
     },
     async deleteFilament(tag_uid) {
       try {

@@ -321,8 +321,9 @@ const headers = [
 ];
 
 onMounted(() => {
-    if (store.isLoggedIn) {
-    store.getFilaments();
+  if (store.isLoggedIn) {
+    // Ensure we're viewing only user's own filaments
+    store.setViewAll(false);
   }
 });
 

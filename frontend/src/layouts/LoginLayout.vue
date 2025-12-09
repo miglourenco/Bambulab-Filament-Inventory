@@ -13,9 +13,9 @@
 <style lang="css" scoped>
 .loginLayout {
   background-color: #e8f7fe;
-  height: 100%;
+  min-height: 100vh;
   width: 100%;
-  overflow: hidden;
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
