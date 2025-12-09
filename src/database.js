@@ -148,11 +148,23 @@ class Database {
 
   // Filament Management
   getUserFilaments(userId) {
-    return Object.values(this.data.filaments).filter(f => f.userId === userId);
+    const user = this.data.users[userId];
+    return Object.values(this.data.filaments)
+      .filter(f => f.userId === userId)
+      .map(filament => ({
+        ...filament,
+        username: user ? user.username : 'Unknown'
+      }));
   }
 
   getAllFilaments() {
-    return Object.values(this.data.filaments);
+    return Object.values(this.data.filaments).map(filament => {
+      const user = this.data.users[filament.userId];
+      return {
+        ...filament,
+        username: user ? user.username : 'Unknown'
+      };
+    });
   }
 
   getFilament(tag_uid) {

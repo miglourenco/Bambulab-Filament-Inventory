@@ -8,7 +8,8 @@
       "role": "admin",
       "createdAt": "2025-12-09T14:54:22.539Z",
       "hassUrl": "http://192.168.1.253:8123",
-      "hassToken": ""
+      "hassToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJhYzFjZTFiZDY4OGU0MDUyODhlN2YwNDNiOGFmNDM5MSIsImlhdCI6MTc2NTExMjA0NSwiZXhwIjoyMDgwNDcyMDQ1fQ.5vZ3hO3L70Dr2EfX5XVxeM0xWev5eZEtStRGUauESmE",
+      "updatedAt": "2025-12-09T15:35:45.183Z"
     }
   },
   "filaments": {
@@ -25,7 +26,7 @@
       "userId": "user-1765292062498-2inwo2wq2",
       "serialNumber": "CAB98F7500000100",
       "createdAt": "2025-12-09T14:54:22.541Z",
-      "updatedAt": "2025-12-09T14:54:22.541Z"
+      "updatedAt": "2025-12-09T15:36:12.534Z"
     }
   },
   "amsConfigs": {
@@ -33,16 +34,18 @@
       {
         "id": "ams-1765292062541-0",
         "name": "AMS 1",
-        "type": "ams",
+        "type": "ams2pro",
         "sensor": "sensor.p1s_01p09c570500317_ams_1",
-        "enabled": true
+        "enabled": true,
+        "updatedAt": "2025-12-09T15:00:03.585Z"
       },
       {
         "id": "ams-1765292062541-1",
         "name": "AMS 2",
-        "type": "ams",
+        "type": "amsht",
         "sensor": "sensor.p1s_01p09c570500317_ams_128",
-        "enabled": true
+        "enabled": true,
+        "updatedAt": "2025-12-09T15:00:07.717Z"
       }
     ]
   }

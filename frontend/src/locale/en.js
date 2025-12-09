@@ -17,7 +17,10 @@ language.defaultLayout = {
   title: 'Filament Inventory',
   logout: 'Logout',
   filamentFilter: 'Filament Filter',
-  filamentFilterAll: 'All'
+  filamentFilterAll: 'All',
+  settings: 'Settings',
+  myInventory: 'My Inventory',
+  stockTotal: 'Stock Total'
 };
 
 language.homeView = {
@@ -71,6 +74,7 @@ language.registerPage = {
   title: 'Register',
   username: 'Username',
   email: 'Email',
+  adminKey: 'Admin Registration Key',
   password: 'Password',
   confirmPassword: 'Confirm Password',
   register: 'Register',
@@ -79,6 +83,7 @@ language.registerPage = {
   success: 'Registration successful!',
   error: 'Registration failed',
   usernameExists: 'Username already exists',
+  invalidAdminKey: 'Invalid admin key. Contact administrator.',
   invalidEmail: 'Invalid email address',
   passwordLength: 'Password must be at least 6 characters',
   passwordMismatch: 'Passwords do not match'
@@ -108,6 +113,20 @@ language.settings = {
   amsToggled: 'AMS status updated',
   amsError: 'Error managing AMS',
   confirmDeleteAMS: 'Are you sure you want to delete this AMS?'
+};
+
+language.stockTotal = {
+  title: 'Stock Total',
+  filters: 'Filters',
+  filterOwner: 'Filter by Owner',
+  owner: 'Owner',
+  inventory: 'Inventory',
+  items: 'items',
+  weight: 'Weight',
+  serialNumber: 'Serial Number',
+  manual: 'Manual',
+  noData: 'No filaments available',
+  tagUid: 'Tag UID'
 };
 
 language.loginPage.noAccount = "Don't have an account?";

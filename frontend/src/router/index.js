@@ -19,6 +19,11 @@ const routes = [
         name: 'Settings',
         component: () => import('@/views/SettingsView.vue'),
       },
+      {
+        path: '/stock-total',
+        name: 'StockTotal',
+        component: () => import('@/views/StockTotalView.vue'),
+      },
     ],
   },
   {

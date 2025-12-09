@@ -12,7 +12,10 @@ language.defaultLayout = {
   title: 'Filament Inventar',
   logout: 'Abmelden',
   filamentFilter: 'Filament Filter',
-  filamentFilterAll: 'Alle'
+  filamentFilterAll: 'Alle',
+  settings: 'Einstellungen',
+  myInventory: 'Mein Inventar',
+  stockTotal: 'Gesamtbestand'
 };
 
 language.general = {
@@ -71,6 +74,7 @@ language.registerPage = {
   title: 'Registrieren',
   username: 'Benutzername',
   email: 'E-Mail',
+  adminKey: 'Admin-Registrierungsschlüssel',
   password: 'Passwort',
   confirmPassword: 'Passwort bestätigen',
   register: 'Registrieren',
@@ -79,6 +83,7 @@ language.registerPage = {
   success: 'Registrierung erfolgreich!',
   error: 'Registrierung fehlgeschlagen',
   usernameExists: 'Benutzername existiert bereits',
+  invalidAdminKey: 'Ungültiger Admin-Schlüssel. Wenden Sie sich an den Administrator.',
   invalidEmail: 'Ungültige E-Mail-Adresse',
   passwordLength: 'Passwort muss mindestens 6 Zeichen lang sein',
   passwordMismatch: 'Passwörter stimmen nicht überein'
@@ -108,6 +113,20 @@ language.settings = {
   amsToggled: 'AMS-Status aktualisiert',
   amsError: 'Fehler bei der AMS-Verwaltung',
   confirmDeleteAMS: 'Möchten Sie diese AMS wirklich löschen?'
+};
+
+language.stockTotal = {
+  title: 'Gesamtbestand',
+  filters: 'Filter',
+  filterOwner: 'Nach Besitzer filtern',
+  owner: 'Besitzer',
+  inventory: 'Inventar',
+  items: 'Artikel',
+  weight: 'Gewicht',
+  serialNumber: 'Seriennummer',
+  manual: 'Manuell',
+  noData: 'Keine Filamente verfügbar',
+  tagUid: 'Tag-UID'
 };
 
 language.loginPage.noAccount = "Noch kein Konto?";

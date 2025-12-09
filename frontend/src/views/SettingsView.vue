@@ -48,7 +48,7 @@
             <span class="text-white">{{ t('$vuetify.settings.hassSettings') }}</span>
           </v-card-title>
           <v-card-text class="pa-4">
-            <v-form v-model="hassValid" @submit.prevent="saveHassSettings">
+            <v-form v-model="hassValid">
               <v-text-field
                 v-model="hassUrl"
                 :label="t('$vuetify.settings.hassUrl')"
@@ -68,15 +68,27 @@
                 class="mb-4"
               ></v-text-field>
 
-              <v-btn
-                type="submit"
-                color="primary"
-                :loading="savingHass"
-                block
-              >
-                <v-icon start>mdi-content-save</v-icon>
-                {{ t('$vuetify.general.save') }}
-              </v-btn>
+              <div class="d-flex gap-2">
+                <v-btn
+                  color="grey"
+                  variant="outlined"
+                  @click="resetHassSettings"
+                  :disabled="savingHass"
+                  class="flex-grow-1"
+                >
+                  <v-icon start>mdi-cancel</v-icon>
+                  {{ t('$vuetify.confirmEdit.cancel') }}
+                </v-btn>
+                <v-btn
+                  color="primary"
+                  @click="saveHassSettings"
+                  :loading="savingHass"
+                  class="flex-grow-1"
+                >
+                  <v-icon start>mdi-content-save</v-icon>
+                  {{ t('$vuetify.general.save') }}
+                </v-btn>
+              </div>
             </v-form>
           </v-card-text>
         </v-card>
@@ -260,17 +272,38 @@ onMounted(async () => {
   await store.getAMSConfigs();
 
   hassUrl.value = store.user?.hassUrl || '';
+  // Token is not returned from API for security, so we keep it empty
+  hassToken.value = '';
 });
+
+const resetHassSettings = async () => {
+  await store.getUserInfo();
+  hassUrl.value = store.user?.hassUrl || '';
+  hassToken.value = '';
+  toast.info('Settings reset');
+};
 
 const saveHassSettings = async () => {
   savingHass.value = true;
 
   try {
-    await store.updateSettings({
-      hassUrl: hassUrl.value,
-      hassToken: hassToken.value
-    });
-    toast.success(t('$vuetify.settings.hassSaved'));
+    const settings = {
+      hassUrl: hassUrl.value
+    };
+
+    // Only send token if it's been changed
+    if (hassToken.value && hassToken.value.trim() !== '') {
+      settings.hassToken = hassToken.value;
+    }
+
+    const success = await store.updateSettings(settings);
+
+    if (success) {
+      toast.success(t('$vuetify.settings.hassSaved'));
+      hassToken.value = ''; // Clear the token field after save
+    } else {
+      toast.error(t('$vuetify.settings.hassError'));
+    }
   } catch (error) {
     toast.error(t('$vuetify.settings.hassError'));
   } finally {

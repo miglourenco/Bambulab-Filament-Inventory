@@ -193,12 +193,13 @@ export const useAppStore = defineStore('app', {
 
       return false;
     },
-    async register(username, password, email) {
+    async register(username, password, email, adminKey) {
       try {
         await axios.post(host + '/register', {
           username,
           password,
-          email
+          email,
+          adminKey
         });
 
         return true;

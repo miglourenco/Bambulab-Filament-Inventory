@@ -22,6 +22,13 @@
 
         <v-spacer />
         <v-btn
+          icon
+          @click="$router.push({ name: 'Settings' })"
+          v-if="!mobile"
+        >
+          <v-icon color="white">mdi-cog</v-icon>
+        </v-btn>
+        <v-btn
           variant="outlined"
           color="white"
           @click="store.logout"
@@ -71,13 +78,52 @@
           <v-icon>mdi-cube-outline</v-icon>
         </template>
       </v-list-item>
+
+      <v-divider class="my-4"></v-divider>
+
+      <v-list-item
+        @click="goToStockTotal"
+        prepend-icon="mdi-archive-check"
+        :title="t('$vuetify.defaultLayout.stockTotal')"
+      ></v-list-item>
+
+      <v-list-item
+        @click="goToSettings"
+        prepend-icon="mdi-cog"
+        :title="t('$vuetify.defaultLayout.settings') || 'Settings'"
+      ></v-list-item>
     </v-list>
     </v-navigation-drawer>
 
     <v-main class="bg-grey-lighten-4">
       <v-container :fluid="mobile">
+        <!-- Tabs Navigation -->
+        <v-row v-if="showTabs">
+          <v-col cols="12">
+            <v-tabs
+              v-model="currentTab"
+              color="primary"
+              align-tabs="center"
+              grow
+            >
+              <v-tab value="inventory" @click="$router.push({ name: 'Home' })">
+                <v-icon start>mdi-home</v-icon>
+                {{ t('$vuetify.defaultLayout.myInventory') }}
+              </v-tab>
+              <v-tab value="stock-total" @click="$router.push({ name: 'StockTotal' })">
+                <v-icon start>mdi-archive-check</v-icon>
+                {{ t('$vuetify.defaultLayout.stockTotal') }}
+              </v-tab>
+              <v-tab value="settings" @click="$router.push({ name: 'Settings' })">
+                <v-icon start>mdi-cog</v-icon>
+                {{ t('$vuetify.defaultLayout.settings') }}
+              </v-tab>
+            </v-tabs>
+          </v-col>
+        </v-row>
+
         <v-row>
-          <v-col cols="12" md="2" v-if="!mobile">
+          <v-col cols="12" md="2" v-if="!mobile && showSidebar">
             <v-sheet rounded="lg" elevation="1" class="pa-2">
               <v-list rounded="lg">
                 <v-list-item
@@ -118,7 +164,7 @@
             </v-sheet>
           </v-col>
 
-          <v-col cols="12" md="10">
+          <v-col cols="12" :md="showSidebar && !mobile ? 10 : 12">
             <v-sheet
               min-height="70vh"
               rounded="lg"
@@ -138,15 +184,31 @@ import DefaultView from './DefaultView.vue';
 import { storeToRefs } from 'pinia';
 import { useAppStore } from '@/store/app';
 import { useLocale, useDisplay } from 'vuetify';
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
+import { useRoute } from 'vue-router';
 
 const { t } = useLocale();
-const { mobile } = useDisplay()
+const { mobile } = useDisplay();
+const route = useRoute();
 
 const store = useAppStore();
 
 const { autocomplete } = storeToRefs(store);
 const drawer = ref(false);
+
+// Compute current tab based on route
+const currentTab = computed(() => {
+  if (route.name === 'Home') return 'inventory';
+  if (route.name === 'StockTotal') return 'stock-total';
+  if (route.name === 'Settings') return 'settings';
+  return 'inventory';
+});
+
+// Show tabs on all pages
+const showTabs = computed(() => true);
+
+// Show sidebar only on Home page
+const showSidebar = computed(() => route.name === 'Home');
 
 const toggleDrawer = () => {
   drawer.value = !drawer.value;
@@ -155,6 +217,16 @@ const toggleDrawer = () => {
 const setFilter = (filter) => {
   store.setFilter(filter);
   drawer.value = false;
+};
+
+const goToStockTotal = () => {
+  drawer.value = false;
+  window.location.hash = '#/stock-total';
+};
+
+const goToSettings = () => {
+  drawer.value = false;
+  window.location.hash = '#/settings';
 };
 </script>
 

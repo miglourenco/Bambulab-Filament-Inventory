@@ -30,6 +30,20 @@
               ></v-text-field>
 
               <v-text-field
+                v-model="adminKey"
+                :label="t('$vuetify.registerPage.adminKey')"
+                :rules="requiredRules"
+                prepend-inner-icon="mdi-key-variant"
+                :type="showAdminKey ? 'text' : 'password'"
+                :append-inner-icon="showAdminKey ? 'mdi-eye' : 'mdi-eye-off'"
+                @click:append-inner="showAdminKey = !showAdminKey"
+                variant="outlined"
+                hint="Contact administrator for registration key"
+                persistent-hint
+                class="mb-2"
+              ></v-text-field>
+
+              <v-text-field
                 v-model="password"
                 :label="t('$vuetify.registerPage.password')"
                 :rules="passwordRules"
@@ -103,10 +117,12 @@ const router = useRouter();
 
 const username = ref('');
 const email = ref('');
+const adminKey = ref('');
 const password = ref('');
 const confirmPassword = ref('');
 const showPassword = ref(false);
 const showConfirmPassword = ref(false);
+const showAdminKey = ref(false);
 const valid = ref(false);
 const loading = ref(false);
 const error = ref('');
@@ -135,7 +151,7 @@ const registerUser = async () => {
   loading.value = true;
 
   try {
-    await store.register(username.value, password.value, email.value);
+    await store.register(username.value, password.value, email.value, adminKey.value);
     toast.success(t('$vuetify.registerPage.success'));
 
     // Auto login after successful registration
@@ -149,6 +165,8 @@ const registerUser = async () => {
   } catch (err) {
     if (err.response?.status === 409) {
       error.value = t('$vuetify.registerPage.usernameExists');
+    } else if (err.response?.status === 403) {
+      error.value = t('$vuetify.registerPage.invalidAdminKey');
     } else {
       error.value = t('$vuetify.registerPage.error');
     }

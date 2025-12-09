@@ -93,13 +93,19 @@ app.post('/oauth/token', async (req, res) => {
   }
 });
 
-// Register new user
+// Register new user (admin only)
 app.post('/register', async (req, res) => {
   try {
-    const { username, password, email } = req.body;
+    const { username, password, email, adminKey } = req.body;
 
     if (!username || !password || !email) {
       return res.status(400).json({ error: 'Missing required fields' });
+    }
+
+    // Check admin key for registration
+    const validAdminKey = process.env.ADMIN_REGISTRATION_KEY || 'change-this-key';
+    if (adminKey !== validAdminKey) {
+      return res.status(403).json({ error: 'Invalid admin key. Only administrators can create new users.' });
     }
 
     // Check if user already exists
@@ -192,8 +198,13 @@ app.get('/filaments', async (req, res) => {
     const userId = req.auth.sub;
     const user = await db.getUserById(userId);
 
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
     let filaments;
-    if (user.role === 'admin' && req.query.viewAll === 'true') {
+    // All users can see all filaments, but viewAll parameter controls the view
+    if (req.query.viewAll === 'true') {
       filaments = db.getAllFilaments();
     } else {
       filaments = db.getUserFilaments(userId);
