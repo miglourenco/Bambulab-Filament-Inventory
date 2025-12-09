@@ -67,4 +67,50 @@ language.confirmEdit = {
 
 language.close = 'Close';
 
+language.registerPage = {
+  title: 'Register',
+  username: 'Username',
+  email: 'Email',
+  password: 'Password',
+  confirmPassword: 'Confirm Password',
+  register: 'Register',
+  haveAccount: 'Already have an account?',
+  loginLink: 'Login here',
+  success: 'Registration successful!',
+  error: 'Registration failed',
+  usernameExists: 'Username already exists',
+  invalidEmail: 'Invalid email address',
+  passwordLength: 'Password must be at least 6 characters',
+  passwordMismatch: 'Passwords do not match'
+};
+
+language.settings = {
+  title: 'Settings',
+  userInfo: 'User Information',
+  username: 'Username',
+  email: 'Email',
+  role: 'Role',
+  hassSettings: 'Home Assistant Settings',
+  hassUrl: 'Home Assistant URL',
+  hassToken: 'Access Token',
+  hassSaved: 'Settings saved successfully',
+  hassError: 'Error saving settings',
+  amsConfig: 'AMS Configuration',
+  addAMS: 'Add AMS',
+  editAMS: 'Edit AMS',
+  amsName: 'AMS Name',
+  amsType: 'AMS Type',
+  amsSensor: 'HASS Sensor',
+  noAMS: 'No AMS configured. Add one to start syncing.',
+  amsAdded: 'AMS added successfully',
+  amsUpdated: 'AMS updated successfully',
+  amsDeleted: 'AMS deleted successfully',
+  amsToggled: 'AMS status updated',
+  amsError: 'Error managing AMS',
+  confirmDeleteAMS: 'Are you sure you want to delete this AMS?'
+};
+
+language.loginPage.noAccount = "Don't have an account?";
+language.loginPage.registerLink = "Register here";
+
 export default language;

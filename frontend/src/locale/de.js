@@ -67,4 +67,50 @@ language.confirmEdit = {
 
 language.close = 'Schließen';
 
+language.registerPage = {
+  title: 'Registrieren',
+  username: 'Benutzername',
+  email: 'E-Mail',
+  password: 'Passwort',
+  confirmPassword: 'Passwort bestätigen',
+  register: 'Registrieren',
+  haveAccount: 'Haben Sie bereits ein Konto?',
+  loginLink: 'Hier anmelden',
+  success: 'Registrierung erfolgreich!',
+  error: 'Registrierung fehlgeschlagen',
+  usernameExists: 'Benutzername existiert bereits',
+  invalidEmail: 'Ungültige E-Mail-Adresse',
+  passwordLength: 'Passwort muss mindestens 6 Zeichen lang sein',
+  passwordMismatch: 'Passwörter stimmen nicht überein'
+};
+
+language.settings = {
+  title: 'Einstellungen',
+  userInfo: 'Benutzerinformationen',
+  username: 'Benutzername',
+  email: 'E-Mail',
+  role: 'Rolle',
+  hassSettings: 'Home Assistant Einstellungen',
+  hassUrl: 'Home Assistant URL',
+  hassToken: 'Zugangstoken',
+  hassSaved: 'Einstellungen erfolgreich gespeichert',
+  hassError: 'Fehler beim Speichern der Einstellungen',
+  amsConfig: 'AMS-Konfiguration',
+  addAMS: 'AMS hinzufügen',
+  editAMS: 'AMS bearbeiten',
+  amsName: 'AMS-Name',
+  amsType: 'AMS-Typ',
+  amsSensor: 'HASS-Sensor',
+  noAMS: 'Keine AMS konfiguriert. Fügen Sie eine hinzu, um die Synchronisierung zu starten.',
+  amsAdded: 'AMS erfolgreich hinzugefügt',
+  amsUpdated: 'AMS erfolgreich aktualisiert',
+  amsDeleted: 'AMS erfolgreich gelöscht',
+  amsToggled: 'AMS-Status aktualisiert',
+  amsError: 'Fehler bei der AMS-Verwaltung',
+  confirmDeleteAMS: 'Möchten Sie diese AMS wirklich löschen?'
+};
+
+language.loginPage.noAccount = "Noch kein Konto?";
+language.loginPage.registerLink = "Hier registrieren";
+
 export default language;

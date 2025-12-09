@@ -1,0 +1,49 @@
+{
+  "users": {
+    "user-1765292062498-2inwo2wq2": {
+      "id": "user-1765292062498-2inwo2wq2",
+      "username": "miguellourenco",
+      "password": "$2b$10$hp8zhyKzpvX6aUAzAep4Vunl7cuNxlYyJZyJ7PgD.lhEu8.k6m7fC",
+      "email": "admin@local",
+      "role": "admin",
+      "createdAt": "2025-12-09T14:54:22.539Z",
+      "hassUrl": "http://192.168.1.253:8123",
+      "hassToken": ""
+    }
+  },
+  "filaments": {
+    "CAB98F7500000100": {
+      "type": "ASA",
+      "manufacturer": "BambuLab",
+      "tracking": true,
+      "size": 1000,
+      "tag_uid": "CAB98F7500000100",
+      "remain": 100,
+      "color": "#2140B4FF",
+      "empty": false,
+      "name": "Bambu ASA",
+      "userId": "user-1765292062498-2inwo2wq2",
+      "serialNumber": "CAB98F7500000100",
+      "createdAt": "2025-12-09T14:54:22.541Z",
+      "updatedAt": "2025-12-09T14:54:22.541Z"
+    }
+  },
+  "amsConfigs": {
+    "user-1765292062498-2inwo2wq2": [
+      {
+        "id": "ams-1765292062541-0",
+        "name": "AMS 1",
+        "type": "ams",
+        "sensor": "sensor.p1s_01p09c570500317_ams_1",
+        "enabled": true
+      },
+      {
+        "id": "ams-1765292062541-1",
+        "name": "AMS 2",
+        "type": "ams",
+        "sensor": "sensor.p1s_01p09c570500317_ams_128",
+        "enabled": true
+      }
+    ]
+  }
+}
