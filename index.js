@@ -6,7 +6,11 @@ import jwt from 'jsonwebtoken';
 import fs from 'fs/promises';
 import cors from 'cors';
 import db from './src/database.js';
+import materialsDB from './src/materials-db.js';
 import './src/hass-sync.js';
+
+// Initialize materials database
+await materialsDB.initialize();
 
 const app = express();
 
@@ -176,6 +180,7 @@ app.get('/user/me', async (req, res) => {
       email: user.email,
       role: user.role,
       hassUrl: user.hassUrl || '',
+      trayName: user.trayName || 'tray',
       createdAt: user.createdAt
     });
   } catch (error) {
@@ -188,12 +193,13 @@ app.get('/user/me', async (req, res) => {
 app.put('/user/settings', async (req, res) => {
   try {
     const userId = req.auth.sub;
-    const { hassUrl, hassToken, email } = req.body;
+    const { hassUrl, hassToken, email, trayName } = req.body;
 
     const updates = {};
     if (hassUrl !== undefined) updates.hassUrl = hassUrl;
     if (hassToken !== undefined) updates.hassToken = hassToken;
     if (email !== undefined) updates.email = email;
+    if (trayName !== undefined) updates.trayName = trayName;
 
     const user = await db.updateUser(userId, updates);
 
@@ -206,7 +212,8 @@ app.put('/user/settings', async (req, res) => {
       username: user.username,
       email: user.email,
       role: user.role,
-      hassUrl: user.hassUrl || ''
+      hassUrl: user.hassUrl || '',
+      trayName: user.trayName || 'tray'
     });
   } catch (error) {
     console.error('Update settings error:', error);
@@ -393,6 +400,46 @@ app.delete('/ams-config/:amsId', async (req, res) => {
     res.json({ message: 'AMS configuration deleted successfully' });
   } catch (error) {
     console.error('Delete AMS config error:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// Get all material types
+app.get('/materials/types', async (_req, res) => {
+  try {
+    const types = materialsDB.getMaterialTypes();
+    res.json(types);
+  } catch (error) {
+    console.error('Get material types error:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// Get colors for a specific material type
+app.get('/materials/:materialType/colors', async (req, res) => {
+  try {
+    const { materialType } = req.params;
+    const colors = materialsDB.getColorsForMaterial(materialType);
+    res.json(colors);
+  } catch (error) {
+    console.error('Get colors error:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// Add new material/color combination
+app.post('/materials', async (req, res) => {
+  try {
+    const { material, colorname, color } = req.body;
+
+    if (!material || !colorname || !color) {
+      return res.status(400).json({ error: 'Material, colorname, and color are required' });
+    }
+
+    const added = await materialsDB.addMaterial(material, colorname, color);
+    res.json({ success: true, added });
+  } catch (error) {
+    console.error('Add material error:', error);
     res.status(500).json({ error: 'Internal server error' });
   }
 });

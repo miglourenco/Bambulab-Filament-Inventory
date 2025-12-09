@@ -39,6 +39,7 @@
                         :items="autocomplete('manufacturer')"
                         :label="t('$vuetify.homeView.form.manufacturer')"
                         required
+                        @update:model-value="onManufacturerChange"
                       ></v-combobox>
                     </v-col>
                   </v-row>
@@ -50,9 +51,10 @@
                       <v-combobox
                         v-model="addModel.type"
                         :rules="requiredRules"
-                        :items="autocomplete('type')"
+                        :items="isBambuLab ? materialTypes : autocomplete('type')"
                         :label="t('$vuetify.homeView.form.type')"
                         required
+                        @update:model-value="onMaterialTypeChange"
                       ></v-combobox>
                     </v-col>
                   </v-row>
@@ -110,12 +112,14 @@
                     <v-col
                       cols="12"
                     >
-                      <v-text-field
+                      <v-combobox
                         v-model="addModel.colorname"
                         required
                         :rules="requiredRules"
+                        :items="availableColorNames"
                         :label="t('$vuetify.homeView.form.colorname')"
-                      ></v-text-field>
+                        @update:model-value="onColorNameChange"
+                      ></v-combobox>
                     </v-col>
                   </v-row>
 
@@ -272,13 +276,14 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, computed, watch } from 'vue';
 import { useAppStore } from '@/store/app';
 import { storeToRefs } from 'pinia';
 import { toast } from 'vue3-toastify';
 import FilamentDetails from '@/components/FilamentDetails.vue';
 import BarcodeScanner from '@/components/BarcodeScanner.vue';
 import { useLocale, useDisplay } from 'vuetify';
+import axios from 'axios';
 
 const { t } = useLocale();
 const { mobile } = useDisplay()
@@ -298,6 +303,10 @@ const addForm = ref(null);
 const filamentDetails = ref(null);
 const barcodeScanner = ref(null);
 
+// Materials database
+const materialTypes = ref([]);
+const availableColors = ref([]);
+
 const addModel = ref({
   manufacturer: '',
   type: '',
@@ -307,6 +316,17 @@ const addModel = ref({
   size: 1000,
   remain: 100,
   empty: false
+});
+
+// Check if manufacturer is BambuLab (case insensitive)
+const isBambuLab = computed(() => {
+  return addModel.value.manufacturer &&
+         addModel.value.manufacturer.toLowerCase().includes('bambu');
+});
+
+// Get available color names based on selected material type
+const availableColorNames = computed(() => {
+  return availableColors.value.map(c => c.colorname);
 });
 
 const headers = [
@@ -320,23 +340,85 @@ const headers = [
   { title: t('$vuetify.homeView.form.actions'), key: 'actions', sortable: false }
 ];
 
-onMounted(() => {
+onMounted(async () => {
   if (store.isLoggedIn) {
     // Ensure we're viewing only user's own filaments
     store.setViewAll(false);
   }
+
+  // Load material types
+  try {
+    const response = await axios.get('/materials/types');
+    materialTypes.value = response.data;
+  } catch (error) {
+    console.error('Error loading material types:', error);
+  }
 });
+
+// Load colors when manufacturer or material type changes
+const onManufacturerChange = () => {
+  // Reset type and colors when manufacturer changes
+  addModel.value.type = '';
+  availableColors.value = [];
+  addModel.value.colorname = '';
+};
+
+const onMaterialTypeChange = async () => {
+  // Reset color selection
+  addModel.value.colorname = '';
+  availableColors.value = [];
+
+  // If BambuLab and type selected, load colors
+  if (isBambuLab.value && addModel.value.type) {
+    try {
+      const response = await axios.get(`/materials/${encodeURIComponent(addModel.value.type)}/colors`);
+      availableColors.value = response.data;
+    } catch (error) {
+      console.error('Error loading colors:', error);
+    }
+  }
+};
+
+const onColorNameChange = () => {
+  // Auto-fill color when colorname is selected from dropdown
+  const selectedColor = availableColors.value.find(c => c.colorname === addModel.value.colorname);
+
+  if (selectedColor) {
+    // Convert hex to rgba format for v-color-picker
+    addModel.value.color = selectedColor.color + 'ff';
+  }
+};
 
 const addFilament = async () => {
   let success = store.addFilament(addModel.value);
 
   if (success) {
+    // If BambuLab and new material/color combination, save to database
+    if (isBambuLab.value) {
+      try {
+        // Convert color from rgba to hex
+        let hexColor = addModel.value.color;
+        if (hexColor.length === 9) {
+          hexColor = hexColor.substring(0, 7); // Remove alpha channel
+        }
+
+        await axios.post('/materials', {
+          material: addModel.value.type,
+          colorname: addModel.value.colorname,
+          color: hexColor
+        });
+      } catch (error) {
+        console.error('Error saving material to database:', error);
+      }
+    }
+
     addForm.value.reset();
     addModel.value = {
       manufacturer: '',
       type: '',
       name: '',
       color: '#ffffffff',
+      colorname: '',
       size: 1000,
       remain: 100,
       empty: false

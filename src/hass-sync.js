@@ -1,9 +1,10 @@
 import axios from 'axios';
 import db from './database.js';
+import materialsDB from './materials-db.js';
 
-const getAMSTrays = async (hassUrl, hassToken, sensor, trayNumber) => {
+const getAMSTrays = async (hassUrl, hassToken, sensor, trayNumber, trayName = 'tray') => {
   try {
-    const { data } = await axios.get(`${hassUrl}/api/states/${sensor}_${process.env.TRAY_NAME || 'tray'}_${trayNumber}`, {
+    const { data } = await axios.get(`${hassUrl}/api/states/${sensor}_${trayName}_${trayNumber}`, {
       headers: {
         Authorization: `Bearer ${hassToken}`,
       },
@@ -45,6 +46,7 @@ export const syncUserHASS = async (userId) => {
   }
 
   let promises = [];
+  const userTrayName = user.trayName || 'tray';
 
   for (const ams of amsConfigs) {
     if (!ams.enabled) continue;
@@ -52,7 +54,7 @@ export const syncUserHASS = async (userId) => {
     const numTrays = db.getAMSTrays(ams.type);
 
     for (let j = 1; j <= numTrays; j++) {
-      promises.push(getAMSTrays(user.hassUrl, user.hassToken, ams.sensor, j));
+      promises.push(getAMSTrays(user.hassUrl, user.hassToken, ams.sensor, j, userTrayName));
     }
   }
 
@@ -86,16 +88,26 @@ export const syncUserHASS = async (userId) => {
           empty: tray.empty
         });
       } else {
-        // Find if there's a colorname for this combination
-        const userFilaments = db.getUserFilaments(userId);
-        const withColorname = userFilaments.find(f => {
-          const localkey = f.color + f.type + f.name + f.manufacturer;
-          return localkey === key && f.colorname;
-        });
+        // Try to identify colorname from materials database
+        let colorname = '';
+
+        // First try to find from materials database by hex color and material type
+        const identifiedColorName = materialsDB.findColorByHex(tray.type, tray.color);
+        if (identifiedColorName) {
+          colorname = identifiedColorName;
+        } else {
+          // Fallback: Find if there's a colorname for this combination in user's existing filaments
+          const userFilaments = db.getUserFilaments(userId);
+          const withColorname = userFilaments.find(f => {
+            const localkey = f.color + f.type + f.name + f.manufacturer;
+            return localkey === key && f.colorname;
+          });
+          colorname = withColorname?.colorname || '';
+        }
 
         await db.addFilament(userId, {
           ...tray,
-          colorname: withColorname?.colorname || '',
+          colorname,
           userId
         });
       }

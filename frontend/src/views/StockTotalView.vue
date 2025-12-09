@@ -151,22 +151,6 @@
                 </v-chip>
               </template>
 
-              <!-- Serial Number Column -->
-              <template v-slot:item.serialNumber="{ item }">
-                <v-chip
-                  v-if="item.serialNumber"
-                  size="small"
-                  variant="outlined"
-                  color="grey"
-                >
-                  <v-icon start size="small">mdi-barcode</v-icon>
-                  {{ item.serialNumber }}
-                </v-chip>
-                <v-chip v-else size="small" color="grey" variant="text">
-                  {{ t('$vuetify.stockTotal.manual') }}
-                </v-chip>
-              </template>
-
               <!-- Actions Column -->
               <template v-slot:item.actions="{ item }">
                 <v-btn
@@ -345,7 +329,6 @@ const headers = computed(() => [
   { title: t('$vuetify.homeView.form.remain'), key: 'remain', sortable: true },
   { title: t('$vuetify.stockTotal.weight'), key: 'weight', sortable: true },
   { title: t('$vuetify.stockTotal.spoolCount'), key: 'spoolCount', sortable: true },
-  { title: t('$vuetify.stockTotal.serialNumber'), key: 'serialNumber', sortable: true },
   { title: t('$vuetify.homeView.form.actions'), key: 'actions', sortable: false, align: 'center' }
 ]);
 

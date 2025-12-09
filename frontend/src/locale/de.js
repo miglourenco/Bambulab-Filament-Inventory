@@ -98,6 +98,7 @@ language.settings = {
   hassSettings: 'Home Assistant Einstellungen',
   hassUrl: 'Home Assistant URL',
   hassToken: 'Zugangstoken',
+  trayName: 'Tray-Name',
   hassSaved: 'Einstellungen erfolgreich gespeichert',
   hassError: 'Fehler beim Speichern der Einstellungen',
   amsConfig: 'AMS-Konfiguration',

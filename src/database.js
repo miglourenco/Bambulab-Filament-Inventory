@@ -95,7 +95,8 @@ class Database {
       role: userData.role || 'user',
       createdAt: new Date().toISOString(),
       hassUrl: userData.hassUrl || process.env.HASS_URL || '',
-      hassToken: userData.hassToken || ''
+      hassToken: userData.hassToken || '',
+      trayName: userData.trayName || 'tray'
     };
 
     await this.save();

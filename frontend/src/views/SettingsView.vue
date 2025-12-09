@@ -65,6 +65,17 @@
                 variant="outlined"
                 type="password"
                 placeholder="eyJ0eXAi..."
+                class="mb-2"
+              ></v-text-field>
+
+              <v-text-field
+                v-model="trayName"
+                :label="t('$vuetify.settings.trayName')"
+                prepend-inner-icon="mdi-tray"
+                variant="outlined"
+                placeholder="tray"
+                hint="Default: 'tray'. Change if your HASS uses a different name (e.g., 'ams_tray', 'slot')"
+                persistent-hint
                 class="mb-4"
               ></v-text-field>
 
@@ -245,6 +256,7 @@ const store = useAppStore();
 const hassValid = ref(false);
 const hassUrl = ref('');
 const hassToken = ref('');
+const trayName = ref('tray');
 const savingHass = ref(false);
 
 const amsDialog = ref(false);
@@ -272,6 +284,7 @@ onMounted(async () => {
   await store.getAMSConfigs();
 
   hassUrl.value = store.user?.hassUrl || '';
+  trayName.value = store.user?.trayName || 'tray';
   // Token is not returned from API for security, so we keep it empty
   hassToken.value = '';
 });
@@ -279,6 +292,7 @@ onMounted(async () => {
 const resetHassSettings = async () => {
   await store.getUserInfo();
   hassUrl.value = store.user?.hassUrl || '';
+  trayName.value = store.user?.trayName || 'tray';
   hassToken.value = '';
   toast.info('Settings reset');
 };
@@ -288,7 +302,8 @@ const saveHassSettings = async () => {
 
   try {
     const settings = {
-      hassUrl: hassUrl.value
+      hassUrl: hassUrl.value,
+      trayName: trayName.value || 'tray'
     };
 
     // Only send token if it's been changed
