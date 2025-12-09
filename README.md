@@ -1,6 +1,16 @@
 ## What this is for
 This code generates a readme.md Markdown file for the project. The project aims to present a list of 3D print filaments for BambuLab 3D printers with AMS systems. It also includes functionality to automatically update the remaining amount if BambuLab RFID compatible filaments are used.
 
+## Features
+- 📊 Modern and responsive UI with improved design
+- 🎨 Color-coded inventory with visual indicators
+- 📱 Mobile-optimized interface
+- 📷 **QR Code and Barcode Scanner** - Scan filament codes directly from your mobile device
+- 🔖 **NFC Tag Reading** - Read NFC tags from filament spools for quick inventory updates
+- 🔍 Quick search and filtering by filament type
+- ✨ Automatic sync with BambuLab AMS systems
+- 📦 Manual filament management for non-BambuLab spools
+
 ## Installation:
 The recommended way to install this software is Docker using a docker compose.
 
@@ -30,6 +40,22 @@ When executed you can open your Browser at http://localhost:3000 and login using
 The interface will automatically sync all BambuLab filaments with colors and remaining amount from AMS.
 
 For Non-BambuLab Filaments you can manually add and manage filaments.
+
+## Mobile Features
+When accessing from a mobile device, you'll have additional features:
+
+### QR Code / Barcode Scanner
+- Tap the floating scanner button (bottom-right corner)
+- Point your camera at the QR code or barcode on your filament box
+- The app will automatically find the filament in your inventory or prompt you to add it
+
+### NFC Tag Reading
+- Switch to the NFC tab in the scanner
+- Tap "Start NFC Reading"
+- Bring your phone close to the NFC tag on your filament spool
+- The app will instantly identify and display the filament details
+
+**Note:** NFC reading requires a device with NFC hardware and HTTPS connection or localhost.
 
 ## Contribution
 When you want to run this locally:

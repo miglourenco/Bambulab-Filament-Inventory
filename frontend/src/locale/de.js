@@ -52,4 +52,19 @@ language.filamentDetails = {
   error: 'Fehler beim Aktualisieren des Filaments'
 };
 
+language.scanner = {
+  title: 'Code Scanner',
+  instructions: 'Positionieren Sie den Code im Bereich',
+  startNFC: 'NFC-Lesung starten',
+  stopNFC: 'Lesung stoppen',
+  nfcReading: 'Bringen Sie den NFC-Tag nahe an das Gerät',
+  nfcNotSupported: 'NFC wird auf diesem Gerät nicht unterstützt'
+};
+
+language.confirmEdit = {
+  cancel: 'Abbrechen'
+};
+
+language.close = 'Schließen';
+
 export default language;

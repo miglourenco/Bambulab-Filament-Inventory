@@ -165,43 +165,109 @@
       :items="store.filamentList"
       :search="search"
       :items-per-page="-1"
+      class="elevation-1 mt-4"
     >
       <template v-slot:item.color="{ item }">
-        <v-avatar variant="elevated" :color="item.color"></v-avatar>
+        <div class="d-flex align-center">
+          <v-avatar
+            :color="item.color"
+            size="40"
+            class="elevation-2"
+          >
+            <v-icon v-if="item.color === '#FFFFFFFF'" color="grey-darken-1">mdi-palette</v-icon>
+          </v-avatar>
+        </div>
+      </template>
+
+      <template v-slot:item.manufacturer="{ item }">
+        <div class="d-flex align-center">
+          <v-chip
+            color="primary"
+            variant="outlined"
+            size="small"
+          >
+            {{ item.manufacturer }}
+          </v-chip>
+        </div>
+      </template>
+
+      <template v-slot:item.type="{ item }">
+        <div class="d-flex align-center">
+          <v-chip
+            color="secondary"
+            variant="tonal"
+            size="small"
+          >
+            <v-icon start>mdi-cube-outline</v-icon>
+            {{ item.type }}
+          </v-chip>
+        </div>
       </template>
 
       <template v-slot:item.filaments="{ item }">
-        {{ item.filaments.length }}
+        <v-chip
+          color="info"
+          variant="flat"
+          size="small"
+        >
+          <v-icon start>mdi-package-variant</v-icon>
+          {{ item.filaments.length }}
+        </v-chip>
       </template>
 
       <template v-slot:item.remain="{ item }">
-        {{ item.remain }} g
+        <div class="d-flex align-center">
+          <v-chip
+            :color="item.remain > 500 ? 'success' : item.remain > 200 ? 'warning' : 'error'"
+            variant="flat"
+            size="small"
+          >
+            <v-icon start>mdi-weight-gram</v-icon>
+            {{ Math.round(item.remain) }} g
+          </v-chip>
+        </div>
       </template>
 
       <template v-slot:item.actions="{ item }">
         <div style="white-space: nowrap;">
           <v-btn
-            size="x-small"
+            size="small"
             @click="editFilament(item)"
             icon
-            flat
+            variant="text"
+            color="orange"
           >
-            <v-icon color="orange darken-2" size="small">mdi-pencil</v-icon>
+            <v-icon size="small">mdi-pencil</v-icon>
           </v-btn>
 
           <v-btn
-            size="x-small"
+            size="small"
             @click="additionalFilament(item)"
             icon
-            flat
+            variant="text"
+            color="primary"
           >
-            <v-icon color="primary" size="small">mdi-plus</v-icon>
+            <v-icon size="small">mdi-plus</v-icon>
           </v-btn>
         </div>
       </template>
     </v-data-table>
 
+    <!-- Botão flutuante para scanner -->
+    <v-btn
+      v-if="mobile"
+      color="primary"
+      size="large"
+      icon
+      elevation="8"
+      @click="openScanner"
+      style="position: fixed; bottom: 80px; right: 16px; z-index: 1000;"
+    >
+      <v-icon size="large">mdi-qrcode-scan</v-icon>
+    </v-btn>
+
     <Filament-Details ref="filamentDetails"></Filament-Details>
+    <Barcode-Scanner ref="barcodeScanner" @code-scanned="handleCodeScanned"></Barcode-Scanner>
   </v-container>
 </template>
 
@@ -211,6 +277,7 @@ import { useAppStore } from '@/store/app';
 import { storeToRefs } from 'pinia';
 import { toast } from 'vue3-toastify';
 import FilamentDetails from '@/components/FilamentDetails.vue';
+import BarcodeScanner from '@/components/BarcodeScanner.vue';
 import { useLocale, useDisplay } from 'vuetify';
 
 const { t } = useLocale();
@@ -229,6 +296,7 @@ const valid = ref(false);
 const openAddDialog = ref(false);
 const addForm = ref(null);
 const filamentDetails = ref(null);
+const barcodeScanner = ref(null);
 
 const addModel = ref({
   manufacturer: '',
@@ -301,5 +369,22 @@ const additionalFilament = async (item) => {
 
 const editFilament = async (item) => {
   filamentDetails.value.open(item.filaments);
+};
+
+const openScanner = () => {
+  barcodeScanner.value.open();
+};
+
+const handleCodeScanned = async (code) => {
+  // Procura por um filamento com o código escaneado
+  const result = await store.searchFilamentByCode(code);
+
+  if (result) {
+    toast.success('Filamento encontrado!');
+    filamentDetails.value.open(result.filaments);
+  } else {
+    toast.info('Filamento não encontrado. Adicione um novo.');
+    openAddDialog.value = true;
+  }
 };
 </script>

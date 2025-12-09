@@ -6,11 +6,15 @@ const host = import.meta.env.DEV ? 'http://localhost:3000' : '';
 export const useAppStore = defineStore('app', {
   state: () => ({
     login: sessionStorage.getItem('token') || null,
+    user: JSON.parse(sessionStorage.getItem('user') || 'null'),
     filaments: [],
-    filter: null
+    filter: null,
+    amsConfigs: [],
+    viewAll: false
   }),
   getters: {
     isLoggedIn: (state) => !!state.login,
+    isAdmin: (state) => state.user?.role === 'admin',
     autocomplete: (state) => {
       return (key) => state.filaments.map((filament) => filament[key]).filter((value, index, self) => self.indexOf(value) === index);
     },
@@ -48,6 +52,10 @@ export const useAppStore = defineStore('app', {
   actions: {
     setFilter(filter) {
       this.filter = filter;
+    },
+    setViewAll(value) {
+      this.viewAll = value;
+      this.getFilaments();
     },
     async deleteFilament(tag_uid) {
       try {
@@ -98,18 +106,46 @@ export const useAppStore = defineStore('app', {
           return;
         }
 
+        const params = this.viewAll && this.isAdmin ? { viewAll: 'true' } : {};
+
         const { data } = await axios.get(host + '/filaments', {
           headers: {
             Authorization: `Bearer ${this.login}`,
           },
+          params
         });
 
         this.filaments = data;
       } catch (error) {
         if (error.response?.status === 401) {
           this.login = null;
+          this.user = null;
           sessionStorage.removeItem('token');
+          sessionStorage.removeItem('user');
         }
+      }
+    },
+    async searchFilamentByCode(code) {
+      try {
+        if (!this.isLoggedIn) {
+          return null;
+        }
+
+        const { data } = await axios.get(host + `/filaments/search/${code}`, {
+          headers: {
+            Authorization: `Bearer ${this.login}`,
+          },
+        });
+
+        // Find in filamentList
+        const filament = this.filamentList.find(f =>
+          f.filaments.some(fil => fil.tag_uid === code || fil.serialNumber === code)
+        );
+
+        return filament;
+      } catch (error) {
+        console.log(error);
+        return null;
       }
     },
     async addFilament(filament) {
@@ -142,10 +178,13 @@ export const useAppStore = defineStore('app', {
         });
 
         this.login = data.access_token;
+        this.user = data.user;
 
         sessionStorage.setItem('token', data.access_token);
+        sessionStorage.setItem('user', JSON.stringify(data.user));
 
-        this.getFilaments();
+        await this.getFilaments();
+        await this.getAMSConfigs();
 
         return true;
       } catch (error) {
@@ -154,9 +193,141 @@ export const useAppStore = defineStore('app', {
 
       return false;
     },
+    async register(username, password, email) {
+      try {
+        await axios.post(host + '/register', {
+          username,
+          password,
+          email
+        });
+
+        return true;
+      } catch (error) {
+        console.log(error);
+        throw error;
+      }
+    },
+    async getUserInfo() {
+      try {
+        if (!this.isLoggedIn) {
+          return null;
+        }
+
+        const { data } = await axios.get(host + '/user/me', {
+          headers: {
+            Authorization: `Bearer ${this.login}`,
+          },
+        });
+
+        this.user = data;
+        sessionStorage.setItem('user', JSON.stringify(data));
+
+        return data;
+      } catch (error) {
+        console.log(error);
+        return null;
+      }
+    },
+    async updateSettings(settings) {
+      try {
+        if (!this.isLoggedIn) {
+          return false;
+        }
+
+        const { data } = await axios.put(host + '/user/settings', settings, {
+          headers: {
+            Authorization: `Bearer ${this.login}`,
+          },
+        });
+
+        this.user = { ...this.user, ...data };
+        sessionStorage.setItem('user', JSON.stringify(this.user));
+
+        return true;
+      } catch (error) {
+        console.log(error);
+        return false;
+      }
+    },
+    async getAMSConfigs() {
+      try {
+        if (!this.isLoggedIn) {
+          return;
+        }
+
+        const { data } = await axios.get(host + '/ams-config', {
+          headers: {
+            Authorization: `Bearer ${this.login}`,
+          },
+        });
+
+        this.amsConfigs = data;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async addAMSConfig(config) {
+      try {
+        if (!this.isLoggedIn) {
+          return false;
+        }
+
+        await axios.post(host + '/ams-config', config, {
+          headers: {
+            Authorization: `Bearer ${this.login}`,
+          },
+        });
+
+        await this.getAMSConfigs();
+        return true;
+      } catch (error) {
+        console.log(error);
+        return false;
+      }
+    },
+    async updateAMSConfig(amsId, updates) {
+      try {
+        if (!this.isLoggedIn) {
+          return false;
+        }
+
+        await axios.put(host + `/ams-config/${amsId}`, updates, {
+          headers: {
+            Authorization: `Bearer ${this.login}`,
+          },
+        });
+
+        await this.getAMSConfigs();
+        return true;
+      } catch (error) {
+        console.log(error);
+        return false;
+      }
+    },
+    async deleteAMSConfig(amsId) {
+      try {
+        if (!this.isLoggedIn) {
+          return false;
+        }
+
+        await axios.delete(host + `/ams-config/${amsId}`, {
+          headers: {
+            Authorization: `Bearer ${this.login}`,
+          },
+        });
+
+        await this.getAMSConfigs();
+        return true;
+      } catch (error) {
+        console.log(error);
+        return false;
+      }
+    },
     logout() {
       this.login = null;
+      this.user = null;
       sessionStorage.removeItem('token');
+      sessionStorage.removeItem('user');
     }
   }
 });
@@ -164,5 +335,7 @@ export const useAppStore = defineStore('app', {
 setInterval(() => {
   const appStore = useAppStore();
 
-  appStore.getFilaments();
+  if (appStore.isLoggedIn) {
+    appStore.getFilaments();
+  }
 }, 10000);
