@@ -55,24 +55,115 @@ class MaterialsDB {
       }));
   }
 
-  // Find color by material type and hex code (for HASS import)
-  findColorByHex(materialType, hexColor) {
+  // Find color by product name and hex code (for HASS import)
+  findColorByNameAndHex(productName, hexColor) {
     // Normalize hex color
     const normalizedHex = hexColor.toUpperCase();
 
-    // First try exact match
+    console.log(`[MaterialsDB] findColorByNameAndHex - Looking for name: "${productName}", color: "${normalizedHex}"`);
+    console.log(`[MaterialsDB] Database has ${this.materials.length} materials loaded`);
+
+    // First try exact match by name and color
     let match = this.materials.find(
-      m => m.material === materialType && m.color.toUpperCase() === normalizedHex
+      m => m.name === productName && m.color.toUpperCase() === normalizedHex
     );
 
     if (match) {
+      console.log(`[MaterialsDB] ✅ Exact match found by name: "${match.colorname}"`);
       return match.colorname;
     }
 
-    // Try to find closest color by distance calculation
-    const materialsOfType = this.materials.filter(m => m.material === materialType);
+    console.log(`[MaterialsDB] No exact match by name, trying closest color for this product...`);
 
-    if (materialsOfType.length === 0) return null;
+    // Try to find closest color by distance calculation for this product name
+    const materialsWithName = this.materials.filter(m => m.name === productName);
+
+    console.log(`[MaterialsDB] Found ${materialsWithName.length} materials with name "${productName}"`);
+
+    if (materialsWithName.length === 0) {
+      console.log(`[MaterialsDB] ⚠️ No materials with name "${productName}", trying by material type...`);
+      // Fallback to old method using material type
+      return this.findColorByMaterialType(productName, normalizedHex);
+    }
+
+    // Calculate color distance
+    const hexToRgb = (hex) => {
+      const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+      return result ? {
+        r: parseInt(result[1], 16),
+        g: parseInt(result[2], 16),
+        b: parseInt(result[3], 16)
+      } : null;
+    };
+
+    const colorDistance = (color1, color2) => {
+      const c1 = hexToRgb(color1);
+      const c2 = hexToRgb(color2);
+      if (!c1 || !c2) return Infinity;
+
+      return Math.sqrt(
+        Math.pow(c1.r - c2.r, 2) +
+        Math.pow(c1.g - c2.g, 2) +
+        Math.pow(c1.b - c2.b, 2)
+      );
+    };
+
+    // Find closest color (threshold of 30 for similar colors)
+    let closest = null;
+    let minDistance = 30;
+
+    for (const material of materialsWithName) {
+      const distance = colorDistance(normalizedHex, material.color);
+      if (distance < minDistance) {
+        minDistance = distance;
+        closest = material;
+      }
+    }
+
+    if (closest) {
+      console.log(`[MaterialsDB] ✅ Closest match found by name: "${closest.colorname}" (distance: ${minDistance.toFixed(2)})`);
+      return closest.colorname;
+    } else {
+      console.log(`[MaterialsDB] ❌ No close match found by name (all colors had distance > 30)`);
+      return null;
+    }
+  }
+
+  // Find color by material type and hex code (fallback method)
+  findColorByMaterialType(materialType, hexColor) {
+    // Normalize hex color
+    const normalizedHex = hexColor.toUpperCase();
+
+    console.log(`[MaterialsDB] findColorByMaterialType - Looking for material: "${materialType}", color: "${normalizedHex}"`);
+
+    // Extract material type from name if it contains "Bambu"
+    let actualMaterialType = materialType;
+    if (materialType.includes('Bambu ')) {
+      actualMaterialType = materialType.replace('Bambu ', '').split(' ')[0];
+      console.log(`[MaterialsDB] Extracted material type: "${actualMaterialType}"`);
+    }
+
+    // First try exact match
+    let match = this.materials.find(
+      m => m.material === actualMaterialType && m.color.toUpperCase() === normalizedHex
+    );
+
+    if (match) {
+      console.log(`[MaterialsDB] ✅ Exact match found by material type: "${match.colorname}"`);
+      return match.colorname;
+    }
+
+    console.log(`[MaterialsDB] No exact match, trying closest color...`);
+
+    // Try to find closest color by distance calculation
+    const materialsOfType = this.materials.filter(m => m.material === actualMaterialType);
+
+    console.log(`[MaterialsDB] Found ${materialsOfType.length} materials of type "${actualMaterialType}"`);
+
+    if (materialsOfType.length === 0) {
+      console.log(`[MaterialsDB] ❌ No materials of type "${actualMaterialType}" in database`);
+      return null;
+    }
 
     // Calculate color distance
     const hexToRgb = (hex) => {
@@ -108,7 +199,13 @@ class MaterialsDB {
       }
     }
 
-    return closest ? closest.colorname : null;
+    if (closest) {
+      console.log(`[MaterialsDB] ✅ Closest match found: "${closest.colorname}" (distance: ${minDistance.toFixed(2)})`);
+      return closest.colorname;
+    } else {
+      console.log(`[MaterialsDB] ❌ No close match found (all colors had distance > 30)`);
+      return null;
+    }
   }
 
   // Add new material/color combination
@@ -144,6 +241,62 @@ class MaterialsDB {
   // Get all materials (for export/debugging)
   getAllMaterials() {
     return this.materials;
+  }
+
+  // Update existing material with EAN or add new material with EAN
+  async updateOrAddEAN(ean, materialData) {
+    const { manufacturer, material, name, colorname, color } = materialData;
+
+    // Check if EAN already exists in database
+    const existingByEAN = this.materials.find(m => m.ean === ean);
+
+    if (existingByEAN) {
+      // EAN exists, update the entry
+      existingByEAN.manufacturer = manufacturer;
+      existingByEAN.material = material;
+      existingByEAN.name = name;
+      existingByEAN.colorname = colorname;
+      existingByEAN.color = color.toUpperCase();
+
+      await this.save();
+      console.log(`Updated existing material with EAN ${ean}: ${name} - ${colorname}`);
+      return { action: 'updated', ean };
+    }
+
+    // Check if same material/color combination exists but without EAN
+    const existingByMaterial = this.materials.find(
+      m => m.manufacturer === manufacturer &&
+           m.material === material &&
+           m.name === name &&
+           m.colorname === colorname &&
+           m.color.toUpperCase() === color.toUpperCase() &&
+           (!m.ean || m.ean === '')
+    );
+
+    if (existingByMaterial) {
+      // Found matching material without EAN, add EAN to it
+      existingByMaterial.ean = ean;
+      await this.save();
+      console.log(`Added EAN ${ean} to existing material: ${name} - ${colorname}`);
+      return { action: 'ean_added', ean };
+    }
+
+    // Material doesn't exist, create new entry
+    this.materials.push({
+      manufacturer,
+      material,
+      name,
+      colorname,
+      color: color.toUpperCase(),
+      distance: 98.4,  // Default distance
+      note: "Custom",
+      productType: "Spool",
+      ean
+    });
+
+    await this.save();
+    console.log(`Added new material with EAN ${ean}: ${name} - ${colorname}`);
+    return { action: 'created', ean };
   }
 }
 

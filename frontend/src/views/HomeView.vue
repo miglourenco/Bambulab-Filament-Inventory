@@ -13,11 +13,13 @@
 
       <v-spacer v-if="!mobile" />
 
-      <v-dialog width="500" v-model="openAddDialog">
+      <v-dialog width="600" v-model="openAddDialog" scrollable>
         <template v-slot:activator="{ props }">
           <v-btn
             color="primary"
             v-bind="props"
+            size="large"
+            elevation="2"
           >
             <v-icon left>mdi-plus</v-icon>
             {{ t('$vuetify.homeView.form.button') }}
@@ -25,138 +27,196 @@
         </template>
 
         <template v-slot:default>
-          <v-card :title="t('$vuetify.homeView.form.title')">
+          <v-card>
+            <v-card-title class="bg-primary text-white pa-4">
+              <v-icon left class="mr-2">mdi-cube-outline</v-icon>
+              {{ t('$vuetify.homeView.form.title') }}
+            </v-card-title>
+
+            <v-divider></v-divider>
+
             <v-form v-model="valid" @submit.prevent ref="addForm">
-              <v-card-text>
+              <v-card-text class="pa-6" style="max-height: 70vh;">
                 <v-container>
+                  <!-- EAN Code Field -->
                   <v-row>
-                    <v-col
-                      cols="12"
-                    >
+                    <v-col cols="12">
+                      <v-text-field
+                        v-model="addModel.ean"
+                        :label="t('$vuetify.homeView.form.ean') || 'EAN / Código de Barras'"
+                        prepend-inner-icon="mdi-barcode"
+                        variant="outlined"
+                        density="comfortable"
+                        hint="Opcional - Código EAN do produto"
+                        persistent-hint
+                        :error="eanError"
+                        :error-messages="eanErrorMessage"
+                      >
+                        <template v-slot:append>
+                          <v-btn
+                            v-if="mobile"
+                            icon="mdi-qrcode-scan"
+                            size="small"
+                            variant="text"
+                            @click="scanEAN"
+                          ></v-btn>
+                        </template>
+                      </v-text-field>
+                    </v-col>
+                  </v-row>
+
+                  <v-divider class="my-4"></v-divider>
+
+                  <!-- Manufacturer and Type Row -->
+                  <v-row>
+                    <v-col cols="12" md="6">
                       <v-combobox
                         v-model="addModel.manufacturer"
                         :rules="requiredRules"
                         :items="autocomplete('manufacturer')"
                         :label="t('$vuetify.homeView.form.manufacturer')"
+                        prepend-inner-icon="mdi-factory"
+                        variant="outlined"
+                        density="comfortable"
                         required
                         @update:model-value="onManufacturerChange"
                       ></v-combobox>
                     </v-col>
-                  </v-row>
 
-                  <v-row>
-                    <v-col
-                      cols="12"
-                    >
+                    <v-col cols="12" md="6">
                       <v-combobox
                         v-model="addModel.type"
                         :rules="requiredRules"
                         :items="isBambuLab ? materialTypes : autocomplete('type')"
                         :label="t('$vuetify.homeView.form.type')"
+                        prepend-inner-icon="mdi-cog"
+                        variant="outlined"
+                        density="comfortable"
                         required
                         @update:model-value="onMaterialTypeChange"
                       ></v-combobox>
                     </v-col>
                   </v-row>
 
+                  <!-- Product Name -->
                   <v-row>
-                    <v-col
-                      cols="12"
-                    >
+                    <v-col cols="12">
                       <v-text-field
                         v-model="addModel.name"
                         :rules="requiredRules"
                         :label="t('$vuetify.homeView.form.name')"
+                        prepend-inner-icon="mdi-tag-text"
+                        variant="outlined"
+                        density="comfortable"
                         required
                       ></v-text-field>
                     </v-col>
                   </v-row>
 
+                  <!-- Size and Remain Row -->
                   <v-row>
-                    <v-col
-                      cols="12"
-                    >
+                    <v-col cols="12" md="6">
                       <v-combobox
                         v-model="addModel.size"
                         :items="[1000, 500, 250]"
                         :rules="requiredRules"
                         :label="t('$vuetify.homeView.form.size')"
+                        prepend-inner-icon="mdi-weight"
+                        variant="outlined"
+                        density="comfortable"
+                        suffix="g"
                         required
                       ></v-combobox>
                     </v-col>
-                  </v-row>
 
-                  <v-row>
-                    <v-col
-                      cols="12"
-                    >
-                      <v-slider
-                        v-model="addModel.remain"
-                        :rules="requiredRules"
-                        type="number"
-                        :min="0"
-                        :max="100"
-                        :step="1"
-                        :label="t('$vuetify.homeView.form.remain')"
-                        required
-                        thumb-label="always"
-                      >
-                        <template v-slot:thumb-label>
-                          <span style="white-space: nowrap;">{{ addModel.remain }} %</span>
-                        </template>
-                      </v-slider>
+                    <v-col cols="12" md="6" class="d-flex align-center">
+                      <div style="width: 100%;">
+                        <v-slider
+                          v-model="addModel.remain"
+                          :rules="requiredRules"
+                          type="number"
+                          :min="0"
+                          :max="100"
+                          :step="1"
+                          :label="t('$vuetify.homeView.form.remain')"
+                          color="primary"
+                          required
+                          thumb-label="always"
+                          prepend-icon="mdi-gauge"
+                        >
+                          <template v-slot:thumb-label>
+                            <span style="white-space: nowrap;">{{ addModel.remain }} %</span>
+                          </template>
+                        </v-slider>
+                      </div>
                     </v-col>
                   </v-row>
 
+                  <v-divider class="my-4"></v-divider>
+
+                  <!-- Color Section -->
                   <v-row>
-                    <v-col
-                      cols="12"
-                    >
+                    <v-col cols="12">
                       <v-combobox
                         v-model="addModel.colorname"
                         required
                         :rules="requiredRules"
                         :items="availableColorNames"
                         :label="t('$vuetify.homeView.form.colorname')"
+                        prepend-inner-icon="mdi-palette"
+                        variant="outlined"
+                        density="comfortable"
                         @update:model-value="onColorNameChange"
                       ></v-combobox>
                     </v-col>
                   </v-row>
 
                   <v-row>
-                    <v-col
-                      cols="12"
-                    >
+                    <v-col cols="12" class="text-center">
+                      <div class="text-subtitle-2 mb-2">{{ t('$vuetify.homeView.form.color') || 'Cor' }}</div>
                       <v-color-picker
                         v-model="addModel.color"
-                        :label="t('$vuetify.homeView.form.color')"
                         required
                         show-swatches
                         hide-details
                         mode="hexa"
                         :modes="['hexa']"
+                        width="100%"
+                        elevation="2"
                       ></v-color-picker>
                     </v-col>
                   </v-row>
                 </v-container>
               </v-card-text>
 
-              <v-card-actions>
+              <v-divider></v-divider>
+
+              <v-card-actions class="pa-4">
                 <v-spacer></v-spacer>
 
                 <v-btn
                   :text="t('$vuetify.confirmEdit.cancel')"
-                  color="red darken-2"
-                  @click="openAddDialog = false"
-                ></v-btn>
+                  color="error"
+                  variant="outlined"
+                  size="large"
+                  @click="closeAddDialog"
+                >
+                  <v-icon left>mdi-close</v-icon>
+                  {{ t('$vuetify.confirmEdit.cancel') }}
+                </v-btn>
 
                 <v-btn
                   :text="t('$vuetify.general.save')"
-                  color="green darken-2"
+                  color="success"
+                  variant="elevated"
+                  size="large"
                   type="submit"
                   :disabled="!valid"
                   @click="addFilament"
-                ></v-btn>
+                >
+                  <v-icon left>mdi-content-save</v-icon>
+                  {{ t('$vuetify.general.save') }}
+                </v-btn>
               </v-card-actions>
             </v-form>
           </v-card>
@@ -315,8 +375,12 @@ const addModel = ref({
   colorname: '',
   size: 1000,
   remain: 100,
-  empty: false
+  empty: false,
+  ean: ''
 });
+
+const eanError = ref(false);
+const eanErrorMessage = ref('');
 
 // Check if manufacturer is BambuLab (case insensitive)
 const isBambuLab = computed(() => {
@@ -326,7 +390,12 @@ const isBambuLab = computed(() => {
 
 // Get available color names based on selected material type
 const availableColorNames = computed(() => {
-  return availableColors.value.map(c => c.colorname);
+  // Only show dropdown options for BambuLab materials
+  if (isBambuLab.value && availableColors.value.length > 0) {
+    return availableColors.value.map(c => c.colorname);
+  }
+  // For non-BambuLab, return empty array to allow free text input
+  return [];
 });
 
 const headers = [
@@ -389,17 +458,66 @@ const onColorNameChange = () => {
   }
 };
 
+const scanEAN = () => {
+  barcodeScanner.value.open();
+};
+
+const closeAddDialog = () => {
+  addForm.value.reset();
+  resetAddModel();
+  openAddDialog.value = false;
+  eanError.value = false;
+  eanErrorMessage.value = '';
+};
+
+const resetAddModel = () => {
+  addModel.value = {
+    manufacturer: '',
+    type: '',
+    name: '',
+    color: '#ffffffff',
+    colorname: '',
+    size: 1000,
+    remain: 100,
+    empty: false,
+    ean: ''
+  };
+};
+
 const addFilament = async () => {
   let success = store.addFilament(addModel.value);
 
   if (success) {
-    // If BambuLab and new material/color combination, save to database
-    if (isBambuLab.value) {
+    // If EAN is provided and BambuLab, save to database with EAN
+    if (addModel.value.ean && isBambuLab.value) {
       try {
         // Convert color from rgba to hex
         let hexColor = addModel.value.color;
         if (hexColor.length === 9) {
           hexColor = hexColor.substring(0, 7); // Remove alpha channel
+        }
+
+        // Save/update material with EAN in base_dados_completa.json
+        await axios.post('/materials/update-ean', {
+          ean: addModel.value.ean,
+          manufacturer: addModel.value.manufacturer,
+          material: addModel.value.type,
+          name: addModel.value.name,
+          colorname: addModel.value.colorname,
+          color: hexColor
+        });
+
+        toast.success('Material e EAN salvos na base de dados!');
+      } catch (error) {
+        console.error('Error saving material with EAN to database:', error);
+        toast.warning('Filamento adicionado mas EAN não foi salvo na base de dados');
+      }
+    } else if (isBambuLab.value) {
+      // If BambuLab but no EAN, just save material/color combination
+      try {
+        let hexColor = addModel.value.color;
+        if (hexColor.length === 9) {
+          hexColor = hexColor.substring(0, 7);
         }
 
         await axios.post('/materials', {
@@ -412,19 +530,7 @@ const addFilament = async () => {
       }
     }
 
-    addForm.value.reset();
-    addModel.value = {
-      manufacturer: '',
-      type: '',
-      name: '',
-      color: '#ffffffff',
-      colorname: '',
-      size: 1000,
-      remain: 100,
-      empty: false
-    };
-
-    openAddDialog.value = false;
+    closeAddDialog();
     toast.success('Filament erfolgreich hinzugefügt');
   } else {
     toast.error('Fehler beim Hinzufügen des Filaments');
@@ -472,11 +578,16 @@ const handleCodeScanned = async (code) => {
       const response = await axios.get(`/product-info/${code}`);
 
       if (response.data) {
+        // Pre-fill EAN code
+        addModel.value.ean = code;
+        eanError.value = false;
+        eanErrorMessage.value = '';
+
         // Auto-fill the form with scraped data
         addModel.value.manufacturer = response.data.manufacturer || '';
         addModel.value.type = response.data.type || '';
         addModel.value.colorname = response.data.colorname || '';
-        addModel.value.name = response.data.type || '';
+        addModel.value.name = response.data.name || response.data.type || '';
 
         // If color is provided directly from local database, use it
         if (response.data.color) {
@@ -501,7 +612,13 @@ const handleCodeScanned = async (code) => {
       }
     } catch (error) {
       console.error('Error fetching product info:', error);
-      toast.info('Filamento não encontrado. Adicione um novo.');
+
+      // Pre-fill EAN even on error
+      addModel.value.ean = code;
+      eanError.value = true;
+      eanErrorMessage.value = 'EAN não encontrado na base de dados - será adicionado ao salvar';
+
+      toast.warning('EAN não encontrado. Preencha os dados manualmente.');
       openAddDialog.value = true;
     }
   }

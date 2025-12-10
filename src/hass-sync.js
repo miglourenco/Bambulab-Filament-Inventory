@@ -91,11 +91,19 @@ export const syncUserHASS = async (userId) => {
         // Try to identify colorname from materials database
         let colorname = '';
 
-        // First try to find from materials database by hex color and material type
-        const identifiedColorName = materialsDB.findColorByHex(tray.type, tray.color);
+        // Ensure materialsDB is initialized
+        await materialsDB.initialize();
+
+        console.log(`[HASS Sync] Looking for colorname - Name: "${tray.name}", Color: "${tray.color}", Type: "${tray.type}"`);
+
+        // First try to find from materials database by product name and hex color
+        const identifiedColorName = materialsDB.findColorByNameAndHex(tray.name, tray.color);
         if (identifiedColorName) {
           colorname = identifiedColorName;
+          console.log(`[HASS Sync] ✅ Found colorname in database: "${colorname}"`);
         } else {
+          console.log(`[HASS Sync] ⚠️ Colorname not found in database for name "${tray.name}" and color "${tray.color}"`);
+
           // Fallback: Find if there's a colorname for this combination in user's existing filaments
           const userFilaments = db.getUserFilaments(userId);
           const withColorname = userFilaments.find(f => {
@@ -103,6 +111,12 @@ export const syncUserHASS = async (userId) => {
             return localkey === key && f.colorname;
           });
           colorname = withColorname?.colorname || '';
+
+          if (colorname) {
+            console.log(`[HASS Sync] ✅ Found colorname in user filaments: "${colorname}"`);
+          } else {
+            console.log(`[HASS Sync] ❌ No colorname found - will be empty`);
+          }
         }
 
         await db.addFilament(userId, {

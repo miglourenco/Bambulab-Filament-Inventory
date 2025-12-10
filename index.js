@@ -843,6 +843,32 @@ app.post('/materials', async (req, res) => {
   }
 });
 
+// Update or add material with EAN to base_dados_completa.json
+app.post('/materials/update-ean', async (req, res) => {
+  try {
+    const { ean, manufacturer, material, name, colorname, color } = req.body;
+
+    if (!ean || !manufacturer || !material || !name || !colorname || !color) {
+      return res.status(400).json({
+        error: 'EAN, manufacturer, material, name, colorname, and color are required'
+      });
+    }
+
+    const result = await materialsDB.updateOrAddEAN(ean, {
+      manufacturer,
+      material,
+      name,
+      colorname,
+      color
+    });
+
+    res.json({ success: true, ...result });
+  } catch (error) {
+    console.error('Update EAN error:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
 // deliver static files from frontend/dist
 app.use(express.static('frontend/dist'));
 

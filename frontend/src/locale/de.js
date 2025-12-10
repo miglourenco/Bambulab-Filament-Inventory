@@ -49,6 +49,7 @@ language.filamentDetails = {
   remaining: 'Restmenge',
   colorname: 'Farbname',
   actions: 'Aktionen',
+  ean: 'EAN / Barcode',
   successDelete: 'Filament gelöscht',
   errorDelete: 'Fehler beim Löschen des Filaments',
   success: 'Filament aktualisiert',
