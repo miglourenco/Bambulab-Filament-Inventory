@@ -1,8 +1,6 @@
 [
   {
-    "manufacturer": "BambuLab",
     "material": "ABS",
-    "name": "Bambu ABS",
     "colorname": "Black",
     "color": "#000000",
     "distance": 98.4,
@@ -11,9 +9,7 @@
     "ean": "6975337032878"
   },
   {
-    "manufacturer": "BambuLab",
     "material": "ABS",
-    "name": "Bambu ABS",
     "colorname": "Black",
     "color": "#000000",
     "distance": 98.4,
@@ -22,9 +18,7 @@
     "ean": "6975337030331"
   },
   {
-    "manufacturer": "BambuLab",
     "material": "ABS",
-    "name": "Bambu ABS",
     "colorname": "Bambu Green",
     "color": "#00AE42",
     "distance": 91.6,
@@ -33,9 +27,7 @@
     "ean": "6975337032144"
   },
   {
-    "manufacturer": "BambuLab",
     "material": "ABS",
-    "name": "Bambu ABS",
     "colorname": "Blue",
     "color": "#0A2CA5",
     "distance": 58.7,
@@ -44,9 +36,7 @@
     "ean": "6975337032861"
   },
   {
-    "manufacturer": "BambuLab",
     "material": "ABS",
-    "name": "Bambu ABS",
     "colorname": "Blue",
     "color": "#0A2CA5",
     "distance": 58.7,
@@ -55,9 +45,7 @@
     "ean": "6975337033783"
   },
   {
-    "manufacturer": "BambuLab",
     "material": "ABS",
-    "name": "Bambu ABS",
     "colorname": "Blue",
     "color": "#0A2CA5",
     "distance": 58.7,
@@ -66,9 +54,7 @@
     "ean": "6975337030379"
   },
   {
-    "manufacturer": "BambuLab",
     "material": "ABS",
-    "name": "Bambu ABS",
     "colorname": "Blue",
     "color": "#0A2CA5",
     "distance": 58.7,
@@ -77,9 +63,7 @@
     "ean": "6975337039587"
   },
   {
-    "manufacturer": "BambuLab",
     "material": "ABS",
-    "name": "Bambu ABS",
     "colorname": "Navy Blue",
     "color": "#0C2340",
     "distance": 58.5,
@@ -88,9 +72,7 @@
     "ean": "6975337032861"
   },
   {
-    "manufacturer": "BambuLab",
     "material": "ABS",
-    "name": "Bambu ABS",
     "colorname": "Navy Blue",
     "color": "#0C2340",
     "distance": 58.5,
@@ -99,9 +81,7 @@
     "ean": "6975337033783"
   },
   {
-    "manufacturer": "BambuLab",
     "material": "ABS",
-    "name": "Bambu ABS",
     "colorname": "Navy Blue",
     "color": "#0C2340",
     "distance": 58.5,
@@ -110,9 +90,7 @@
     "ean": "6975337030379"
   },
   {
-    "manufacturer": "BambuLab",
     "material": "ABS",
-    "name": "Bambu ABS",
     "colorname": "Navy Blue",
     "color": "#0C2340",
     "distance": 58.5,
@@ -121,9 +99,7 @@
     "ean": "6975337039587"
   },
   {
-    "manufacturer": "BambuLab",
     "material": "ABS",
-    "name": "Bambu ABS",
     "colorname": "Azure",
     "color": "#489FDF",
     "distance": 48.2,
@@ -132,9 +108,7 @@
     "ean": null
   },
   {
-    "manufacturer": "BambuLab",
     "material": "ABS",
-    "name": "Bambu ABS",
     "colorname": "Lavender",
     "color": "#7248BD",
     "distance": 9.6,
@@ -143,9 +117,7 @@
     "ean": null
   },
   {
-    "manufacturer": "BambuLab",
     "material": "ABS",
-    "name": "Bambu ABS",
     "colorname": "Olive",
     "color": "#789D4A",
     "distance": 96.6,
@@ -154,9 +126,7 @@
     "ean": null
   },
   {
-    "manufacturer": "BambuLab",
     "material": "ABS",
-    "name": "Bambu ABS",
     "colorname": "Mint",
     "color": "#7AE1BF",
     "distance": 67.3,
@@ -165,9 +135,7 @@
     "ean": null
   },
   {
-    "manufacturer": "BambuLab",
     "material": "ABS",
-    "name": "Bambu ABS",
     "colorname": "Silver",
     "color": "#87909A",
     "distance": 57.3,
@@ -176,9 +144,7 @@
     "ean": "6975337032151"
   },
   {
-    "manufacturer": "BambuLab",
     "material": "ABS",
-    "name": "Bambu ABS",
     "colorname": "Silver",
     "color": "#87909A",
     "distance": 57.3,
@@ -187,9 +153,7 @@
     "ean": "6975337039563"
   },
   {
-    "manufacturer": "BambuLab",
     "material": "ABS",
-    "name": "Bambu ABS",
     "colorname": "Purple",
     "color": "#AF1685",
     "distance": 55.3,
@@ -198,9 +162,7 @@
     "ean": null
   },
   {
-    "manufacturer": "BambuLab",
     "material": "ABS",
-    "name": "Bambu ABS",
     "colorname": "Red",
     "color": "#D32941",
     "distance": 61.1,
@@ -209,9 +171,7 @@
     "ean": "6975337032892"
   },
   {
-    "manufacturer": "BambuLab",
     "material": "ABS",
-    "name": "Bambu ABS",
     "colorname": "Red",
     "color": "#D32941",
     "distance": 61.1,
@@ -220,9 +180,7 @@
     "ean": "6975337030355"
   },
   {
-    "manufacturer": "BambuLab",
     "material": "ABS",
-    "name": "Bambu ABS",
     "colorname": "Beige",
     "color": "#DFD1A7",
     "distance": 91.3,
@@ -231,9 +189,7 @@
     "ean": null
   },
   {
-    "manufacturer": "BambuLab",
     "material": "ABS",
-    "name": "Bambu ABS",
     "colorname": "Yellow",
     "color": "#FCE900",
     "distance": 108,
@@ -242,9 +198,7 @@
     "ean": null
   },
   {
-    "manufacturer": "BambuLab",
     "material": "ABS",
-    "name": "Bambu ABS",
     "colorname": "Orange",
     "color": "#FF6A13",
     "distance": 94.3,
@@ -253,9 +207,7 @@
     "ean": "6975337032168"
   },
   {
-    "manufacturer": "BambuLab",
     "material": "ABS",
-    "name": "Bambu ABS",
     "colorname": "Tangerine Yellow",
     "color": "#FFC72C",
     "distance": 104.7,
@@ -264,9 +216,7 @@
     "ean": null
   },
   {
-    "manufacturer": "BambuLab",
     "material": "ABS",
-    "name": "Bambu ABS",
     "colorname": "White",
     "color": "#FFFFFF",
     "distance": 101.5,
@@ -275,9 +225,7 @@
     "ean": "6975337032885"
   },
   {
-    "manufacturer": "BambuLab",
     "material": "ABS",
-    "name": "Bambu ABS",
     "colorname": "White",
     "color": "#FFFFFF",
     "distance": 101.5,
@@ -286,9 +234,7 @@
     "ean": "6975337030348"
   },
   {
-    "manufacturer": "BambuLab",
     "material": "ABS-GF",
-    "name": "Bambu ABS-GF",
     "colorname": "Black",
     "color": "#000000",
     "distance": 98.4,
@@ -297,9 +243,7 @@
     "ean": null
   },
   {
-    "manufacturer": "BambuLab",
     "material": "ABS-GF",
-    "name": "Bambu ABS-GF",
     "colorname": "Blue",
     "color": "#0C3B95",
     "distance": 58.6,
@@ -308,9 +252,7 @@
     "ean": "6975337037972"
   },
   {
-    "manufacturer": "BambuLab",
     "material": "ABS-GF",
-    "name": "Bambu ABS-GF",
     "colorname": "Green",
     "color": "#61BF36",
     "distance": 88.3,
@@ -319,9 +261,7 @@
     "ean": null
   },
   {
-    "manufacturer": "BambuLab",
     "material": "ABS-GF",
-    "name": "Bambu ABS-GF",
     "colorname": "Gray",
     "color": "#C6C6C6",
     "distance": 90.2,
@@ -330,9 +270,7 @@
     "ean": null
   },
   {
-    "manufacturer": "BambuLab",
     "material": "ABS-GF",
-    "name": "Bambu ABS-GF",
     "colorname": "Red",
     "color": "#E83100",
     "distance": 89.6,
@@ -341,9 +279,7 @@
     "ean": "6975337037279"
   },
   {
-    "manufacturer": "BambuLab",
     "material": "ABS-GF",
-    "name": "Bambu ABS-GF",
     "colorname": "Orange",
     "color": "#F48438",
     "distance": 90.5,
@@ -352,9 +288,7 @@
     "ean": "6975337037286"
   },
   {
-    "manufacturer": "BambuLab",
     "material": "ABS-GF",
-    "name": "Bambu ABS-GF",
     "colorname": "Yellow",
     "color": "#FFE133",
     "distance": 108.1,
@@ -363,9 +297,7 @@
     "ean": null
   },
   {
-    "manufacturer": "BambuLab",
     "material": "ABS-GF",
-    "name": "Bambu ABS-GF",
     "colorname": "White",
     "color": "#FFFFFF",
     "distance": 101.5,
@@ -374,9 +306,7 @@
     "ean": null
   },
   {
-    "manufacturer": "BambuLab",
     "material": "ASA",
-    "name": "Bambu ASA",
     "colorname": "Black",
     "color": "#000000",
     "distance": 98.4,
@@ -385,9 +315,7 @@
     "ean": "6975337032915"
   },
   {
-    "manufacturer": "BambuLab",
     "material": "ASA",
-    "name": "Bambu ASA",
     "colorname": "Green",
     "color": "#00A6A0",
     "distance": 79.9,
@@ -396,9 +324,7 @@
     "ean": "6975337032953"
   },
   {
-    "manufacturer": "BambuLab",
     "material": "ASA",
-    "name": "Bambu ASA",
     "colorname": "Blue",
     "color": "#2140B4",
     "distance": 38.1,
@@ -407,9 +333,7 @@
     "ean": "6975337032960"
   },
   {
-    "manufacturer": "BambuLab",
     "material": "ASA",
-    "name": "Bambu ASA",
     "colorname": "Gray",
     "color": "#8A949E",
     "distance": 57.7,
@@ -418,9 +342,7 @@
     "ean": null
   },
   {
-    "manufacturer": "BambuLab",
     "material": "ASA",
-    "name": "Bambu ASA",
     "colorname": "Red",
     "color": "#E02928",
     "distance": 69.9,
@@ -429,9 +351,7 @@
     "ean": "6975337032946"
   },
   {
-    "manufacturer": "BambuLab",
     "material": "ASA",
-    "name": "Bambu ASA",
     "colorname": "White",
     "color": "#FFFAF2",
     "distance": 116.2,
@@ -440,9 +360,7 @@
     "ean": "6975337032922"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "ASA-AERO",
-    "name": "Bambu ASA-Aero",
+    "material": "ASA Aero",
     "colorname": "White",
     "color": "#F5F1DD",
     "distance": 101.9,
@@ -451,9 +369,7 @@
     "ean": "6975337036715"
   },
   {
-    "manufacturer": "BambuLab",
     "material": "ASA-CF",
-    "name": "Bambu ASA-CF",
     "colorname": "Black",
     "color": "#000000",
     "distance": 98.4,
@@ -462,9 +378,7 @@
     "ean": "6977252424783"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PA-GF",
-    "name": "Bambu PA6-GF",
+    "material": "PA6-GF",
     "colorname": "Black",
     "color": "#000000",
     "distance": 98.4,
@@ -473,9 +387,7 @@
     "ean": "6975337036968"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PA-GF",
-    "name": "Bambu PA6-GF",
+    "material": "PA6-GF",
     "colorname": "Gray",
     "color": "#353533",
     "distance": 112.1,
@@ -484,9 +396,7 @@
     "ean": null
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PA-GF",
-    "name": "Bambu PA6-GF",
+    "material": "PA6-GF",
     "colorname": "Brown",
     "color": "#5B492F",
     "distance": 85.8,
@@ -495,9 +405,7 @@
     "ean": null
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PA-GF",
-    "name": "Bambu PA6-GF",
+    "material": "PA6-GF",
     "colorname": "Blue",
     "color": "#75AED8",
     "distance": 43.4,
@@ -506,9 +414,7 @@
     "ean": "6975337036975"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PA-GF",
-    "name": "Bambu PA6-GF",
+    "material": "PA6-GF",
     "colorname": "Lime",
     "color": "#C5ED48",
     "distance": 111,
@@ -517,9 +423,7 @@
     "ean": null
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PA-GF",
-    "name": "Bambu PA6-GF",
+    "material": "PA6-GF",
     "colorname": "White",
     "color": "#EAEAE4",
     "distance": 114.3,
@@ -528,9 +432,7 @@
     "ean": "6975337036951"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PA-GF",
-    "name": "Bambu PA6-GF",
+    "material": "PA6-GF",
     "colorname": "Orange",
     "color": "#FF4800",
     "distance": 91.5,
@@ -539,9 +441,7 @@
     "ean": "6975337036999"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PA-GF",
-    "name": "Bambu PA6-GF",
+    "material": "PA6-GF",
     "colorname": "Yellow",
     "color": "#FFCE00",
     "distance": 104.9,
@@ -550,9 +450,7 @@
     "ean": null
   },
   {
-    "manufacturer": "BambuLab",
     "material": "PA6-CF",
-    "name": "Bambu PA6-CF",
     "colorname": "Black",
     "color": "#000000",
     "distance": 98.4,
@@ -561,9 +459,7 @@
     "ean": "6975337032977"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PA-CF",
-    "name": "Bambu PAHT-CF",
+    "material": "PAHT-CF",
     "colorname": "Black",
     "color": "#000000",
     "distance": 98.4,
@@ -572,9 +468,7 @@
     "ean": "6975337031833"
   },
   {
-    "manufacturer": "BambuLab",
     "material": "PPA-CF",
-    "name": "Bambu PPA-CF",
     "colorname": "Black",
     "color": "#000000",
     "distance": 98.4,
@@ -583,9 +477,7 @@
     "ean": "6977252422192"
   },
   {
-    "manufacturer": "BambuLab",
     "material": "PET-CF",
-    "name": "Bambu PET-CF",
     "colorname": "Black",
     "color": "#000000",
     "distance": 98.4,
@@ -594,9 +486,7 @@
     "ean": "6975337032250"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PETG",
-    "name": "Bambu PETG HF",
+    "material": "PETG HF",
     "colorname": "Black",
     "color": "#000000",
     "distance": 98.4,
@@ -605,9 +495,7 @@
     "ean": "6975337038221"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PETG",
-    "name": "Bambu PETG HF",
+    "material": "PETG HF",
     "colorname": "Black",
     "color": "#000000",
     "distance": 98.4,
@@ -616,9 +504,7 @@
     "ean": "6975337038580"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PETG",
-    "name": "Bambu PETG HF",
+    "material": "PETG HF",
     "colorname": "Blue",
     "color": "#002E96",
     "distance": 70.9,
@@ -627,9 +513,7 @@
     "ean": "6975337038269"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PETG",
-    "name": "Bambu PETG HF",
+    "material": "PETG HF",
     "colorname": "Blue",
     "color": "#002E96",
     "distance": 70.9,
@@ -638,9 +522,7 @@
     "ean": "6977252424677"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PETG",
-    "name": "Bambu PETG HF",
+    "material": "PETG HF",
     "colorname": "Green",
     "color": "#00AE42",
     "distance": 91.6,
@@ -649,9 +531,7 @@
     "ean": "6977252424721"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PETG",
-    "name": "Bambu PETG HF",
+    "material": "PETG HF",
     "colorname": "Green",
     "color": "#00AE42",
     "distance": 91.6,
@@ -660,9 +540,7 @@
     "ean": "6977252424684"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PETG",
-    "name": "Bambu PETG HF",
+    "material": "PETG HF",
     "colorname": "Lake Blue",
     "color": "#1F79E5",
     "distance": 50.4,
@@ -671,9 +549,7 @@
     "ean": "6975337038269"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PETG",
-    "name": "Bambu PETG HF",
+    "material": "PETG HF",
     "colorname": "Lake Blue",
     "color": "#1F79E5",
     "distance": 50.4,
@@ -682,9 +558,7 @@
     "ean": "6977252424677"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PETG",
-    "name": "Bambu PETG HF",
+    "material": "PETG HF",
     "colorname": "Forest Green",
     "color": "#39541A",
     "distance": 101.4,
@@ -693,9 +567,7 @@
     "ean": "6977252424721"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PETG",
-    "name": "Bambu PETG HF",
+    "material": "PETG HF",
     "colorname": "Dark Gray",
     "color": "#515151",
     "distance": 84,
@@ -704,9 +576,7 @@
     "ean": null
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PETG",
-    "name": "Bambu PETG HF",
+    "material": "PETG HF",
     "colorname": "Lime Green",
     "color": "#6EE53C",
     "distance": 96.6,
@@ -715,9 +585,7 @@
     "ean": "6977252424684"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PETG",
-    "name": "Bambu PETG HF",
+    "material": "PETG HF",
     "colorname": "Peanut Brown",
     "color": "#875718",
     "distance": 86.8,
@@ -726,9 +594,7 @@
     "ean": "6977252424714"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PETG",
-    "name": "Bambu PETG HF",
+    "material": "PETG HF",
     "colorname": "Gray",
     "color": "#ADB1B2",
     "distance": 72.1,
@@ -737,9 +603,7 @@
     "ean": null
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PETG",
-    "name": "Bambu PETG HF",
+    "material": "PETG HF",
     "colorname": "Red",
     "color": "#EB3A3A",
     "distance": 75.2,
@@ -748,9 +612,7 @@
     "ean": "6975337038245"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PETG",
-    "name": "Bambu PETG HF",
+    "material": "PETG HF",
     "colorname": "Red",
     "color": "#EB3A3A",
     "distance": 75.2,
@@ -759,9 +621,7 @@
     "ean": "6975337038566"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PETG",
-    "name": "Bambu PETG HF",
+    "material": "PETG HF",
     "colorname": "Orange",
     "color": "#F75403",
     "distance": 91.2,
@@ -770,9 +630,7 @@
     "ean": null
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PETG",
-    "name": "Bambu PETG HF",
+    "material": "PETG HF",
     "colorname": "Cream",
     "color": "#F9DFB9",
     "distance": 102.8,
@@ -781,9 +639,7 @@
     "ean": "6977252424691"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PETG",
-    "name": "Bambu PETG HF",
+    "material": "PETG HF",
     "colorname": "Yellow",
     "color": "#FFD00B",
     "distance": 105.2,
@@ -792,9 +648,7 @@
     "ean": "6975337038573"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PETG",
-    "name": "Bambu PETG HF",
+    "material": "PETG HF",
     "colorname": "White",
     "color": "#FFFFFF",
     "distance": 101.5,
@@ -803,9 +657,7 @@
     "ean": "6975337038207"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PETG",
-    "name": "Bambu PETG Translucent",
+    "material": "PETG Translucent",
     "colorname": "Translucent Light Blue",
     "color": "#61B0FF",
     "distance": 74.9,
@@ -814,9 +666,7 @@
     "ean": "6975337035961"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PETG",
-    "name": "Bambu PETG Translucent",
+    "material": "PETG Translucent",
     "colorname": "Translucent Olive",
     "color": "#748C45",
     "distance": 101.3,
@@ -825,9 +675,7 @@
     "ean": "6975337039013"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PETG",
-    "name": "Bambu PETG Translucent",
+    "material": "PETG Translucent",
     "colorname": "Translucent Teal",
     "color": "#77EDD7",
     "distance": 71.6,
@@ -836,9 +684,7 @@
     "ean": "6975337035992"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PETG",
-    "name": "Bambu PETG Translucent",
+    "material": "PETG Translucent",
     "colorname": "Translucent Gray",
     "color": "#8E8E8E",
     "distance": 81.9,
@@ -847,9 +693,7 @@
     "ean": "6975337035954"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PETG",
-    "name": "Bambu PETG Translucent",
+    "material": "PETG Translucent",
     "colorname": "Translucent Gray",
     "color": "#8E8E8E",
     "distance": 81.9,
@@ -858,9 +702,7 @@
     "ean": "6975337039006"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PETG",
-    "name": "Bambu PETG Translucent",
+    "material": "PETG Translucent",
     "colorname": "Translucent Brown",
     "color": "#C9A381",
     "distance": 78.9,
@@ -869,9 +711,7 @@
     "ean": "6975337035985"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PETG",
-    "name": "Bambu PETG Translucent",
+    "material": "PETG Translucent",
     "colorname": "Translucent Brown",
     "color": "#C9A381",
     "distance": 78.9,
@@ -880,9 +720,7 @@
     "ean": "6975337038993"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PETG",
-    "name": "Bambu PETG Translucent",
+    "material": "PETG Translucent",
     "colorname": "Translucent Purple",
     "color": "#D6ABFF",
     "distance": 78.4,
@@ -891,9 +729,7 @@
     "ean": "6975337036104"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PETG",
-    "name": "Bambu PETG Translucent",
+    "material": "PETG Translucent",
     "colorname": "Translucent Purple",
     "color": "#D6ABFF",
     "distance": 78.4,
@@ -902,9 +738,7 @@
     "ean": "6975337039044"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PETG",
-    "name": "Bambu PETG Translucent",
+    "material": "PETG Translucent",
     "colorname": "Translucent Pink",
     "color": "#F9C1BD",
     "distance": 90.4,
@@ -913,9 +747,7 @@
     "ean": "6975337036098"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PETG",
-    "name": "Bambu PETG Translucent",
+    "material": "PETG Translucent",
     "colorname": "Translucent Orange",
     "color": "#FF911A",
     "distance": 98.3,
@@ -924,9 +756,7 @@
     "ean": "6975337036005"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PETG",
-    "name": "Bambu PETG Translucent",
+    "material": "PETG Translucent",
     "colorname": "Translucent Orange",
     "color": "#FF911A",
     "distance": 98.3,
@@ -935,9 +765,7 @@
     "ean": "6975337039051"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PETG",
-    "name": "Bambu PETG Translucent",
+    "material": "PETG Translucent",
     "colorname": "Clear",
     "color": "#FFFFFF",
     "distance": 101.5,
@@ -946,9 +774,7 @@
     "ean": "6975337038016"
   },
   {
-    "manufacturer": "BambuLab",
     "material": "PETG-CF",
-    "name": "Bambu PETG-CF",
     "colorname": "Black",
     "color": "#000000",
     "distance": 98.4,
@@ -957,9 +783,7 @@
     "ean": null
   },
   {
-    "manufacturer": "BambuLab",
     "material": "PETG-CF",
-    "name": "Bambu PETG-CF",
     "colorname": "Malachite Green",
     "color": "#16b08e",
     "distance": 67,
@@ -968,9 +792,7 @@
     "ean": null
   },
   {
-    "manufacturer": "BambuLab",
     "material": "PETG-CF",
-    "name": "Bambu PETG-CF",
     "colorname": "Indigo Blue",
     "color": "#324585",
     "distance": 26.1,
@@ -979,9 +801,7 @@
     "ean": null
   },
   {
-    "manufacturer": "BambuLab",
     "material": "PETG-CF",
-    "name": "Bambu PETG-CF",
     "colorname": "Titan Gray",
     "color": "#565656",
     "distance": 83.3,
@@ -990,9 +810,7 @@
     "ean": null
   },
   {
-    "manufacturer": "BambuLab",
     "material": "PETG-CF",
-    "name": "Bambu PETG-CF",
     "colorname": "Violet Purple",
     "color": "#583061",
     "distance": 39.7,
@@ -1001,9 +819,7 @@
     "ean": null
   },
   {
-    "manufacturer": "BambuLab",
     "material": "PETG-CF",
-    "name": "Bambu PETG-CF",
     "colorname": "Brick Red",
     "color": "#9f332a",
     "distance": 64.6,
@@ -1012,9 +828,7 @@
     "ean": null
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PLA-AERO",
-    "name": "Bambu PLA Aero",
+    "material": "PLA Aero",
     "colorname": "White",
     "color": "#F5F1DD",
     "distance": 101.9,
@@ -1023,9 +837,7 @@
     "ean": "6975337032588"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PLA-AERO",
-    "name": "Bambu PLA Aero",
+    "material": "PLA Aero",
     "colorname": "Gray",
     "color": "#CDCECA",
     "distance": 120.2,
@@ -1034,9 +846,7 @@
     "ean": null
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PLA-AERO",
-    "name": "Bambu PLA Aero",
+    "material": "PLA Aero",
     "colorname": "Black",
     "color": "#000000",
     "distance": 98.4,
@@ -1045,9 +855,7 @@
     "ean": "6975337032595"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PLA",
-    "name": "Bambu PLA Basic",
+    "material": "PLA Basic",
     "colorname": "Black",
     "color": "#000000",
     "distance": 98.4,
@@ -1056,9 +864,7 @@
     "ean": "6975337031383"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PLA",
-    "name": "Bambu PLA Basic",
+    "material": "PLA Basic",
     "colorname": "Black",
     "color": "#000000",
     "distance": 98.4,
@@ -1067,9 +873,7 @@
     "ean": "6975337031178"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PLA",
-    "name": "Bambu PLA Basic",
+    "material": "PLA Basic",
     "colorname": "Cobalt Blue",
     "color": "#0056B8",
     "distance": 69.9,
@@ -1078,9 +882,7 @@
     "ean": "6975337031406"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PLA",
-    "name": "Bambu PLA Basic",
+    "material": "PLA Basic",
     "colorname": "Cobalt Blue",
     "color": "#0056B8",
     "distance": 69.9,
@@ -1089,9 +891,7 @@
     "ean": "6975337032038"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PLA",
-    "name": "Bambu PLA Basic",
+    "material": "PLA Basic",
     "colorname": "Cyan",
     "color": "#0086D6",
     "distance": 70.2,
@@ -1100,9 +900,7 @@
     "ean": "6975337032052"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PLA",
-    "name": "Bambu PLA Basic",
+    "material": "PLA Basic",
     "colorname": "Bambu Green",
     "color": "#00AE42",
     "distance": 91.6,
@@ -1111,9 +909,7 @@
     "ean": "6975337031901"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PLA",
-    "name": "Bambu PLA Basic",
+    "material": "PLA Basic",
     "colorname": "Bambu Green",
     "color": "#00AE42",
     "distance": 91.6,
@@ -1122,9 +918,7 @@
     "ean": "6975337035817"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PLA",
-    "name": "Bambu PLA Basic",
+    "material": "PLA Basic",
     "colorname": "Turquoise",
     "color": "#00B1B7",
     "distance": 77.5,
@@ -1133,9 +927,7 @@
     "ean": null
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PLA",
-    "name": "Bambu PLA Basic",
+    "material": "PLA Basic",
     "colorname": "Blue",
     "color": "#0A2989",
     "distance": 60,
@@ -1144,9 +936,7 @@
     "ean": "6975337031406"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PLA",
-    "name": "Bambu PLA Basic",
+    "material": "PLA Basic",
     "colorname": "Blue",
     "color": "#0A2989",
     "distance": 60,
@@ -1155,9 +945,7 @@
     "ean": "6975337032342"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PLA",
-    "name": "Bambu PLA Basic",
+    "material": "PLA Basic",
     "colorname": "Blue",
     "color": "#0A2989",
     "distance": 60,
@@ -1166,9 +954,7 @@
     "ean": "6975337032038"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PLA",
-    "name": "Bambu PLA Basic",
+    "material": "PLA Basic",
     "colorname": "Blue",
     "color": "#0A2989",
     "distance": 60,
@@ -1177,9 +963,7 @@
     "ean": "6975337030232"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PLA",
-    "name": "Bambu PLA Basic",
+    "material": "PLA Basic",
     "colorname": "Mistletoe Green",
     "color": "#3F8E43",
     "distance": 77.2,
@@ -1188,9 +972,7 @@
     "ean": "6975337035787"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PLA",
-    "name": "Bambu PLA Basic",
+    "material": "PLA Basic",
     "colorname": "Indigo Purple",
     "color": "#482960",
     "distance": 34.1,
@@ -1199,9 +981,7 @@
     "ean": "6975337031932"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PLA",
-    "name": "Bambu PLA Basic",
+    "material": "PLA Basic",
     "colorname": "Indigo Purple",
     "color": "#482960",
     "distance": 34.1,
@@ -1210,9 +990,7 @@
     "ean": "6975337037378"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PLA",
-    "name": "Bambu PLA Basic",
+    "material": "PLA Basic",
     "colorname": "Dark Gray",
     "color": "#545454",
     "distance": 83.6,
@@ -1221,9 +999,7 @@
     "ean": null
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PLA",
-    "name": "Bambu PLA Basic",
+    "material": "PLA Basic",
     "colorname": "Blue Gray",
     "color": "#5B6579",
     "distance": 49.1,
@@ -1232,9 +1008,7 @@
     "ean": "6975337031406"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PLA",
-    "name": "Bambu PLA Basic",
+    "material": "PLA Basic",
     "colorname": "Blue Gray",
     "color": "#5B6579",
     "distance": 49.1,
@@ -1243,9 +1017,7 @@
     "ean": "6975337032038"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PLA",
-    "name": "Bambu PLA Basic",
+    "material": "PLA Basic",
     "colorname": "Blue Gray",
     "color": "#5B6579",
     "distance": 49.1,
@@ -1254,9 +1026,7 @@
     "ean": "6975337030232"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PLA",
-    "name": "Bambu PLA Basic",
+    "material": "PLA Basic",
     "colorname": "Purple",
     "color": "#5E43B7",
     "distance": 5.7,
@@ -1265,9 +1035,7 @@
     "ean": "6975337031932"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PLA",
-    "name": "Bambu PLA Basic",
+    "material": "PLA Basic",
     "colorname": "Purple",
     "color": "#5E43B7",
     "distance": 5.7,
@@ -1276,9 +1044,7 @@
     "ean": "6975337037378"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PLA",
-    "name": "Bambu PLA Basic",
+    "material": "PLA Basic",
     "colorname": "Cocoa Brown",
     "color": "#6F5034",
     "distance": 79.1,
@@ -1287,9 +1053,7 @@
     "ean": "6975337032373"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PLA",
-    "name": "Bambu PLA Basic",
+    "material": "PLA Basic",
     "colorname": "Bronze",
     "color": "#847D48",
     "distance": 91.7,
@@ -1298,9 +1062,7 @@
     "ean": "6975337031918"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PLA",
-    "name": "Bambu PLA Basic",
+    "material": "PLA Basic",
     "colorname": "Gray",
     "color": "#8E9089",
     "distance": 114.5,
@@ -1309,9 +1071,7 @@
     "ean": "6975337030232"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PLA",
-    "name": "Bambu PLA Basic",
+    "material": "PLA Basic",
     "colorname": "Maroon Red",
     "color": "#9D2235",
     "distance": 61.2,
@@ -1320,9 +1080,7 @@
     "ean": "6975337031413"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PLA",
-    "name": "Bambu PLA Basic",
+    "material": "PLA Basic",
     "colorname": "Maroon Red",
     "color": "#9D2235",
     "distance": 61.2,
@@ -1331,9 +1089,7 @@
     "ean": "6975337030270"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PLA",
-    "name": "Bambu PLA Basic",
+    "material": "PLA Basic",
     "colorname": "Brown",
     "color": "#9D432C",
     "distance": 67.8,
@@ -1342,9 +1098,7 @@
     "ean": "6975337032373"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PLA",
-    "name": "Bambu PLA Basic",
+    "material": "PLA Basic",
     "colorname": "Silver",
     "color": "#A6A9AA",
     "distance": 70.5,
@@ -1353,9 +1107,7 @@
     "ean": "6975337031390"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PLA",
-    "name": "Bambu PLA Basic",
+    "material": "PLA Basic",
     "colorname": "Silver",
     "color": "#A6A9AA",
     "distance": 70.5,
@@ -1364,9 +1116,7 @@
     "ean": "6975337030218"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PLA",
-    "name": "Bambu PLA Basic",
+    "material": "PLA Basic",
     "colorname": "Bright Green",
     "color": "#BECF00",
     "distance": 112.9,
@@ -1375,9 +1125,7 @@
     "ean": null
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PLA",
-    "name": "Bambu PLA Basic",
+    "material": "PLA Basic",
     "colorname": "Red",
     "color": "#C12E1F",
     "distance": 70.6,
@@ -1386,9 +1134,7 @@
     "ean": "6975337031413"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PLA",
-    "name": "Bambu PLA Basic",
+    "material": "PLA Basic",
     "colorname": "Red",
     "color": "#C12E1F",
     "distance": 70.6,
@@ -1397,9 +1143,7 @@
     "ean": "6975337030270"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PLA",
-    "name": "Bambu PLA Basic",
+    "material": "PLA Basic",
     "colorname": "Light Gray",
     "color": "#D1D3D5",
     "distance": 74.5,
@@ -1408,9 +1152,7 @@
     "ean": null
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PLA",
-    "name": "Bambu PLA Basic",
+    "material": "PLA Basic",
     "colorname": "Gold",
     "color": "#E4BD68",
     "distance": 90.9,
@@ -1419,9 +1161,7 @@
     "ean": "6975337031925"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PLA",
-    "name": "Bambu PLA Basic",
+    "material": "PLA Basic",
     "colorname": "Magenta",
     "color": "#EC008C",
     "distance": 72.8,
@@ -1430,9 +1170,7 @@
     "ean": "6975337032045"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PLA",
-    "name": "Bambu PLA Basic",
+    "material": "PLA Basic",
     "colorname": "Yellow",
     "color": "#F4EE2A",
     "distance": 105.6,
@@ -1441,9 +1179,7 @@
     "ean": "6975337031956"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PLA",
-    "name": "Bambu PLA Basic",
+    "material": "PLA Basic",
     "colorname": "Yellow",
     "color": "#F4EE2A",
     "distance": 105.6,
@@ -1452,9 +1188,7 @@
     "ean": "6975337030225"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PLA",
-    "name": "Bambu PLA Basic",
+    "material": "PLA Basic",
     "colorname": "Hot Pink",
     "color": "#F5547C",
     "distance": 76.6,
@@ -1463,9 +1197,7 @@
     "ean": "6975337032359"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PLA",
-    "name": "Bambu PLA Basic",
+    "material": "PLA Basic",
     "colorname": "Pink",
     "color": "#F55A74",
     "distance": 78.6,
@@ -1474,9 +1206,7 @@
     "ean": "6975337032359"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PLA",
-    "name": "Bambu PLA Basic",
+    "material": "PLA Basic",
     "colorname": "Beige",
     "color": "#F7E6DE",
     "distance": 90.3,
@@ -1485,9 +1215,7 @@
     "ean": "6975337032335"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PLA",
-    "name": "Bambu PLA Basic",
+    "material": "PLA Basic",
     "colorname": "Beige",
     "color": "#F7E6DE",
     "distance": 90.3,
@@ -1496,9 +1224,7 @@
     "ean": "6975337030201"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PLA",
-    "name": "Bambu PLA Basic",
+    "material": "PLA Basic",
     "colorname": "Sunflower Yellow",
     "color": "#FEC600",
     "distance": 104.2,
@@ -1507,9 +1233,7 @@
     "ean": "6975337031956"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PLA",
-    "name": "Bambu PLA Basic",
+    "material": "PLA Basic",
     "colorname": "Sunflower Yellow",
     "color": "#FEC600",
     "distance": 104.2,
@@ -1518,9 +1242,7 @@
     "ean": "6975337030225"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PLA",
-    "name": "Bambu PLA Basic",
+    "material": "PLA Basic",
     "colorname": "Orange",
     "color": "#FF6A13",
     "distance": 94.3,
@@ -1529,9 +1251,7 @@
     "ean": "6975337032311"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PLA",
-    "name": "Bambu PLA Basic",
+    "material": "PLA Basic",
     "colorname": "Orange",
     "color": "#FF6A13",
     "distance": 94.3,
@@ -1540,9 +1260,7 @@
     "ean": "6975337030898"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PLA",
-    "name": "Bambu PLA Basic",
+    "material": "PLA Basic",
     "colorname": "Pumpkin Orange",
     "color": "#FF9016",
     "distance": 98.3,
@@ -1551,9 +1269,7 @@
     "ean": "6975337032311"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PLA",
-    "name": "Bambu PLA Basic",
+    "material": "PLA Basic",
     "colorname": "Pumpkin Orange",
     "color": "#FF9016",
     "distance": 98.3,
@@ -1562,9 +1278,7 @@
     "ean": "6975337030898"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PLA",
-    "name": "Bambu PLA Basic",
+    "material": "PLA Basic",
     "colorname": "Jade White",
     "color": "#FFFFFF",
     "distance": 101.5,
@@ -1573,9 +1287,7 @@
     "ean": "6975337031024"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PLA",
-    "name": "Bambu PLA Basic",
+    "material": "PLA Basic",
     "colorname": "Jade White",
     "color": "#FFFFFF",
     "distance": 101.5,
@@ -1584,9 +1296,7 @@
     "ean": "6975337030164"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PLA",
-    "name": "Bambu PLA Marble",
+    "material": "PLA Marble",
     "colorname": "Red Granite",
     "color": "#AD4E38",
     "distance": 64.4,
@@ -1595,9 +1305,7 @@
     "ean": null
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PLA",
-    "name": "Bambu PLA Marble",
+    "material": "PLA Marble",
     "colorname": "White Marble",
     "color": "#F7F3F0",
     "distance": 95.5,
@@ -1606,9 +1314,7 @@
     "ean": null
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PLA",
-    "name": "Bambu PLA Matte",
+    "material": "PLA Matte",
     "colorname": "Charcoal",
     "color": "#000000",
     "distance": 98.4,
@@ -1617,9 +1323,7 @@
     "ean": "6975337031338"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PLA",
-    "name": "Bambu PLA Matte",
+    "material": "PLA Matte",
     "colorname": "Charcoal",
     "color": "#000000",
     "distance": 98.4,
@@ -1628,9 +1332,7 @@
     "ean": "6975337030102"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PLA",
-    "name": "Bambu PLA Matte",
+    "material": "PLA Matte",
     "colorname": "Marine Blue",
     "color": "#0078BF",
     "distance": 71.6,
@@ -1639,9 +1341,7 @@
     "ean": "6975337031369"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PLA",
-    "name": "Bambu PLA Matte",
+    "material": "PLA Matte",
     "colorname": "Marine Blue",
     "color": "#0078BF",
     "distance": 71.6,
@@ -1650,9 +1350,7 @@
     "ean": "6975337030089"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PLA",
-    "name": "Bambu PLA Matte",
+    "material": "PLA Matte",
     "colorname": "Dark Blue",
     "color": "#042F56",
     "distance": 72.7,
@@ -1661,9 +1359,7 @@
     "ean": "6975337031871"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PLA",
-    "name": "Bambu PLA Matte",
+    "material": "PLA Matte",
     "colorname": "Dark Blue",
     "color": "#042F56",
     "distance": 72.7,
@@ -1672,9 +1368,7 @@
     "ean": "6975337037347"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PLA",
-    "name": "Bambu PLA Matte",
+    "material": "PLA Matte",
     "colorname": "Grass Green",
     "color": "#61C680",
     "distance": 68.6,
@@ -1683,9 +1377,7 @@
     "ean": "6975337032410"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PLA",
-    "name": "Bambu PLA Matte",
+    "material": "PLA Matte",
     "colorname": "Grass Green",
     "color": "#61C680",
     "distance": 68.6,
@@ -1694,9 +1386,7 @@
     "ean": "6975337030119"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PLA",
-    "name": "Bambu PLA Matte",
+    "material": "PLA Matte",
     "colorname": "Dark Green",
     "color": "#68724D",
     "distance": 107.8,
@@ -1705,9 +1395,7 @@
     "ean": "6975337031864"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PLA",
-    "name": "Bambu PLA Matte",
+    "material": "PLA Matte",
     "colorname": "Dark Green",
     "color": "#68724D",
     "distance": 107.8,
@@ -1716,9 +1404,7 @@
     "ean": "6975337037330"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PLA",
-    "name": "Bambu PLA Matte",
+    "material": "PLA Matte",
     "colorname": "Dark Brown",
     "color": "#7D6556",
     "distance": 80.8,
@@ -1727,9 +1413,7 @@
     "ean": "6975337031895"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PLA",
-    "name": "Bambu PLA Matte",
+    "material": "PLA Matte",
     "colorname": "Dark Brown",
     "color": "#7D6556",
     "distance": 80.8,
@@ -1738,9 +1422,7 @@
     "ean": "6975337037316"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PLA",
-    "name": "Bambu PLA Matte",
+    "material": "PLA Matte",
     "colorname": "Ash Gray",
     "color": "#9B9EA0",
     "distance": 66.1,
@@ -1749,9 +1431,7 @@
     "ean": null
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PLA",
-    "name": "Bambu PLA Matte",
+    "material": "PLA Matte",
     "colorname": "Ice Blue",
     "color": "#A3D8E1",
     "distance": 55.6,
@@ -1760,9 +1440,7 @@
     "ean": "6975337031857"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PLA",
-    "name": "Bambu PLA Matte",
+    "material": "PLA Matte",
     "colorname": "Ice Blue",
     "color": "#A3D8E1",
     "distance": 55.6,
@@ -1771,9 +1449,7 @@
     "ean": "6975337030140"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PLA",
-    "name": "Bambu PLA Matte",
+    "material": "PLA Matte",
     "colorname": "Lilac Purple",
     "color": "#AE96D4",
     "distance": 35.9,
@@ -1782,9 +1458,7 @@
     "ean": "6975337032434"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PLA",
-    "name": "Bambu PLA Matte",
+    "material": "PLA Matte",
     "colorname": "Lilac Purple",
     "color": "#AE96D4",
     "distance": 35.9,
@@ -1793,9 +1467,7 @@
     "ean": "6975337030157"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PLA",
-    "name": "Bambu PLA Matte",
+    "material": "PLA Matte",
     "colorname": "Dark Red",
     "color": "#BB3D43",
     "distance": 56.5,
@@ -1804,9 +1476,7 @@
     "ean": "6975337031888"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PLA",
-    "name": "Bambu PLA Matte",
+    "material": "PLA Matte",
     "colorname": "Dark Red",
     "color": "#BB3D43",
     "distance": 56.5,
@@ -1815,9 +1485,7 @@
     "ean": "6975337037323"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PLA",
-    "name": "Bambu PLA Matte",
+    "material": "PLA Matte",
     "colorname": "Latte Brown",
     "color": "#D3B7A7",
     "distance": 81.8,
@@ -1826,9 +1494,7 @@
     "ean": "6975337030126"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PLA",
-    "name": "Bambu PLA Matte",
+    "material": "PLA Matte",
     "colorname": "Scarlet Red",
     "color": "#DE4343",
     "distance": 68.6,
@@ -1837,9 +1503,7 @@
     "ean": "6975337031376"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PLA",
-    "name": "Bambu PLA Matte",
+    "material": "PLA Matte",
     "colorname": "Scarlet Red",
     "color": "#DE4343",
     "distance": 68.6,
@@ -1848,9 +1512,7 @@
     "ean": "6975337030133"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PLA",
-    "name": "Bambu PLA Matte",
+    "material": "PLA Matte",
     "colorname": "Sakura Pink",
     "color": "#E8AFCF",
     "distance": 60.1,
@@ -1859,9 +1521,7 @@
     "ean": "6975337032397"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PLA",
-    "name": "Bambu PLA Matte",
+    "material": "PLA Matte",
     "colorname": "Sakura Pink",
     "color": "#E8AFCF",
     "distance": 60.1,
@@ -1870,9 +1530,7 @@
     "ean": "6975337030072"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PLA",
-    "name": "Bambu PLA Matte",
+    "material": "PLA Matte",
     "colorname": "Desert Tan",
     "color": "#E8DBB7",
     "distance": 93.7,
@@ -1881,9 +1539,7 @@
     "ean": "6975337035053"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PLA",
-    "name": "Bambu PLA Matte",
+    "material": "PLA Matte",
     "colorname": "Desert Tan",
     "color": "#E8DBB7",
     "distance": 93.7,
@@ -1892,9 +1548,7 @@
     "ean": "6975337038177"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PLA",
-    "name": "Bambu PLA Matte",
+    "material": "PLA Matte",
     "colorname": "Lemon Yellow",
     "color": "#F7D959",
     "distance": 104.1,
@@ -1903,9 +1557,7 @@
     "ean": "6975337032403"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PLA",
-    "name": "Bambu PLA Matte",
+    "material": "PLA Matte",
     "colorname": "Lemon Yellow",
     "color": "#F7D959",
     "distance": 104.1,
@@ -1914,9 +1566,7 @@
     "ean": "6975337030096"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PLA",
-    "name": "Bambu PLA Matte",
+    "material": "PLA Matte",
     "colorname": "Mandarin Orange",
     "color": "#F99963",
     "distance": 94.2,
@@ -1925,9 +1575,7 @@
     "ean": "6975337032380"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PLA",
-    "name": "Bambu PLA Matte",
+    "material": "PLA Matte",
     "colorname": "Mandarin Orange",
     "color": "#F99963",
     "distance": 94.2,
@@ -1936,9 +1584,7 @@
     "ean": "6975337030065"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PLA",
-    "name": "Bambu PLA Matte",
+    "material": "PLA Matte",
     "colorname": "Ivory White",
     "color": "#FFFFFF",
     "distance": 101.5,
@@ -1947,9 +1593,7 @@
     "ean": "6975337031345"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PLA",
-    "name": "Bambu PLA Matte",
+    "material": "PLA Matte",
     "colorname": "Ivory White",
     "color": "#FFFFFF",
     "distance": 101.5,
@@ -1958,9 +1602,7 @@
     "ean": "6975337030041"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PLA",
-    "name": "Bambu PLA Matte",
+    "material": "PLA Matte",
     "colorname": "Bone White",
     "color": "#CBC6B8",
     "distance": 99.8,
@@ -1969,9 +1611,7 @@
     "ean": "6977252427012"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PLA",
-    "name": "Bambu PLA Matte",
+    "material": "PLA Matte",
     "colorname": "Caramel",
     "color": "#AE835B",
     "distance": 77,
@@ -1980,9 +1620,7 @@
     "ean": "6977252427814"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PLA",
-    "name": "Bambu PLA Matte",
+    "material": "PLA Matte",
     "colorname": "Terracotta",
     "color": "#B15533",
     "distance": 68.3,
@@ -1991,9 +1629,7 @@
     "ean": "6977252428194"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PLA",
-    "name": "Bambu PLA Matte",
+    "material": "PLA Matte",
     "colorname": "Nardo Gray",
     "color": "#757575",
     "distance": 80.4,
@@ -2002,9 +1638,7 @@
     "ean": "6977252428200"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PLA",
-    "name": "Bambu PLA Matte",
+    "material": "PLA Matte",
     "colorname": "Plum",
     "color": "#950051",
     "distance": 78.6,
@@ -2013,9 +1647,7 @@
     "ean": "6977252427500"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PLA",
-    "name": "Bambu PLA Matte",
+    "material": "PLA Matte",
     "colorname": "Dark Chocolate",
     "color": "#4D3324",
     "distance": 79.9,
@@ -2024,9 +1656,7 @@
     "ean": "6977252427531"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PLA",
-    "name": "Bambu PLA Matte",
+    "material": "PLA Matte",
     "colorname": "Apple Green",
     "color": "#C2E189",
     "distance": 105.8,
@@ -2035,9 +1665,7 @@
     "ean": "6977252427524"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PLA",
-    "name": "Bambu PLA Matte",
+    "material": "PLA Matte",
     "colorname": "Sky Blue",
     "color": "#56B7E6",
     "distance": 55.2,
@@ -2046,9 +1674,7 @@
     "ean": "6977252427517"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PLA",
-    "name": "Bambu PLA Metal",
+    "material": "PLA Metal",
     "colorname": "Oxide Green Metallic",
     "color": "#1D7C6A",
     "distance": 61.1,
@@ -2057,9 +1683,7 @@
     "ean": "6975337030324"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PLA",
-    "name": "Bambu PLA Metal",
+    "material": "PLA Metal",
     "colorname": "Cobalt Blue Metallic",
     "color": "#39699E",
     "distance": 27.5,
@@ -2068,9 +1692,7 @@
     "ean": "6975337030317"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PLA",
-    "name": "Bambu PLA Metal",
+    "material": "PLA Metal",
     "colorname": "Iron Gray Metallic",
     "color": "#43403D",
     "distance": 95.9,
@@ -2079,9 +1701,7 @@
     "ean": "6975337032090"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PLA",
-    "name": "Bambu PLA Metal",
+    "material": "PLA Metal",
     "colorname": "Copper Brown Metallic",
     "color": "#AA6443",
     "distance": 68.3,
@@ -2090,9 +1710,7 @@
     "ean": "6975337032106"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PLA",
-    "name": "Bambu PLA Metal",
+    "material": "PLA Metal",
     "colorname": "Iridium Gold Metallic",
     "color": "#B39B84",
     "distance": 83.8,
@@ -2101,9 +1719,7 @@
     "ean": "6975337030294"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PLA",
-    "name": "Bambu PLA Silk+",
+    "material": "PLA Silk+",
     "colorname": "Blue",
     "color": "#008BDA",
     "distance": 70.2,
@@ -2112,9 +1728,7 @@
     "ean": null
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PLA",
-    "name": "Bambu PLA Silk+",
+    "material": "PLA Silk+",
     "colorname": "Candy Green",
     "color": "#018814",
     "distance": 98.8,
@@ -2123,9 +1737,7 @@
     "ean": null
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PLA",
-    "name": "Bambu PLA Silk+",
+    "material": "PLA Silk+",
     "colorname": "Titan Gray",
     "color": "#5F6367",
     "distance": 60.9,
@@ -2134,9 +1746,7 @@
     "ean": null
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PLA",
-    "name": "Bambu PLA Silk+",
+    "material": "PLA Silk+",
     "colorname": "Purple",
     "color": "#8671CB",
     "distance": 24.1,
@@ -2145,9 +1755,7 @@
     "ean": null
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PLA",
-    "name": "Bambu PLA Silk+",
+    "material": "PLA Silk+",
     "colorname": "Mint",
     "color": "#96DCB9",
     "distance": 69.9,
@@ -2156,9 +1764,7 @@
     "ean": null
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PLA",
-    "name": "Bambu PLA Silk+",
+    "material": "PLA Silk+",
     "colorname": "Baby Blue",
     "color": "#A8C6EE",
     "distance": 58,
@@ -2167,9 +1773,7 @@
     "ean": null
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PLA",
-    "name": "Bambu PLA Silk+",
+    "material": "PLA Silk+",
     "colorname": "Rose Gold",
     "color": "#BA9594",
     "distance": 73.6,
@@ -2178,9 +1782,7 @@
     "ean": null
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PLA",
-    "name": "Bambu PLA Silk+",
+    "material": "PLA Silk+",
     "colorname": "Silver",
     "color": "#C8C8C8",
     "distance": 90.6,
@@ -2189,9 +1791,7 @@
     "ean": null
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PLA",
-    "name": "Bambu PLA Silk+",
+    "material": "PLA Silk+",
     "colorname": "Candy Red",
     "color": "#D02727",
     "distance": 65.5,
@@ -2200,9 +1800,7 @@
     "ean": null
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PLA",
-    "name": "Bambu PLA Silk+",
+    "material": "PLA Silk+",
     "colorname": "Champagne",
     "color": "#F3CFB2",
     "distance": 93,
@@ -2211,9 +1809,7 @@
     "ean": null
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PLA",
-    "name": "Bambu PLA Silk+",
+    "material": "PLA Silk+",
     "colorname": "Gold",
     "color": "#F4A925",
     "distance": 96.3,
@@ -2222,9 +1818,7 @@
     "ean": null
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PLA",
-    "name": "Bambu PLA Silk+",
+    "material": "PLA Silk+",
     "colorname": "Pink",
     "color": "#F7ADA6",
     "distance": 88.4,
@@ -2233,9 +1827,7 @@
     "ean": null
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PLA",
-    "name": "Bambu PLA Silk+",
+    "material": "PLA Silk+",
     "colorname": "White",
     "color": "#FFFFFF",
     "distance": 101.5,
@@ -2244,9 +1836,7 @@
     "ean": null
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PLA",
-    "name": "Bambu PLA Wood",
+    "material": "PLA Wood",
     "colorname": "Rosewood",
     "color": "#4C241C",
     "distance": 72.9,
@@ -2255,9 +1845,7 @@
     "ean": null
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PLA",
-    "name": "Bambu PLA Wood",
+    "material": "PLA Wood",
     "colorname": "Black Walnut",
     "color": "#4F3F24",
     "distance": 87.1,
@@ -2266,9 +1854,7 @@
     "ean": "6977252424769"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PLA",
-    "name": "Bambu PLA Wood",
+    "material": "PLA Wood",
     "colorname": "Classic Birch",
     "color": "#918669",
     "distance": 91.3,
@@ -2277,9 +1863,7 @@
     "ean": "6977252424752"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PLA",
-    "name": "Bambu PLA Wood",
+    "material": "PLA Wood",
     "colorname": "Clay Brown",
     "color": "#995F11",
     "distance": 90.8,
@@ -2288,9 +1872,7 @@
     "ean": null
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PLA",
-    "name": "Bambu PLA Wood",
+    "material": "PLA Wood",
     "colorname": "Ochre Yellow",
     "color": "#C98935",
     "distance": 78.9,
@@ -2299,9 +1881,7 @@
     "ean": "6977252424660"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PLA",
-    "name": "Bambu PLA Wood",
+    "material": "PLA Wood",
     "colorname": "White Oak",
     "color": "#D6CCA3",
     "distance": 93.2,
@@ -2310,9 +1890,7 @@
     "ean": "6977252424745"
   },
   {
-    "manufacturer": "BambuLab",
     "material": "PLA-CF",
-    "name": "Bambu PLA-CF",
     "colorname": "Black",
     "color": "#000000",
     "distance": 98.4,
@@ -2321,9 +1899,7 @@
     "ean": "6975337031758"
   },
   {
-    "manufacturer": "BambuLab",
     "material": "PLA-CF",
-    "name": "Bambu PLA-CF",
     "colorname": "Royal Blue",
     "color": "#2842AD",
     "distance": 31.7,
@@ -2332,9 +1908,7 @@
     "ean": "6975337033400"
   },
   {
-    "manufacturer": "BambuLab",
     "material": "PLA-CF",
-    "name": "Bambu PLA-CF",
     "colorname": "Lava Gray",
     "color": "#4d5054",
     "distance": 62.7,
@@ -2343,9 +1917,7 @@
     "ean": null
   },
   {
-    "manufacturer": "BambuLab",
     "material": "PLA-CF",
-    "name": "Bambu PLA-CF",
     "colorname": "Matcha Green",
     "color": "#5c9748",
     "distance": 87.2,
@@ -2354,9 +1926,7 @@
     "ean": "6975337032465"
   },
   {
-    "manufacturer": "BambuLab",
     "material": "PLA-CF",
-    "name": "Bambu PLA-CF",
     "colorname": "Iris Purple",
     "color": "#69398E",
     "distance": 19.8,
@@ -2365,9 +1935,7 @@
     "ean": null
   },
   {
-    "manufacturer": "BambuLab",
     "material": "PLA-CF",
-    "name": "Bambu PLA-CF",
     "colorname": "Jeans Blue",
     "color": "#6e88bc",
     "distance": 33.5,
@@ -2376,9 +1944,7 @@
     "ean": "6975337032472"
   },
   {
-    "manufacturer": "BambuLab",
     "material": "PLA-CF",
-    "name": "Bambu PLA-CF",
     "colorname": "Burgundy Red",
     "color": "#951e23",
     "distance": 66.4,
@@ -2387,9 +1953,7 @@
     "ean": "6975337032458"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "TPU-AMS",
-    "name": "Bambu TPU for AMS",
+    "material": "TPU 68D for AMS",
     "colorname": "Black",
     "color": "#000000",
     "distance": 98.4,
@@ -2398,9 +1962,7 @@
     "ean": null
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "TPU-AMS",
-    "name": "Bambu TPU for AMS",
+    "material": "TPU 68D for AMS",
     "colorname": "Blue",
     "color": "#5898DD",
     "distance": 44.9,
@@ -2409,9 +1971,7 @@
     "ean": null
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "TPU-AMS",
-    "name": "Bambu TPU for AMS",
+    "material": "TPU 68D for AMS",
     "colorname": "Neon Green",
     "color": "#90FF1A",
     "distance": 113.3,
@@ -2420,9 +1980,7 @@
     "ean": null
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "TPU-AMS",
-    "name": "Bambu TPU for AMS",
+    "material": "TPU 68D for AMS",
     "colorname": "Gray",
     "color": "#939393",
     "distance": 82.4,
@@ -2431,9 +1989,7 @@
     "ean": null
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "TPU-AMS",
-    "name": "Bambu TPU for AMS",
+    "material": "TPU 68D for AMS",
     "colorname": "Red",
     "color": "#ED0000",
     "distance": 84.6,
@@ -2442,9 +1998,7 @@
     "ean": null
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "TPU-AMS",
-    "name": "Bambu TPU for AMS",
+    "material": "TPU 68D for AMS",
     "colorname": "Yellow",
     "color": "#F9EF41",
     "distance": 108,
@@ -2453,9 +2007,7 @@
     "ean": null
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "TPU-AMS",
-    "name": "Bambu TPU for AMS",
+    "material": "TPU 68D for AMS",
     "colorname": "White",
     "color": "#FFFFFF",
     "distance": 101.5,
@@ -2464,9 +2016,7 @@
     "ean": null
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "TPU",
-    "name": "Bambu TPU 95A HF",
+    "material": "TPU 95A HF",
     "colorname": "Blue",
     "color": "#0072CE",
     "distance": 69.6,
@@ -2475,9 +2025,7 @@
     "ean": "6975337033486"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "TPU",
-    "name": "Bambu TPU 95A HF",
+    "material": "TPU 95A HF",
     "colorname": "Black",
     "color": "#101820",
     "distance": 59,
@@ -2486,9 +2034,7 @@
     "ean": "6975337033493"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "TPU",
-    "name": "Bambu TPU 95A HF",
+    "material": "TPU 95A HF",
     "colorname": "Gray",
     "color": "#898D8D",
     "distance": 71.1,
@@ -2497,9 +2043,7 @@
     "ean": null
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "TPU",
-    "name": "Bambu TPU 95A HF",
+    "material": "TPU 95A HF",
     "colorname": "Red",
     "color": "#C8102E",
     "distance": 71.9,
@@ -2508,9 +2052,7 @@
     "ean": "6975337034858"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "TPU",
-    "name": "Bambu TPU 95A HF",
+    "material": "TPU 95A HF",
     "colorname": "Yellow",
     "color": "#F3E600",
     "distance": 108.5,
@@ -2519,9 +2061,7 @@
     "ean": "6975337033479"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "TPU",
-    "name": "Bambu TPU 95A HF",
+    "material": "TPU 95A HF",
     "colorname": "White",
     "color": "#FFFFFF",
     "distance": 101.5,
@@ -2530,9 +2070,7 @@
     "ean": "6975337034865"
   },
   {
-    "manufacturer": "BambuLab",
     "material": "PC",
-    "name": "Bambu PC",
     "colorname": "Transparent",
     "color": "#FFFFFF",
     "distance": 101.5,
@@ -2541,9 +2079,7 @@
     "ean": "6975337032199"
   },
   {
-    "manufacturer": "BambuLab",
     "material": "PC",
-    "name": "Bambu PC",
     "colorname": "Clear Black",
     "color": "#000000",
     "distance": 98.4,
@@ -2552,9 +2088,7 @@
     "ean": "6975337032205"
   },
   {
-    "manufacturer": "BambuLab",
     "material": "PC",
-    "name": "Bambu PC",
     "colorname": "Clear Black",
     "color": "#000000",
     "distance": 98.4,
@@ -2563,9 +2097,7 @@
     "ean": "6975337031086"
   },
   {
-    "manufacturer": "BambuLab",
     "material": "PC",
-    "name": "Bambu PC",
     "colorname": "Black",
     "color": "#000000",
     "distance": 98.4,
@@ -2574,9 +2106,7 @@
     "ean": "6975337032205"
   },
   {
-    "manufacturer": "BambuLab",
     "material": "PC",
-    "name": "Bambu PC",
     "colorname": "Black",
     "color": "#000000",
     "distance": 98.4,
@@ -2585,9 +2115,7 @@
     "ean": "6975337031086"
   },
   {
-    "manufacturer": "BambuLab",
     "material": "PC",
-    "name": "Bambu PC",
     "colorname": "White",
     "color": "#FFFFFF",
     "distance": 101.5,
@@ -2596,9 +2124,7 @@
     "ean": "6975337031093"
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PC",
-    "name": "Bambu PC FR",
+    "material": "PC-FR",
     "colorname": "Black",
     "color": "#000000",
     "distance": 98.4,
@@ -2607,9 +2133,7 @@
     "ean": null
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PC",
-    "name": "Bambu PC FR",
+    "material": "PC-FR",
     "colorname": "White",
     "color": "#FFFFFF",
     "distance": 101.5,
@@ -2618,9 +2142,7 @@
     "ean": null
   },
   {
-    "manufacturer": "BambuLab",
-    "material": "PC",
-    "name": "Bambu PC FR",
+    "material": "PC-FR",
     "colorname": "Gray",
     "color": "#A8A8AA",
     "distance": 63.3,
@@ -2629,9 +2151,7 @@
     "ean": null
   },
   {
-    "manufacturer": "BambuLab",
     "material": "PPS-CF",
-    "name": "Bambu PPS-CF",
     "colorname": "Black",
     "color": "#000000",
     "distance": 98.4,

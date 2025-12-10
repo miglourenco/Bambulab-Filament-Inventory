@@ -441,8 +441,8 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "ASA-AERO",
-    "name": "Bambu ASA-Aero",
+    "material": "ASA Aero",
+    "name": "Bambu ASA Aero",
     "colorname": "White",
     "color": "#F5F1DD",
     "distance": 101.9,
@@ -463,7 +463,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PA-GF",
+    "material": "PA6-GF",
     "name": "Bambu PA6-GF",
     "colorname": "Black",
     "color": "#000000",
@@ -474,7 +474,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PA-GF",
+    "material": "PA6-GF",
     "name": "Bambu PA6-GF",
     "colorname": "Gray",
     "color": "#353533",
@@ -485,7 +485,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PA-GF",
+    "material": "PA6-GF",
     "name": "Bambu PA6-GF",
     "colorname": "Brown",
     "color": "#5B492F",
@@ -496,7 +496,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PA-GF",
+    "material": "PA6-GF",
     "name": "Bambu PA6-GF",
     "colorname": "Blue",
     "color": "#75AED8",
@@ -507,7 +507,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PA-GF",
+    "material": "PA6-GF",
     "name": "Bambu PA6-GF",
     "colorname": "Lime",
     "color": "#C5ED48",
@@ -518,7 +518,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PA-GF",
+    "material": "PA6-GF",
     "name": "Bambu PA6-GF",
     "colorname": "White",
     "color": "#EAEAE4",
@@ -529,7 +529,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PA-GF",
+    "material": "PA6-GF",
     "name": "Bambu PA6-GF",
     "colorname": "Orange",
     "color": "#FF4800",
@@ -540,7 +540,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PA-GF",
+    "material": "PA6-GF",
     "name": "Bambu PA6-GF",
     "colorname": "Yellow",
     "color": "#FFCE00",
@@ -562,7 +562,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PA-CF",
+    "material": "PAHT-CF",
     "name": "Bambu PAHT-CF",
     "colorname": "Black",
     "color": "#000000",
@@ -595,7 +595,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PETG",
+    "material": "PETG HF",
     "name": "Bambu PETG HF",
     "colorname": "Black",
     "color": "#000000",
@@ -606,7 +606,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PETG",
+    "material": "PETG HF",
     "name": "Bambu PETG HF",
     "colorname": "Black",
     "color": "#000000",
@@ -617,7 +617,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PETG",
+    "material": "PETG HF",
     "name": "Bambu PETG HF",
     "colorname": "Blue",
     "color": "#002E96",
@@ -628,7 +628,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PETG",
+    "material": "PETG HF",
     "name": "Bambu PETG HF",
     "colorname": "Blue",
     "color": "#002E96",
@@ -639,7 +639,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PETG",
+    "material": "PETG HF",
     "name": "Bambu PETG HF",
     "colorname": "Green",
     "color": "#00AE42",
@@ -650,7 +650,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PETG",
+    "material": "PETG HF",
     "name": "Bambu PETG HF",
     "colorname": "Green",
     "color": "#00AE42",
@@ -661,7 +661,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PETG",
+    "material": "PETG HF",
     "name": "Bambu PETG HF",
     "colorname": "Lake Blue",
     "color": "#1F79E5",
@@ -672,7 +672,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PETG",
+    "material": "PETG HF",
     "name": "Bambu PETG HF",
     "colorname": "Lake Blue",
     "color": "#1F79E5",
@@ -683,7 +683,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PETG",
+    "material": "PETG HF",
     "name": "Bambu PETG HF",
     "colorname": "Forest Green",
     "color": "#39541A",
@@ -694,7 +694,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PETG",
+    "material": "PETG HF",
     "name": "Bambu PETG HF",
     "colorname": "Dark Gray",
     "color": "#515151",
@@ -705,7 +705,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PETG",
+    "material": "PETG HF",
     "name": "Bambu PETG HF",
     "colorname": "Lime Green",
     "color": "#6EE53C",
@@ -716,7 +716,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PETG",
+    "material": "PETG HF",
     "name": "Bambu PETG HF",
     "colorname": "Peanut Brown",
     "color": "#875718",
@@ -727,7 +727,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PETG",
+    "material": "PETG HF",
     "name": "Bambu PETG HF",
     "colorname": "Gray",
     "color": "#ADB1B2",
@@ -738,7 +738,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PETG",
+    "material": "PETG HF",
     "name": "Bambu PETG HF",
     "colorname": "Red",
     "color": "#EB3A3A",
@@ -749,7 +749,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PETG",
+    "material": "PETG HF",
     "name": "Bambu PETG HF",
     "colorname": "Red",
     "color": "#EB3A3A",
@@ -760,7 +760,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PETG",
+    "material": "PETG HF",
     "name": "Bambu PETG HF",
     "colorname": "Orange",
     "color": "#F75403",
@@ -771,7 +771,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PETG",
+    "material": "PETG HF",
     "name": "Bambu PETG HF",
     "colorname": "Cream",
     "color": "#F9DFB9",
@@ -782,7 +782,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PETG",
+    "material": "PETG HF",
     "name": "Bambu PETG HF",
     "colorname": "Yellow",
     "color": "#FFD00B",
@@ -793,7 +793,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PETG",
+    "material": "PETG HF",
     "name": "Bambu PETG HF",
     "colorname": "White",
     "color": "#FFFFFF",
@@ -804,7 +804,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PETG",
+    "material": "PETG Translucent",
     "name": "Bambu PETG Translucent",
     "colorname": "Translucent Light Blue",
     "color": "#61B0FF",
@@ -815,7 +815,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PETG",
+    "material": "PETG Translucent",
     "name": "Bambu PETG Translucent",
     "colorname": "Translucent Olive",
     "color": "#748C45",
@@ -826,7 +826,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PETG",
+    "material": "PETG Translucent",
     "name": "Bambu PETG Translucent",
     "colorname": "Translucent Teal",
     "color": "#77EDD7",
@@ -837,7 +837,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PETG",
+    "material": "PETG Translucent",
     "name": "Bambu PETG Translucent",
     "colorname": "Translucent Gray",
     "color": "#8E8E8E",
@@ -848,7 +848,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PETG",
+    "material": "PETG Translucent",
     "name": "Bambu PETG Translucent",
     "colorname": "Translucent Gray",
     "color": "#8E8E8E",
@@ -859,7 +859,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PETG",
+    "material": "PETG Translucent",
     "name": "Bambu PETG Translucent",
     "colorname": "Translucent Brown",
     "color": "#C9A381",
@@ -870,7 +870,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PETG",
+    "material": "PETG Translucent",
     "name": "Bambu PETG Translucent",
     "colorname": "Translucent Brown",
     "color": "#C9A381",
@@ -881,7 +881,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PETG",
+    "material": "PETG Translucent",
     "name": "Bambu PETG Translucent",
     "colorname": "Translucent Purple",
     "color": "#D6ABFF",
@@ -892,7 +892,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PETG",
+    "material": "PETG Translucent",
     "name": "Bambu PETG Translucent",
     "colorname": "Translucent Purple",
     "color": "#D6ABFF",
@@ -903,7 +903,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PETG",
+    "material": "PETG Translucent",
     "name": "Bambu PETG Translucent",
     "colorname": "Translucent Pink",
     "color": "#F9C1BD",
@@ -914,7 +914,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PETG",
+    "material": "PETG Translucent",
     "name": "Bambu PETG Translucent",
     "colorname": "Translucent Orange",
     "color": "#FF911A",
@@ -925,7 +925,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PETG",
+    "material": "PETG Translucent",
     "name": "Bambu PETG Translucent",
     "colorname": "Translucent Orange",
     "color": "#FF911A",
@@ -936,7 +936,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PETG",
+    "material": "PETG Translucent",
     "name": "Bambu PETG Translucent",
     "colorname": "Clear",
     "color": "#FFFFFF",
@@ -1013,7 +1013,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PLA-AERO",
+    "material": "PLA Aero",
     "name": "Bambu PLA Aero",
     "colorname": "White",
     "color": "#F5F1DD",
@@ -1024,7 +1024,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PLA-AERO",
+    "material": "PLA Aero",
     "name": "Bambu PLA Aero",
     "colorname": "Gray",
     "color": "#CDCECA",
@@ -1035,7 +1035,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PLA-AERO",
+    "material": "PLA Aero",
     "name": "Bambu PLA Aero",
     "colorname": "Black",
     "color": "#000000",
@@ -1046,7 +1046,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PLA",
+    "material": "PLA Basic",
     "name": "Bambu PLA Basic",
     "colorname": "Black",
     "color": "#000000",
@@ -1057,7 +1057,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PLA",
+    "material": "PLA Basic",
     "name": "Bambu PLA Basic",
     "colorname": "Black",
     "color": "#000000",
@@ -1068,7 +1068,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PLA",
+    "material": "PLA Basic",
     "name": "Bambu PLA Basic",
     "colorname": "Cobalt Blue",
     "color": "#0056B8",
@@ -1079,7 +1079,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PLA",
+    "material": "PLA Basic",
     "name": "Bambu PLA Basic",
     "colorname": "Cobalt Blue",
     "color": "#0056B8",
@@ -1090,7 +1090,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PLA",
+    "material": "PLA Basic",
     "name": "Bambu PLA Basic",
     "colorname": "Cyan",
     "color": "#0086D6",
@@ -1101,7 +1101,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PLA",
+    "material": "PLA Basic",
     "name": "Bambu PLA Basic",
     "colorname": "Bambu Green",
     "color": "#00AE42",
@@ -1112,7 +1112,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PLA",
+    "material": "PLA Basic",
     "name": "Bambu PLA Basic",
     "colorname": "Bambu Green",
     "color": "#00AE42",
@@ -1123,7 +1123,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PLA",
+    "material": "PLA Basic",
     "name": "Bambu PLA Basic",
     "colorname": "Turquoise",
     "color": "#00B1B7",
@@ -1134,7 +1134,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PLA",
+    "material": "PLA Basic",
     "name": "Bambu PLA Basic",
     "colorname": "Blue",
     "color": "#0A2989",
@@ -1145,7 +1145,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PLA",
+    "material": "PLA Basic",
     "name": "Bambu PLA Basic",
     "colorname": "Blue",
     "color": "#0A2989",
@@ -1156,7 +1156,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PLA",
+    "material": "PLA Basic",
     "name": "Bambu PLA Basic",
     "colorname": "Blue",
     "color": "#0A2989",
@@ -1167,7 +1167,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PLA",
+    "material": "PLA Basic",
     "name": "Bambu PLA Basic",
     "colorname": "Blue",
     "color": "#0A2989",
@@ -1178,7 +1178,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PLA",
+    "material": "PLA Basic",
     "name": "Bambu PLA Basic",
     "colorname": "Mistletoe Green",
     "color": "#3F8E43",
@@ -1189,7 +1189,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PLA",
+    "material": "PLA Basic",
     "name": "Bambu PLA Basic",
     "colorname": "Indigo Purple",
     "color": "#482960",
@@ -1200,7 +1200,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PLA",
+    "material": "PLA Basic",
     "name": "Bambu PLA Basic",
     "colorname": "Indigo Purple",
     "color": "#482960",
@@ -1211,7 +1211,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PLA",
+    "material": "PLA Basic",
     "name": "Bambu PLA Basic",
     "colorname": "Dark Gray",
     "color": "#545454",
@@ -1222,7 +1222,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PLA",
+    "material": "PLA Basic",
     "name": "Bambu PLA Basic",
     "colorname": "Blue Gray",
     "color": "#5B6579",
@@ -1233,7 +1233,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PLA",
+    "material": "PLA Basic",
     "name": "Bambu PLA Basic",
     "colorname": "Blue Gray",
     "color": "#5B6579",
@@ -1244,7 +1244,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PLA",
+    "material": "PLA Basic",
     "name": "Bambu PLA Basic",
     "colorname": "Blue Gray",
     "color": "#5B6579",
@@ -1255,7 +1255,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PLA",
+    "material": "PLA Basic",
     "name": "Bambu PLA Basic",
     "colorname": "Purple",
     "color": "#5E43B7",
@@ -1266,7 +1266,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PLA",
+    "material": "PLA Basic",
     "name": "Bambu PLA Basic",
     "colorname": "Purple",
     "color": "#5E43B7",
@@ -1277,7 +1277,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PLA",
+    "material": "PLA Basic",
     "name": "Bambu PLA Basic",
     "colorname": "Cocoa Brown",
     "color": "#6F5034",
@@ -1288,7 +1288,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PLA",
+    "material": "PLA Basic",
     "name": "Bambu PLA Basic",
     "colorname": "Bronze",
     "color": "#847D48",
@@ -1299,7 +1299,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PLA",
+    "material": "PLA Basic",
     "name": "Bambu PLA Basic",
     "colorname": "Gray",
     "color": "#8E9089",
@@ -1310,7 +1310,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PLA",
+    "material": "PLA Basic",
     "name": "Bambu PLA Basic",
     "colorname": "Maroon Red",
     "color": "#9D2235",
@@ -1321,7 +1321,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PLA",
+    "material": "PLA Basic",
     "name": "Bambu PLA Basic",
     "colorname": "Maroon Red",
     "color": "#9D2235",
@@ -1332,7 +1332,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PLA",
+    "material": "PLA Basic",
     "name": "Bambu PLA Basic",
     "colorname": "Brown",
     "color": "#9D432C",
@@ -1343,7 +1343,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PLA",
+    "material": "PLA Basic",
     "name": "Bambu PLA Basic",
     "colorname": "Silver",
     "color": "#A6A9AA",
@@ -1354,7 +1354,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PLA",
+    "material": "PLA Basic",
     "name": "Bambu PLA Basic",
     "colorname": "Silver",
     "color": "#A6A9AA",
@@ -1365,7 +1365,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PLA",
+    "material": "PLA Basic",
     "name": "Bambu PLA Basic",
     "colorname": "Bright Green",
     "color": "#BECF00",
@@ -1376,7 +1376,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PLA",
+    "material": "PLA Basic",
     "name": "Bambu PLA Basic",
     "colorname": "Red",
     "color": "#C12E1F",
@@ -1387,7 +1387,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PLA",
+    "material": "PLA Basic",
     "name": "Bambu PLA Basic",
     "colorname": "Red",
     "color": "#C12E1F",
@@ -1398,7 +1398,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PLA",
+    "material": "PLA Basic",
     "name": "Bambu PLA Basic",
     "colorname": "Light Gray",
     "color": "#D1D3D5",
@@ -1409,7 +1409,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PLA",
+    "material": "PLA Basic",
     "name": "Bambu PLA Basic",
     "colorname": "Gold",
     "color": "#E4BD68",
@@ -1420,7 +1420,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PLA",
+    "material": "PLA Basic",
     "name": "Bambu PLA Basic",
     "colorname": "Magenta",
     "color": "#EC008C",
@@ -1431,7 +1431,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PLA",
+    "material": "PLA Basic",
     "name": "Bambu PLA Basic",
     "colorname": "Yellow",
     "color": "#F4EE2A",
@@ -1442,7 +1442,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PLA",
+    "material": "PLA Basic",
     "name": "Bambu PLA Basic",
     "colorname": "Yellow",
     "color": "#F4EE2A",
@@ -1453,7 +1453,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PLA",
+    "material": "PLA Basic",
     "name": "Bambu PLA Basic",
     "colorname": "Hot Pink",
     "color": "#F5547C",
@@ -1464,7 +1464,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PLA",
+    "material": "PLA Basic",
     "name": "Bambu PLA Basic",
     "colorname": "Pink",
     "color": "#F55A74",
@@ -1475,7 +1475,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PLA",
+    "material": "PLA Basic",
     "name": "Bambu PLA Basic",
     "colorname": "Beige",
     "color": "#F7E6DE",
@@ -1486,7 +1486,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PLA",
+    "material": "PLA Basic",
     "name": "Bambu PLA Basic",
     "colorname": "Beige",
     "color": "#F7E6DE",
@@ -1497,7 +1497,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PLA",
+    "material": "PLA Basic",
     "name": "Bambu PLA Basic",
     "colorname": "Sunflower Yellow",
     "color": "#FEC600",
@@ -1508,7 +1508,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PLA",
+    "material": "PLA Basic",
     "name": "Bambu PLA Basic",
     "colorname": "Sunflower Yellow",
     "color": "#FEC600",
@@ -1519,7 +1519,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PLA",
+    "material": "PLA Basic",
     "name": "Bambu PLA Basic",
     "colorname": "Orange",
     "color": "#FF6A13",
@@ -1530,7 +1530,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PLA",
+    "material": "PLA Basic",
     "name": "Bambu PLA Basic",
     "colorname": "Orange",
     "color": "#FF6A13",
@@ -1541,7 +1541,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PLA",
+    "material": "PLA Basic",
     "name": "Bambu PLA Basic",
     "colorname": "Pumpkin Orange",
     "color": "#FF9016",
@@ -1552,7 +1552,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PLA",
+    "material": "PLA Basic",
     "name": "Bambu PLA Basic",
     "colorname": "Pumpkin Orange",
     "color": "#FF9016",
@@ -1563,7 +1563,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PLA",
+    "material": "PLA Basic",
     "name": "Bambu PLA Basic",
     "colorname": "Jade White",
     "color": "#FFFFFF",
@@ -1574,7 +1574,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PLA",
+    "material": "PLA Basic",
     "name": "Bambu PLA Basic",
     "colorname": "Jade White",
     "color": "#FFFFFF",
@@ -1585,7 +1585,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PLA",
+    "material": "PLA Marble",
     "name": "Bambu PLA Marble",
     "colorname": "Red Granite",
     "color": "#AD4E38",
@@ -1596,7 +1596,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PLA",
+    "material": "PLA Marble",
     "name": "Bambu PLA Marble",
     "colorname": "White Marble",
     "color": "#F7F3F0",
@@ -1607,7 +1607,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PLA",
+    "material": "PLA Matte",
     "name": "Bambu PLA Matte",
     "colorname": "Charcoal",
     "color": "#000000",
@@ -1618,7 +1618,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PLA",
+    "material": "PLA Matte",
     "name": "Bambu PLA Matte",
     "colorname": "Charcoal",
     "color": "#000000",
@@ -1629,7 +1629,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PLA",
+    "material": "PLA Matte",
     "name": "Bambu PLA Matte",
     "colorname": "Marine Blue",
     "color": "#0078BF",
@@ -1640,7 +1640,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PLA",
+    "material": "PLA Matte",
     "name": "Bambu PLA Matte",
     "colorname": "Marine Blue",
     "color": "#0078BF",
@@ -1651,7 +1651,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PLA",
+    "material": "PLA Matte",
     "name": "Bambu PLA Matte",
     "colorname": "Dark Blue",
     "color": "#042F56",
@@ -1662,7 +1662,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PLA",
+    "material": "PLA Matte",
     "name": "Bambu PLA Matte",
     "colorname": "Dark Blue",
     "color": "#042F56",
@@ -1673,7 +1673,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PLA",
+    "material": "PLA Matte",
     "name": "Bambu PLA Matte",
     "colorname": "Grass Green",
     "color": "#61C680",
@@ -1684,7 +1684,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PLA",
+    "material": "PLA Matte",
     "name": "Bambu PLA Matte",
     "colorname": "Grass Green",
     "color": "#61C680",
@@ -1695,7 +1695,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PLA",
+    "material": "PLA Matte",
     "name": "Bambu PLA Matte",
     "colorname": "Dark Green",
     "color": "#68724D",
@@ -1706,7 +1706,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PLA",
+    "material": "PLA Matte",
     "name": "Bambu PLA Matte",
     "colorname": "Dark Green",
     "color": "#68724D",
@@ -1717,7 +1717,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PLA",
+    "material": "PLA Matte",
     "name": "Bambu PLA Matte",
     "colorname": "Dark Brown",
     "color": "#7D6556",
@@ -1728,7 +1728,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PLA",
+    "material": "PLA Matte",
     "name": "Bambu PLA Matte",
     "colorname": "Dark Brown",
     "color": "#7D6556",
@@ -1739,7 +1739,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PLA",
+    "material": "PLA Matte",
     "name": "Bambu PLA Matte",
     "colorname": "Ash Gray",
     "color": "#9B9EA0",
@@ -1750,7 +1750,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PLA",
+    "material": "PLA Matte",
     "name": "Bambu PLA Matte",
     "colorname": "Ice Blue",
     "color": "#A3D8E1",
@@ -1761,7 +1761,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PLA",
+    "material": "PLA Matte",
     "name": "Bambu PLA Matte",
     "colorname": "Ice Blue",
     "color": "#A3D8E1",
@@ -1772,7 +1772,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PLA",
+    "material": "PLA Matte",
     "name": "Bambu PLA Matte",
     "colorname": "Lilac Purple",
     "color": "#AE96D4",
@@ -1783,7 +1783,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PLA",
+    "material": "PLA Matte",
     "name": "Bambu PLA Matte",
     "colorname": "Lilac Purple",
     "color": "#AE96D4",
@@ -1794,7 +1794,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PLA",
+    "material": "PLA Matte",
     "name": "Bambu PLA Matte",
     "colorname": "Dark Red",
     "color": "#BB3D43",
@@ -1805,7 +1805,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PLA",
+    "material": "PLA Matte",
     "name": "Bambu PLA Matte",
     "colorname": "Dark Red",
     "color": "#BB3D43",
@@ -1816,7 +1816,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PLA",
+    "material": "PLA Matte",
     "name": "Bambu PLA Matte",
     "colorname": "Latte Brown",
     "color": "#D3B7A7",
@@ -1827,7 +1827,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PLA",
+    "material": "PLA Matte",
     "name": "Bambu PLA Matte",
     "colorname": "Scarlet Red",
     "color": "#DE4343",
@@ -1838,7 +1838,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PLA",
+    "material": "PLA Matte",
     "name": "Bambu PLA Matte",
     "colorname": "Scarlet Red",
     "color": "#DE4343",
@@ -1849,7 +1849,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PLA",
+    "material": "PLA Matte",
     "name": "Bambu PLA Matte",
     "colorname": "Sakura Pink",
     "color": "#E8AFCF",
@@ -1860,7 +1860,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PLA",
+    "material": "PLA Matte",
     "name": "Bambu PLA Matte",
     "colorname": "Sakura Pink",
     "color": "#E8AFCF",
@@ -1871,7 +1871,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PLA",
+    "material": "PLA Matte",
     "name": "Bambu PLA Matte",
     "colorname": "Desert Tan",
     "color": "#E8DBB7",
@@ -1882,7 +1882,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PLA",
+    "material": "PLA Matte",
     "name": "Bambu PLA Matte",
     "colorname": "Desert Tan",
     "color": "#E8DBB7",
@@ -1893,7 +1893,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PLA",
+    "material": "PLA Matte",
     "name": "Bambu PLA Matte",
     "colorname": "Lemon Yellow",
     "color": "#F7D959",
@@ -1904,7 +1904,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PLA",
+    "material": "PLA Matte",
     "name": "Bambu PLA Matte",
     "colorname": "Lemon Yellow",
     "color": "#F7D959",
@@ -1915,7 +1915,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PLA",
+    "material": "PLA Matte",
     "name": "Bambu PLA Matte",
     "colorname": "Mandarin Orange",
     "color": "#F99963",
@@ -1926,7 +1926,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PLA",
+    "material": "PLA Matte",
     "name": "Bambu PLA Matte",
     "colorname": "Mandarin Orange",
     "color": "#F99963",
@@ -1937,7 +1937,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PLA",
+    "material": "PLA Matte",
     "name": "Bambu PLA Matte",
     "colorname": "Ivory White",
     "color": "#FFFFFF",
@@ -1948,7 +1948,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PLA",
+    "material": "PLA Matte",
     "name": "Bambu PLA Matte",
     "colorname": "Ivory White",
     "color": "#FFFFFF",
@@ -1959,7 +1959,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PLA",
+    "material": "PLA Matte",
     "name": "Bambu PLA Matte",
     "colorname": "Bone White",
     "color": "#CBC6B8",
@@ -1970,7 +1970,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PLA",
+    "material": "PLA Matte",
     "name": "Bambu PLA Matte",
     "colorname": "Caramel",
     "color": "#AE835B",
@@ -1981,7 +1981,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PLA",
+    "material": "PLA Matte",
     "name": "Bambu PLA Matte",
     "colorname": "Terracotta",
     "color": "#B15533",
@@ -1992,7 +1992,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PLA",
+    "material": "PLA Matte",
     "name": "Bambu PLA Matte",
     "colorname": "Nardo Gray",
     "color": "#757575",
@@ -2003,7 +2003,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PLA",
+    "material": "PLA Matte",
     "name": "Bambu PLA Matte",
     "colorname": "Plum",
     "color": "#950051",
@@ -2014,7 +2014,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PLA",
+    "material": "PLA Matte",
     "name": "Bambu PLA Matte",
     "colorname": "Dark Chocolate",
     "color": "#4D3324",
@@ -2025,7 +2025,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PLA",
+    "material": "PLA Matte",
     "name": "Bambu PLA Matte",
     "colorname": "Apple Green",
     "color": "#C2E189",
@@ -2036,7 +2036,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PLA",
+    "material": "PLA Matte",
     "name": "Bambu PLA Matte",
     "colorname": "Sky Blue",
     "color": "#56B7E6",
@@ -2047,7 +2047,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PLA",
+    "material": "PLA Metal",
     "name": "Bambu PLA Metal",
     "colorname": "Oxide Green Metallic",
     "color": "#1D7C6A",
@@ -2058,7 +2058,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PLA",
+    "material": "PLA Metal",
     "name": "Bambu PLA Metal",
     "colorname": "Cobalt Blue Metallic",
     "color": "#39699E",
@@ -2069,7 +2069,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PLA",
+    "material": "PLA Metal",
     "name": "Bambu PLA Metal",
     "colorname": "Iron Gray Metallic",
     "color": "#43403D",
@@ -2080,7 +2080,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PLA",
+    "material": "PLA Metal",
     "name": "Bambu PLA Metal",
     "colorname": "Copper Brown Metallic",
     "color": "#AA6443",
@@ -2091,7 +2091,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PLA",
+    "material": "PLA Metal",
     "name": "Bambu PLA Metal",
     "colorname": "Iridium Gold Metallic",
     "color": "#B39B84",
@@ -2102,7 +2102,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PLA",
+    "material": "PLA Silk+",
     "name": "Bambu PLA Silk+",
     "colorname": "Blue",
     "color": "#008BDA",
@@ -2113,7 +2113,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PLA",
+    "material": "PLA Silk+",
     "name": "Bambu PLA Silk+",
     "colorname": "Candy Green",
     "color": "#018814",
@@ -2124,7 +2124,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PLA",
+    "material": "PLA Silk+",
     "name": "Bambu PLA Silk+",
     "colorname": "Titan Gray",
     "color": "#5F6367",
@@ -2135,7 +2135,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PLA",
+    "material": "PLA Silk+",
     "name": "Bambu PLA Silk+",
     "colorname": "Purple",
     "color": "#8671CB",
@@ -2146,7 +2146,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PLA",
+    "material": "PLA Silk+",
     "name": "Bambu PLA Silk+",
     "colorname": "Mint",
     "color": "#96DCB9",
@@ -2157,7 +2157,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PLA",
+    "material": "PLA Silk+",
     "name": "Bambu PLA Silk+",
     "colorname": "Baby Blue",
     "color": "#A8C6EE",
@@ -2168,7 +2168,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PLA",
+    "material": "PLA Silk+",
     "name": "Bambu PLA Silk+",
     "colorname": "Rose Gold",
     "color": "#BA9594",
@@ -2179,7 +2179,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PLA",
+    "material": "PLA Silk+",
     "name": "Bambu PLA Silk+",
     "colorname": "Silver",
     "color": "#C8C8C8",
@@ -2190,7 +2190,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PLA",
+    "material": "PLA Silk+",
     "name": "Bambu PLA Silk+",
     "colorname": "Candy Red",
     "color": "#D02727",
@@ -2201,7 +2201,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PLA",
+    "material": "PLA Silk+",
     "name": "Bambu PLA Silk+",
     "colorname": "Champagne",
     "color": "#F3CFB2",
@@ -2212,7 +2212,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PLA",
+    "material": "PLA Silk+",
     "name": "Bambu PLA Silk+",
     "colorname": "Gold",
     "color": "#F4A925",
@@ -2223,7 +2223,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PLA",
+    "material": "PLA Silk+",
     "name": "Bambu PLA Silk+",
     "colorname": "Pink",
     "color": "#F7ADA6",
@@ -2234,7 +2234,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PLA",
+    "material": "PLA Silk+",
     "name": "Bambu PLA Silk+",
     "colorname": "White",
     "color": "#FFFFFF",
@@ -2245,7 +2245,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PLA",
+    "material": "PLA Wood",
     "name": "Bambu PLA Wood",
     "colorname": "Rosewood",
     "color": "#4C241C",
@@ -2256,7 +2256,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PLA",
+    "material": "PLA Wood",
     "name": "Bambu PLA Wood",
     "colorname": "Black Walnut",
     "color": "#4F3F24",
@@ -2267,7 +2267,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PLA",
+    "material": "PLA Wood",
     "name": "Bambu PLA Wood",
     "colorname": "Classic Birch",
     "color": "#918669",
@@ -2278,7 +2278,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PLA",
+    "material": "PLA Wood",
     "name": "Bambu PLA Wood",
     "colorname": "Clay Brown",
     "color": "#995F11",
@@ -2289,7 +2289,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PLA",
+    "material": "PLA Wood",
     "name": "Bambu PLA Wood",
     "colorname": "Ochre Yellow",
     "color": "#C98935",
@@ -2300,7 +2300,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PLA",
+    "material": "PLA Wood",
     "name": "Bambu PLA Wood",
     "colorname": "White Oak",
     "color": "#D6CCA3",
@@ -2388,8 +2388,8 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "TPU-AMS",
-    "name": "Bambu TPU for AMS",
+    "material": "TPU 68D for AMS",
+    "name": "Bambu TPU 68D for AMS",
     "colorname": "Black",
     "color": "#000000",
     "distance": 98.4,
@@ -2399,8 +2399,8 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "TPU-AMS",
-    "name": "Bambu TPU for AMS",
+    "material": "TPU 68D for AMS",
+    "name": "Bambu TPU 68D for AMS",
     "colorname": "Blue",
     "color": "#5898DD",
     "distance": 44.9,
@@ -2410,8 +2410,8 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "TPU-AMS",
-    "name": "Bambu TPU for AMS",
+    "material": "TPU 68D for AMS",
+    "name": "Bambu TPU 68D for AMS",
     "colorname": "Neon Green",
     "color": "#90FF1A",
     "distance": 113.3,
@@ -2421,8 +2421,8 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "TPU-AMS",
-    "name": "Bambu TPU for AMS",
+    "material": "TPU 68D for AMS",
+    "name": "Bambu TPU 68D for AMS",
     "colorname": "Gray",
     "color": "#939393",
     "distance": 82.4,
@@ -2432,8 +2432,8 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "TPU-AMS",
-    "name": "Bambu TPU for AMS",
+    "material": "TPU 68D for AMS",
+    "name": "Bambu TPU 68D for AMS",
     "colorname": "Red",
     "color": "#ED0000",
     "distance": 84.6,
@@ -2443,8 +2443,8 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "TPU-AMS",
-    "name": "Bambu TPU for AMS",
+    "material": "TPU 68D for AMS",
+    "name": "Bambu TPU 68D for AMS",
     "colorname": "Yellow",
     "color": "#F9EF41",
     "distance": 108,
@@ -2454,8 +2454,8 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "TPU-AMS",
-    "name": "Bambu TPU for AMS",
+    "material": "TPU 68D for AMS",
+    "name": "Bambu TPU 68D for AMS",
     "colorname": "White",
     "color": "#FFFFFF",
     "distance": 101.5,
@@ -2465,7 +2465,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "TPU",
+    "material": "TPU 95A HF",
     "name": "Bambu TPU 95A HF",
     "colorname": "Blue",
     "color": "#0072CE",
@@ -2476,7 +2476,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "TPU",
+    "material": "TPU 95A HF",
     "name": "Bambu TPU 95A HF",
     "colorname": "Black",
     "color": "#101820",
@@ -2487,7 +2487,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "TPU",
+    "material": "TPU 95A HF",
     "name": "Bambu TPU 95A HF",
     "colorname": "Gray",
     "color": "#898D8D",
@@ -2498,7 +2498,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "TPU",
+    "material": "TPU 95A HF",
     "name": "Bambu TPU 95A HF",
     "colorname": "Red",
     "color": "#C8102E",
@@ -2509,7 +2509,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "TPU",
+    "material": "TPU 95A HF",
     "name": "Bambu TPU 95A HF",
     "colorname": "Yellow",
     "color": "#F3E600",
@@ -2520,7 +2520,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "TPU",
+    "material": "TPU 95A HF",
     "name": "Bambu TPU 95A HF",
     "colorname": "White",
     "color": "#FFFFFF",
@@ -2597,8 +2597,8 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PC",
-    "name": "Bambu PC FR",
+    "material": "PC-FR",
+    "name": "Bambu PC-FR",
     "colorname": "Black",
     "color": "#000000",
     "distance": 98.4,
@@ -2608,8 +2608,8 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PC",
-    "name": "Bambu PC FR",
+    "material": "PC-FR",
+    "name": "Bambu PC-FR",
     "colorname": "White",
     "color": "#FFFFFF",
     "distance": 101.5,
@@ -2619,8 +2619,8 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PC",
-    "name": "Bambu PC FR",
+    "material": "PC-FR",
+    "name": "Bambu PC-FR",
     "colorname": "Gray",
     "color": "#A8A8AA",
     "distance": 63.3,

@@ -433,6 +433,178 @@ app.delete('/ams-config/:amsId', async (req, res) => {
 // Load EAN database
 import eanDatabase from './data/base_dados_completa.json' assert { type: 'json' };
 
+// Helper function to delay between API calls
+const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
+// Helper function to search EAN in free APIs
+async function searchEANInAPIs(ean) {
+  console.log(`[API Search] Trying free APIs for EAN: ${ean}`);
+
+  // Try API 1: UPCItemDB (100 requests/day on trial)
+  try {
+    console.log('[API Search] Trying UPCItemDB...');
+    const response = await axios.get(
+      `https://api.upcitemdb.com/prod/trial/lookup?upc=${ean}`,
+      { timeout: 10000 }
+    );
+
+    if (response.data.items && response.data.items.length > 0) {
+      const item = response.data.items[0];
+      console.log('[API Search] ✅ Found in UPCItemDB:', item.title);
+
+      return {
+        rawTitle: item.title,
+        manufacturer: item.brand || '',
+        description: item.description || '',
+        model: item.model || '',
+        source: 'UPCItemDB',
+        found: true
+      };
+    }
+  } catch (error) {
+    console.log(`[API Search] UPCItemDB error: ${error.message}`);
+  }
+
+  await delay(500);
+
+  // Try API 2: EAN-Search.org (free)
+  try {
+    console.log('[API Search] Trying EAN-Search.org...');
+    const response = await axios.get(
+      `https://api.ean-search.org/api?token=FREE_TIER&op=barcode-lookup&ean=${ean}&format=json`,
+      { timeout: 10000 }
+    );
+
+    if (response.data && response.data.length > 0) {
+      const item = response.data[0];
+      console.log('[API Search] ✅ Found in EAN-Search:', item.name);
+
+      return {
+        rawTitle: item.name,
+        manufacturer: '',
+        description: item.categoryName || '',
+        source: 'EAN-Search',
+        found: true
+      };
+    }
+  } catch (error) {
+    console.log(`[API Search] EAN-Search error: ${error.message}`);
+  }
+
+  await delay(500);
+
+  // Try API 3: OpenFoodFacts (mainly for food, but worth trying)
+  try {
+    console.log('[API Search] Trying OpenFoodFacts...');
+    const response = await axios.get(
+      `https://world.openfoodfacts.org/api/v0/product/${ean}.json`,
+      { timeout: 10000 }
+    );
+
+    if (response.data.status === 1) {
+      const product = response.data.product;
+      console.log('[API Search] ✅ Found in OpenFoodFacts:', product.product_name);
+
+      return {
+        rawTitle: product.product_name || product.product_name_en || '',
+        manufacturer: product.brands || '',
+        description: product.generic_name || product.categories || '',
+        source: 'OpenFoodFacts',
+        found: true
+      };
+    }
+  } catch (error) {
+    console.log(`[API Search] OpenFoodFacts error: ${error.message}`);
+  }
+
+  console.log('[API Search] ❌ EAN not found in any API');
+  return { found: false };
+}
+
+// Helper function to parse product title from API results
+function parseAPIProductTitle(apiResult) {
+  const title = apiResult.rawTitle || '';
+  console.log(`[API Parse] Parsing title: ${title}`);
+
+  // Try to extract Bambu Lab specific information
+  if (title.toLowerCase().includes('bambu lab') || title.toLowerCase().includes('bambulab')) {
+    console.log('[API Parse] Detected Bambu Lab product');
+
+    // Remove extra info after comma
+    const titleBeforeComma = title.split(',')[0].trim();
+
+    // Material types to search for (with priority for composite types)
+    const materialTypes = [
+      'PETG CF', 'PLA CF', 'ABS CF', 'PA CF', 'PC CF', 'PLA Glow',
+      'PLA Basic', 'PLA Matte', 'PLA Silk', 'PLA Metal', 'PLA Marble',
+      'PETG', 'PLA', 'ABS', 'TPU', 'ASA', 'PC', 'PA', 'PP', 'PVA', 'HIPS', 'Nylon'
+    ];
+
+    let type = '';
+    let colorname = '';
+    let manufacturer = 'BambuLab';
+
+    // Find material type
+    for (const matType of materialTypes) {
+      const regex = new RegExp(`\\b${matType.replace(/\s+/g, '\\s+')}\\b`, 'i');
+      if (regex.test(titleBeforeComma)) {
+        type = matType;
+        console.log(`[API Parse] Found material type: ${type}`);
+        break;
+      }
+    }
+
+    // Extract color name
+    // Format: "Bambu Lab - 1.75mm PLA Glow Filament - Glow Blue"
+    const parts = titleBeforeComma.split(/\s*-\s*/);
+
+    if (parts.length >= 2) {
+      // Last part usually contains color
+      const lastPart = parts[parts.length - 1].trim();
+      colorname = lastPart.replace(/\d+(\.\d+)?\s*mm/gi, '').replace(/filament/gi, '').trim();
+      console.log(`[API Parse] Found color name: ${colorname}`);
+    }
+
+    // If no color found in parts, try to extract from title after material type
+    if (!colorname && type) {
+      const afterType = titleBeforeComma.split(new RegExp(type, 'i'))[1];
+      if (afterType) {
+        colorname = afterType.replace(/\d+(\.\d+)?\s*mm/gi, '')
+          .replace(/filament/gi, '')
+          .replace(/[-,]/g, '')
+          .trim();
+        console.log(`[API Parse] Extracted color from after type: ${colorname}`);
+      }
+    }
+
+    const name = type ? `Bambu ${type}` : '';
+    console.log(`[API Parse] Result - Manufacturer: ${manufacturer}, Type: ${type}, Name: ${name}, Color: ${colorname}`);
+    return { manufacturer, type, name, colorname };
+  }
+
+  // Generic parsing for non-Bambu Lab products
+  const parts = title.split(/\s*-\s*/);
+  let manufacturer = '';
+  let type = '';
+  let colorname = '';
+  let name = '';
+
+  if (parts.length >= 1) {
+    manufacturer = parts[0].trim();
+  }
+  if (parts.length >= 2) {
+    type = parts[1].trim();
+    // For generic products, name = manufacturer + type
+    name = manufacturer && type ? `${manufacturer} ${type}` : type;
+  }
+  if (parts.length >= 3) {
+    colorname = parts[2].trim();
+  }
+
+  console.log(`[API Parse] Generic result - Manufacturer: ${manufacturer}, Type: ${type}, Name: ${name}, Color: ${colorname}`);
+  return { manufacturer, type, name, colorname };
+}
+
 // Scrape product info from EAN
 app.get('/product-info/:ean', async (req, res) => {
   try {
@@ -447,8 +619,9 @@ app.get('/product-info/:ean', async (req, res) => {
 
       const response = {
         rawTitle: `Bambu Lab ${localProduct.material} - ${localProduct.colorname}`,
-        manufacturer: 'BambuLab',
+        manufacturer: localProduct.manufacturer,
         type: localProduct.material,
+        name: localProduct.name,
         colorname: localProduct.colorname,
         color: localProduct.color,
         source: 'local_database'
@@ -458,7 +631,31 @@ app.get('/product-info/:ean', async (req, res) => {
       return res.json(response);
     }
 
-    console.log(`[Product Search] EAN not found in local database, trying online scraping...`);
+    console.log(`[Product Search] EAN not found in local database, trying free APIs...`);
+
+    // Try free APIs
+    const apiResult = await searchEANInAPIs(ean);
+
+    if (apiResult.found) {
+      console.log(`[Product Search] Found in API: ${apiResult.source}`);
+
+      // Parse the API result
+      const productInfo = parseAPIProductTitle(apiResult);
+
+      const response = {
+        rawTitle: apiResult.rawTitle,
+        manufacturer: productInfo.manufacturer || apiResult.manufacturer || '',
+        type: productInfo.type || '',
+        name: productInfo.name || '',
+        colorname: productInfo.colorname || '',
+        source: apiResult.source
+      };
+
+      console.log(`[Product Search] Returning result from ${apiResult.source}: ${JSON.stringify(response)}`);
+      return res.json(response);
+    }
+
+    console.log(`[Product Search] EAN not found in APIs, trying web scraping...`);
 
     // Fetch the product page
     const url = `https://pt.product-search.net/?q=${ean}`;

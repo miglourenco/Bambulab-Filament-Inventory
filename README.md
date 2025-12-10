@@ -81,7 +81,12 @@ When accessing from a mobile device, you'll have additional features:
 - Point your camera at the QR code or barcode on your filament box
 - The app will automatically:
   - Search for existing filament in your inventory
-  - If not found, fetch product information from the barcode
+  - If not found, fetch product information from the barcode using a multi-tier lookup system:
+    1. **Local Database** - Searches 400+ BambuLab EAN codes with color HEX values
+    2. **UPCItemDB API** - Free API with 100 requests/day (trial tier)
+    3. **EAN-Search.org** - Free tier barcode lookup
+    4. **OpenFoodFacts API** - Free product database
+    5. **Web Scraping** - Fallback to product-search.net if APIs fail
   - Auto-fill manufacturer, material type, and color name
   - Open the add dialog with pre-filled data for you to complete
 
@@ -91,6 +96,14 @@ When accessing from a mobile device, you'll have additional features:
 - Use a reverse proxy like Nginx or Caddy with SSL certificates
 - Or use a service like ngrok or Cloudflare Tunnel
 - Or access via localhost if running directly on the mobile device
+
+**EAN Lookup System:**
+The barcode scanner uses a sophisticated multi-tier approach to identify products:
+- **Tier 1 (Local)**: Instant lookup from local database with complete product info and color HEX
+- **Tier 2 (APIs)**: Free public APIs for broader product coverage
+- **Tier 3 (Scraping)**: Web scraping as final fallback
+
+This ensures maximum compatibility with various filament brands while prioritizing fast local lookups for BambuLab products.
 
 ## Stock Total View
 The Stock Total tab provides a comprehensive view of all filaments across all users:

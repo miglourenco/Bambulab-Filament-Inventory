@@ -5,7 +5,15 @@
       "Bash(npm install:*)",
       "Bash(docker build:*)",
       "Bash(docker push:*)",
-      "Bash(node test-upcindex.js:*)"
+      "Bash(node test-upcindex.js:*)",
+      "Bash(node -e:*)",
+      "Bash(node update-database.js:*)",
+      "Bash(node normalize-materials.js:*)",
+      "Bash(node fix-names.js:*)",
+      "Bash(ls:*)",
+      "Bash(node restore-correct-structure.js:*)",
+      "Bash(node verify-structure.js:*)",
+      "Bash(node validate-materials.js:*)"
     ]
   }
 }

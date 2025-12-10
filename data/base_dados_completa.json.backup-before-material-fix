@@ -441,7 +441,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "ASA-AERO",
+    "material": "ASA",
     "name": "Bambu ASA-Aero",
     "colorname": "White",
     "color": "#F5F1DD",
@@ -2388,7 +2388,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "TPU-AMS",
+    "material": "TPU",
     "name": "Bambu TPU for AMS",
     "colorname": "Black",
     "color": "#000000",
@@ -2399,7 +2399,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "TPU-AMS",
+    "material": "TPU",
     "name": "Bambu TPU for AMS",
     "colorname": "Blue",
     "color": "#5898DD",
@@ -2410,7 +2410,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "TPU-AMS",
+    "material": "TPU",
     "name": "Bambu TPU for AMS",
     "colorname": "Neon Green",
     "color": "#90FF1A",
@@ -2421,7 +2421,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "TPU-AMS",
+    "material": "TPU",
     "name": "Bambu TPU for AMS",
     "colorname": "Gray",
     "color": "#939393",
@@ -2432,7 +2432,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "TPU-AMS",
+    "material": "TPU",
     "name": "Bambu TPU for AMS",
     "colorname": "Red",
     "color": "#ED0000",
@@ -2443,7 +2443,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "TPU-AMS",
+    "material": "TPU",
     "name": "Bambu TPU for AMS",
     "colorname": "Yellow",
     "color": "#F9EF41",
@@ -2454,7 +2454,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "TPU-AMS",
+    "material": "TPU",
     "name": "Bambu TPU for AMS",
     "colorname": "White",
     "color": "#FFFFFF",
@@ -2597,7 +2597,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PC",
+    "material": "PC-FR",
     "name": "Bambu PC FR",
     "colorname": "Black",
     "color": "#000000",
@@ -2608,7 +2608,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PC",
+    "material": "PC-FR",
     "name": "Bambu PC FR",
     "colorname": "White",
     "color": "#FFFFFF",
@@ -2619,7 +2619,7 @@
   },
   {
     "manufacturer": "BambuLab",
-    "material": "PC",
+    "material": "PC-FR",
     "name": "Bambu PC FR",
     "colorname": "Gray",
     "color": "#A8A8AA",
