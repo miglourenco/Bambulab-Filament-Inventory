@@ -95,9 +95,9 @@ export const syncUserHASS = async (userId) => {
         await materialsDB.initialize();
 
         console.log(`[HASS Sync] Looking for colorname - Name: "${tray.name}", Color: "${tray.color}", Type: "${tray.type}"`);
-
+        
         // First try to find from materials database by product name and hex color
-        const identifiedColorName = materialsDB.findColorByNameAndHex(tray.name, tray.color);
+        const identifiedColorName = materialsDB.findColorByNameAndHex(tray.name, tray.color.slice(0,-2));
         if (identifiedColorName) {
           colorname = identifiedColorName;
           console.log(`[HASS Sync] ✅ Found colorname in database: "${colorname}"`);
