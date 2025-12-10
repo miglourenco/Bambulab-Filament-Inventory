@@ -1,7 +1,35 @@
 import { defineStore } from 'pinia'
 import axios from 'axios';
+import router from '../router';
 
 const host = import.meta.env.DEV ? 'http://localhost:3000' : '';
+
+// Setup axios interceptor to handle 401 errors globally
+let interceptorSetup = false;
+
+function setupAxiosInterceptor(store) {
+  if (interceptorSetup) return;
+  interceptorSetup = true;
+
+  axios.interceptors.response.use(
+    (response) => response,
+    (error) => {
+      if (error.response?.status === 401) {
+        // Token expired or invalid
+        store.login = null;
+        store.user = null;
+        sessionStorage.removeItem('token');
+        sessionStorage.removeItem('user');
+
+        // Redirect to login page
+        if (router.currentRoute.value.path !== '/login') {
+          router.push('/login');
+        }
+      }
+      return Promise.reject(error);
+    }
+  );
+}
 
 export const useAppStore = defineStore('app', {
   state: () => ({
@@ -171,8 +199,15 @@ export const useAppStore = defineStore('app', {
 
       return false;
     },
+    init() {
+      // Setup axios interceptor when store is initialized
+      setupAxiosInterceptor(this);
+    },
     async checkLogin(username, password) {
       try {
+        // Ensure interceptor is setup
+        setupAxiosInterceptor(this);
+
         const { data } = await axios.post(host + '/oauth/token', {
           grant_type: 'password',
           username,

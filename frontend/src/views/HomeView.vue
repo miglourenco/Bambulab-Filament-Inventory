@@ -478,12 +478,20 @@ const handleCodeScanned = async (code) => {
         addModel.value.colorname = response.data.colorname || '';
         addModel.value.name = response.data.type || '';
 
+        // If color is provided directly from local database, use it
+        if (response.data.color) {
+          // Convert HEX to rgba format for v-color-picker
+          const hexColor = response.data.color.startsWith('#') ? response.data.color : '#' + response.data.color;
+          addModel.value.color = hexColor + 'ff';
+          console.log('Color set from database:', addModel.value.color);
+        }
+
         // If BambuLab manufacturer and type, load colors
         if (isBambuLab.value && addModel.value.type) {
           await onMaterialTypeChange();
 
-          // If colorname was found, try to auto-fill the color hex
-          if (addModel.value.colorname) {
+          // If colorname was found and no color was set from database, try to auto-fill the color hex
+          if (addModel.value.colorname && !response.data.color) {
             await onColorNameChange();
           }
         }

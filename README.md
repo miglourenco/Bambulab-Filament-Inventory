@@ -79,15 +79,18 @@ When accessing from a mobile device, you'll have additional features:
 ### QR Code / Barcode Scanner
 - Tap the floating scanner button (bottom-right corner)
 - Point your camera at the QR code or barcode on your filament box
-- The app will automatically find the filament in your inventory or prompt you to add it
+- The app will automatically:
+  - Search for existing filament in your inventory
+  - If not found, fetch product information from the barcode
+  - Auto-fill manufacturer, material type, and color name
+  - Open the add dialog with pre-filled data for you to complete
 
-### NFC Tag Reading
-- Switch to the NFC tab in the scanner
-- Tap "Start NFC Reading"
-- Bring your phone close to the NFC tag on your filament spool
-- The app will instantly identify and display the filament details
+**Important:** Camera access requires HTTPS or localhost. When accessing from Android or iOS devices on your local network, you must use HTTPS (not HTTP). This is a browser security requirement for accessing the camera on mobile devices.
 
-**Note:** NFC reading requires a device with NFC hardware and HTTPS connection or localhost.
+**Setting up HTTPS for local network access:**
+- Use a reverse proxy like Nginx or Caddy with SSL certificates
+- Or use a service like ngrok or Cloudflare Tunnel
+- Or access via localhost if running directly on the mobile device
 
 ## Stock Total View
 The Stock Total tab provides a comprehensive view of all filaments across all users:
