@@ -9,6 +9,7 @@ The EAN lookup system uses a multi-tier approach to identify products from barco
 **File:** `data/base_dados_completa.json`
 **Priority:** Highest (executed first)
 **Speed:** Instant (<1ms)
+**Note:** This is the single source of truth for all material data in the application
 
 Contains 240+ BambuLab filament EAN codes with complete product information:
 ```json
@@ -27,14 +28,14 @@ Contains 240+ BambuLab filament EAN codes with complete product information:
 
 **Database Fields:**
 - `manufacturer` - Always "BambuLab"
-- `material` - Material type (ABS, PLA, PETG, etc.)
-- `name` - Product name (always "Bambu " + material)
+- `material` - Normalized material type (PLA, PLA-AERO, PETG, TPU-AMS, etc.)
+- `name` - Full product name (e.g., "Bambu PLA Matte", "Bambu TPU for AMS")
 - `colorname` - Color name (Black, White, Glow Blue, etc.)
 - `color` - HEX color code
 - `distance` - Distance value for color matching
-- `note` - Additional notes
+- `note` - Additional notes (empty for regular products, "Custom" for user-added)
 - `productType` - "Spool" or "Refill"
-- `ean` - EAN barcode number
+- `ean` - EAN barcode number (empty string for custom materials)
 
 **Advantages:**
 - Instant response (no network latency)
@@ -269,7 +270,7 @@ Return 404 to user
    {
      "manufacturer": "BambuLab",
      "material": "MATERIAL_TYPE",
-     "name": "Bambu MATERIAL_TYPE",
+     "name": "Bambu PRODUCT_NAME",
      "colorname": "COLOR_NAME",
      "color": "#HEXCODE",
      "distance": 98.4,
@@ -280,15 +281,11 @@ Return 404 to user
    ```
 3. Restart server (Docker will auto-restart)
 
-**Automated Update Script:**
-Use `update-database.js` to automatically add manufacturer and name fields to all entries:
-```bash
-node update-database.js
-```
-This script:
-- Adds `manufacturer: "BambuLab"` to all entries
-- Adds `name: "Bambu [material]"` to all entries
-- Creates a backup before updating
+**Important Notes:**
+- `material` field must be normalized (first word or official printer type from printer_data.yaml)
+- `name` field contains the full product name (e.g., "Bambu PLA Matte", not just "Bambu PLA")
+- Validate against `printer_data.yaml` using `validate-materials.js` after adding entries
+- `base_dados_completa.json` is the single source of truth - don't create separate materials.json
 
 ### Monitoring API Health
 Check logs for:

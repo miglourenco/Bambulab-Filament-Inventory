@@ -1,196 +1,7 @@
 import fs from 'fs/promises';
 import path from 'path';
 
-const MATERIALS_DB_FILE = './data/materials.json';
-
-// BambuLab default materials and colors from CSV
-const DEFAULT_MATERIALS = [
-  { material: "ABS", colorname: "Black", color: "#000000", distance: 98.4, note: "" },
-  { material: "ABS", colorname: "Bambu Green", color: "#00AE42", distance: 91.6, note: "" },
-  { material: "ABS", colorname: "Blue", color: "#0A2CA5", distance: 58.7, note: "" },
-  { material: "ABS", colorname: "Navy Blue", color: "#0C2340", distance: 58.5, note: "" },
-  { material: "ABS", colorname: "Azure", color: "#489FDF", distance: 48.2, note: "" },
-  { material: "ABS", colorname: "Lavender", color: "#7248BD", distance: 9.6, note: "Discontinued" },
-  { material: "ABS", colorname: "Olive", color: "#789D4A", distance: 96.6, note: "" },
-  { material: "ABS", colorname: "Mint", color: "#7AE1BF", distance: 67.3, note: "Discontinued" },
-  { material: "ABS", colorname: "Silver", color: "#87909A", distance: 57.3, note: "" },
-  { material: "ABS", colorname: "Purple", color: "#AF1685", distance: 55.3, note: "Discontinued" },
-  { material: "ABS", colorname: "Red", color: "#D32941", distance: 61.1, note: "" },
-  { material: "ABS", colorname: "Beige", color: "#DFD1A7", distance: 91.3, note: "Discontinued" },
-  { material: "ABS", colorname: "Yellow", color: "#FCE900", distance: 108.0, note: "Discontinued" },
-  { material: "ABS", colorname: "Orange", color: "#FF6A13", distance: 94.3, note: "" },
-  { material: "ABS", colorname: "Tangerine Yellow", color: "#FFC72C", distance: 104.7, note: "" },
-  { material: "ABS", colorname: "White", color: "#FFFFFF", distance: 101.5, note: "" },
-  { material: "ABS-GF", colorname: "Black", color: "#000000", distance: 98.4, note: "" },
-  { material: "ABS-GF", colorname: "Blue", color: "#0C3B95", distance: 58.6, note: "" },
-  { material: "ABS-GF", colorname: "Green", color: "#61BF36", distance: 88.3, note: "Discontinued" },
-  { material: "ABS-GF", colorname: "Gray", color: "#C6C6C6", distance: 90.2, note: "" },
-  { material: "ABS-GF", colorname: "Red", color: "#E83100", distance: 89.6, note: "" },
-  { material: "ABS-GF", colorname: "Orange", color: "#F48438", distance: 90.5, note: "" },
-  { material: "ABS-GF", colorname: "Yellow", color: "#FFE133", distance: 108.1, note: "Discontinued" },
-  { material: "ABS-GF", colorname: "White", color: "#FFFFFF", distance: 101.5, note: "" },
-  { material: "ASA", colorname: "Black", color: "#000000", distance: 98.4, note: "" },
-  { material: "ASA", colorname: "Green", color: "#00A6A0", distance: 79.9, note: "" },
-  { material: "ASA", colorname: "Blue", color: "#2140B4", distance: 38.1, note: "" },
-  { material: "ASA", colorname: "Gray", color: "#8A949E", distance: 57.7, note: "" },
-  { material: "ASA", colorname: "Red", color: "#E02928", distance: 69.9, note: "" },
-  { material: "ASA", colorname: "White", color: "#FFFAF2", distance: 116.2, note: "" },
-  { material: "ASA Aero", colorname: "White", color: "#F5F1DD", distance: 101.9, note: "" },
-  { material: "ASA-CF", colorname: "Black", color: "#000000", distance: 98.4, note: "" },
-  { material: "PA6-GF", colorname: "Black", color: "#000000", distance: 98.4, note: "" },
-  { material: "PA6-GF", colorname: "Gray", color: "#353533", distance: 112.1, note: "" },
-  { material: "PA6-GF", colorname: "Brown", color: "#5B492F", distance: 85.8, note: "" },
-  { material: "PA6-GF", colorname: "Blue", color: "#75AED8", distance: 43.4, note: "" },
-  { material: "PA6-GF", colorname: "Lime", color: "#C5ED48", distance: 111.0, note: "" },
-  { material: "PA6-GF", colorname: "White", color: "#EAEAE4", distance: 114.3, note: "" },
-  { material: "PA6-GF", colorname: "Orange", color: "#FF4800", distance: 91.5, note: "" },
-  { material: "PA6-GF", colorname: "Yellow", color: "#FFCE00", distance: 104.9, note: "" },
-  { material: "PA6-CF", colorname: "Black", color: "#000000", distance: 98.4, note: "" },
-  { material: "PAHT-CF", colorname: "Black", color: "#000000", distance: 98.4, note: "" },
-  { material: "PPA-CF", colorname: "Black", color: "#000000", distance: 98.4, note: "" },
-  { material: "PET-CF", colorname: "Black", color: "#000000", distance: 98.4, note: "" },
-  { material: "PETG HF", colorname: "Black", color: "#000000", distance: 98.4, note: "" },
-  { material: "PETG HF", colorname: "Blue", color: "#002E96", distance: 70.9, note: "" },
-  { material: "PETG HF", colorname: "Green", color: "#00AE42", distance: 91.6, note: "" },
-  { material: "PETG HF", colorname: "Lake Blue", color: "#1F79E5", distance: 50.4, note: "" },
-  { material: "PETG HF", colorname: "Forest Green", color: "#39541A", distance: 101.4, note: "" },
-  { material: "PETG HF", colorname: "Dark Gray", color: "#515151", distance: 84.0, note: "" },
-  { material: "PETG HF", colorname: "Lime Green", color: "#6EE53C", distance: 96.6, note: "" },
-  { material: "PETG HF", colorname: "Peanut Brown", color: "#875718", distance: 86.8, note: "" },
-  { material: "PETG HF", colorname: "Gray", color: "#ADB1B2", distance: 72.1, note: "" },
-  { material: "PETG HF", colorname: "Red", color: "#EB3A3A", distance: 75.2, note: "" },
-  { material: "PETG HF", colorname: "Orange", color: "#F75403", distance: 91.2, note: "" },
-  { material: "PETG HF", colorname: "Cream", color: "#F9DFB9", distance: 102.8, note: "" },
-  { material: "PETG HF", colorname: "Yellow", color: "#FFD00B", distance: 105.2, note: "" },
-  { material: "PETG HF", colorname: "White", color: "#FFFFFF", distance: 101.5, note: "" },
-  { material: "PETG Translucent", colorname: "Translucent Light Blue", color: "#61B0FF", distance: 74.9, note: "" },
-  { material: "PETG Translucent", colorname: "Translucent Olive", color: "#748C45", distance: 101.3, note: "" },
-  { material: "PETG Translucent", colorname: "Translucent Teal", color: "#77EDD7", distance: 71.6, note: "" },
-  { material: "PETG Translucent", colorname: "Translucent Gray", color: "#8E8E8E", distance: 81.9, note: "" },
-  { material: "PETG Translucent", colorname: "Translucent Brown", color: "#C9A381", distance: 78.9, note: "" },
-  { material: "PETG Translucent", colorname: "Translucent Purple", color: "#D6ABFF", distance: 78.4, note: "" },
-  { material: "PETG Translucent", colorname: "Translucent Pink", color: "#F9C1BD", distance: 90.4, note: "" },
-  { material: "PETG Translucent", colorname: "Translucent Orange", color: "#FF911A", distance: 98.3, note: "" },
-  { material: "PETG Translucent", colorname: "Clear", color: "#FFFFFF", distance: 101.5, note: "" },
-  { material: "PETG-CF", colorname: "Black", color: "#000000", distance: 98.4, note: "" },
-  { material: "PETG-CF", colorname: "Malachite Green", color: "#16b08e", distance: 67.0, note: "" },
-  { material: "PETG-CF", colorname: "Indigo Blue", color: "#324585", distance: 26.1, note: "" },
-  { material: "PETG-CF", colorname: "Titan Gray", color: "#565656", distance: 83.3, note: "" },
-  { material: "PETG-CF", colorname: "Violet Purple", color: "#583061", distance: 39.7, note: "" },
-  { material: "PETG-CF", colorname: "Brick Red", color: "#9f332a", distance: 64.6, note: "" },
-  { material: "PLA Aero", colorname: "White", color: "#F5F1DD", distance: 101.9, note: "" },
-  { material: "PLA Aero", colorname: "Gray", color: "#CDCECA", distance: 120.2, note: "" },
-  { material: "PLA Aero", colorname: "Black", color: "#000000", distance: 98.4, note: "Discontinued" },
-  { material: "PLA Basic", colorname: "Black", color: "#000000", distance: 98.4, note: "" },
-  { material: "PLA Basic", colorname: "Cobalt Blue", color: "#0056B8", distance: 69.9, note: "" },
-  { material: "PLA Basic", colorname: "Cyan", color: "#0086D6", distance: 70.2, note: "Part of CMYK kit" },
-  { material: "PLA Basic", colorname: "Bambu Green", color: "#00AE42", distance: 91.6, note: "" },
-  { material: "PLA Basic", colorname: "Turquoise", color: "#00B1B7", distance: 77.5, note: "" },
-  { material: "PLA Basic", colorname: "Blue", color: "#0A2989", distance: 60.0, note: "" },
-  { material: "PLA Basic", colorname: "Mistletoe Green", color: "#3F8E43", distance: 77.2, note: "" },
-  { material: "PLA Basic", colorname: "Indigo Purple", color: "#482960", distance: 34.1, note: "" },
-  { material: "PLA Basic", colorname: "Dark Gray", color: "#545454", distance: 83.6, note: "" },
-  { material: "PLA Basic", colorname: "Blue Gray", color: "#5B6579", distance: 49.1, note: "" },
-  { material: "PLA Basic", colorname: "Purple", color: "#5E43B7", distance: 5.7, note: "" },
-  { material: "PLA Basic", colorname: "Cocoa Brown", color: "#6F5034", distance: 79.1, note: "" },
-  { material: "PLA Basic", colorname: "Bronze", color: "#847D48", distance: 91.7, note: "" },
-  { material: "PLA Basic", colorname: "Gray", color: "#8E9089", distance: 114.5, note: "" },
-  { material: "PLA Basic", colorname: "Maroon Red", color: "#9D2235", distance: 61.2, note: "" },
-  { material: "PLA Basic", colorname: "Brown", color: "#9D432C", distance: 67.8, note: "" },
-  { material: "PLA Basic", colorname: "Silver", color: "#A6A9AA", distance: 70.5, note: "" },
-  { material: "PLA Basic", colorname: "Bright Green", color: "#BECF00", distance: 112.9, note: "" },
-  { material: "PLA Basic", colorname: "Red", color: "#C12E1F", distance: 70.6, note: "" },
-  { material: "PLA Basic", colorname: "Light Gray", color: "#D1D3D5", distance: 74.5, note: "" },
-  { material: "PLA Basic", colorname: "Gold", color: "#E4BD68", distance: 90.9, note: "" },
-  { material: "PLA Basic", colorname: "Magenta", color: "#EC008C", distance: 72.8, note: "Part of CMYK kit" },
-  { material: "PLA Basic", colorname: "Yellow", color: "#F4EE2A", distance: 105.6, note: "Part of CMYK kit" },
-  { material: "PLA Basic", colorname: "Hot Pink", color: "#F5547C", distance: 76.6, note: "" },
-  { material: "PLA Basic", colorname: "Pink", color: "#F55A74", distance: 78.6, note: "" },
-  { material: "PLA Basic", colorname: "Beige", color: "#F7E6DE", distance: 90.3, note: "" },
-  { material: "PLA Basic", colorname: "Sunflower Yellow", color: "#FEC600", distance: 104.2, note: "" },
-  { material: "PLA Basic", colorname: "Orange", color: "#FF6A13", distance: 94.3, note: "" },
-  { material: "PLA Basic", colorname: "Pumpkin Orange", color: "#FF9016", distance: 98.3, note: "" },
-  { material: "PLA Basic", colorname: "Jade White", color: "#FFFFFF", distance: 101.5, note: "Part of CMYK kit" },
-  { material: "PLA Marble", colorname: "Red Granite", color: "#AD4E38", distance: 64.4, note: "" },
-  { material: "PLA Marble", colorname: "White Marble", color: "#F7F3F0", distance: 95.5, note: "" },
-  { material: "PLA Matte", colorname: "Charcoal", color: "#000000", distance: 98.4, note: "" },
-  { material: "PLA Matte", colorname: "Marine Blue", color: "#0078BF", distance: 71.6, note: "" },
-  { material: "PLA Matte", colorname: "Dark Blue", color: "#042F56", distance: 72.7, note: "" },
-  { material: "PLA Matte", colorname: "Grass Green", color: "#61C680", distance: 68.6, note: "" },
-  { material: "PLA Matte", colorname: "Dark Green", color: "#68724D", distance: 107.8, note: "" },
-  { material: "PLA Matte", colorname: "Dark Brown", color: "#7D6556", distance: 80.8, note: "" },
-  { material: "PLA Matte", colorname: "Ash Gray", color: "#9B9EA0", distance: 66.1, note: "" },
-  { material: "PLA Matte", colorname: "Ice Blue", color: "#A3D8E1", distance: 55.6, note: "" },
-  { material: "PLA Matte", colorname: "Lilac Purple", color: "#AE96D4", distance: 35.9, note: "" },
-  { material: "PLA Matte", colorname: "Dark Red", color: "#BB3D43", distance: 56.5, note: "" },
-  { material: "PLA Matte", colorname: "Latte Brown", color: "#D3B7A7", distance: 81.8, note: "" },
-  { material: "PLA Matte", colorname: "Scarlet Red", color: "#DE4343", distance: 68.6, note: "" },
-  { material: "PLA Matte", colorname: "Sakura Pink", color: "#E8AFCF", distance: 60.1, note: "" },
-  { material: "PLA Matte", colorname: "Desert Tan", color: "#E8DBB7", distance: 93.7, note: "" },
-  { material: "PLA Matte", colorname: "Lemon Yellow", color: "#F7D959", distance: 104.1, note: "" },
-  { material: "PLA Matte", colorname: "Mandarin Orange", color: "#F99963", distance: 94.2, note: "" },
-  { material: "PLA Matte", colorname: "Ivory White", color: "#FFFFFF", distance: 101.5, note: "" },
-  { material: "PLA Matte", colorname: "Bone White", color: "#CBC6B8", distance: 99.8, note: "" },
-  { material: "PLA Matte", colorname: "Caramel", color: "#AE835B", distance: 77.0, note: "" },
-  { material: "PLA Matte", colorname: "Terracotta", color: "#B15533", distance: 68.3, note: "" },
-  { material: "PLA Matte", colorname: "Nardo Gray", color: "#757575", distance: 80.4, note: "" },
-  { material: "PLA Matte", colorname: "Plum", color: "#950051", distance: 78.6, note: "" },
-  { material: "PLA Matte", colorname: "Dark Chocolate", color: "#4D3324", distance: 79.9, note: "" },
-  { material: "PLA Matte", colorname: "Apple Green", color: "#C2E189", distance: 105.8, note: "" },
-  { material: "PLA Matte", colorname: "Sky Blue", color: "#56B7E6", distance: 55.2, note: "" },
-  { material: "PLA Metal", colorname: "Oxide Green Metallic", color: "#1D7C6A", distance: 61.1, note: "" },
-  { material: "PLA Metal", colorname: "Cobalt Blue Metallic", color: "#39699E", distance: 27.5, note: "" },
-  { material: "PLA Metal", colorname: "Iron Gray Metallic", color: "#43403D", distance: 95.9, note: "" },
-  { material: "PLA Metal", colorname: "Copper Brown Metallic", color: "#AA6443", distance: 68.3, note: "" },
-  { material: "PLA Metal", colorname: "Iridium Gold Metallic", color: "#B39B84", distance: 83.8, note: "" },
-  { material: "PLA Silk+", colorname: "Blue", color: "#008BDA", distance: 70.2, note: "" },
-  { material: "PLA Silk+", colorname: "Candy Green", color: "#018814", distance: 98.8, note: "" },
-  { material: "PLA Silk+", colorname: "Titan Gray", color: "#5F6367", distance: 60.9, note: "" },
-  { material: "PLA Silk+", colorname: "Purple", color: "#8671CB", distance: 24.1, note: "" },
-  { material: "PLA Silk+", colorname: "Mint", color: "#96DCB9", distance: 69.9, note: "" },
-  { material: "PLA Silk+", colorname: "Baby Blue", color: "#A8C6EE", distance: 58.0, note: "" },
-  { material: "PLA Silk+", colorname: "Rose Gold", color: "#BA9594", distance: 73.6, note: "" },
-  { material: "PLA Silk+", colorname: "Silver", color: "#C8C8C8", distance: 90.6, note: "" },
-  { material: "PLA Silk+", colorname: "Candy Red", color: "#D02727", distance: 65.5, note: "" },
-  { material: "PLA Silk+", colorname: "Champagne", color: "#F3CFB2", distance: 93.0, note: "" },
-  { material: "PLA Silk+", colorname: "Gold", color: "#F4A925", distance: 96.3, note: "" },
-  { material: "PLA Silk+", colorname: "Pink", color: "#F7ADA6", distance: 88.4, note: "" },
-  { material: "PLA Silk+", colorname: "White", color: "#FFFFFF", distance: 101.5, note: "" },
-  { material: "PLA Wood", colorname: "Rosewood", color: "#4C241C", distance: 72.9, note: "" },
-  { material: "PLA Wood", colorname: "Black Walnut", color: "#4F3F24", distance: 87.1, note: "" },
-  { material: "PLA Wood", colorname: "Classic Birch", color: "#918669", distance: 91.3, note: "" },
-  { material: "PLA Wood", colorname: "Clay Brown", color: "#995F11", distance: 90.8, note: "" },
-  { material: "PLA Wood", colorname: "Ochre Yellow", color: "#C98935", distance: 78.9, note: "" },
-  { material: "PLA Wood", colorname: "White Oak", color: "#D6CCA3", distance: 93.2, note: "" },
-  { material: "PLA-CF", colorname: "Black", color: "#000000", distance: 98.4, note: "" },
-  { material: "PLA-CF", colorname: "Royal Blue", color: "#2842AD", distance: 31.7, note: "" },
-  { material: "PLA-CF", colorname: "Lava Gray", color: "#4d5054", distance: 62.7, note: "" },
-  { material: "PLA-CF", colorname: "Matcha Green", color: "#5c9748", distance: 87.2, note: "" },
-  { material: "PLA-CF", colorname: "Iris Purple", color: "#69398E", distance: 19.8, note: "" },
-  { material: "PLA-CF", colorname: "Jeans Blue", color: "#6e88bc", distance: 33.5, note: "" },
-  { material: "PLA-CF", colorname: "Burgundy Red", color: "#951e23", distance: 66.4, note: "" },
-  { material: "TPU 68D for AMS", colorname: "Black", color: "#000000", distance: 98.4, note: "" },
-  { material: "TPU 68D for AMS", colorname: "Blue", color: "#5898DD", distance: 44.9, note: "" },
-  { material: "TPU 68D for AMS", colorname: "Neon Green", color: "#90FF1A", distance: 113.3, note: "" },
-  { material: "TPU 68D for AMS", colorname: "Gray", color: "#939393", distance: 82.4, note: "" },
-  { material: "TPU 68D for AMS", colorname: "Red", color: "#ED0000", distance: 84.6, note: "" },
-  { material: "TPU 68D for AMS", colorname: "Yellow", color: "#F9EF41", distance: 108.0, note: "" },
-  { material: "TPU 68D for AMS", colorname: "White", color: "#FFFFFF", distance: 101.5, note: "" },
-  { material: "TPU 95A HF", colorname: "Blue", color: "#0072CE", distance: 69.6, note: "" },
-  { material: "TPU 95A HF", colorname: "Black", color: "#101820", distance: 59.0, note: "" },
-  { material: "TPU 95A HF", colorname: "Gray", color: "#898D8D", distance: 71.1, note: "" },
-  { material: "TPU 95A HF", colorname: "Red", color: "#C8102E", distance: 71.9, note: "" },
-  { material: "TPU 95A HF", colorname: "Yellow", color: "#F3E600", distance: 108.5, note: "" },
-  { material: "TPU 95A HF", colorname: "White", color: "#FFFFFF", distance: 101.5, note: "" },
-  { material: "PC", colorname: "Transparent", color: "#FFFFFF", distance: 101.5, note: "" },
-  { material: "PC", colorname: "Clear Black", color: "#000000", distance: 98.4, note: "" },
-  { material: "PC", colorname: "Black", color: "#000000", distance: 98.4, note: "" },
-  { material: "PC", colorname: "White", color: "#FFFFFF", distance: 101.5, note: "" },
-  { material: "PC-FR", colorname: "Black", color: "#000000", distance: 98.4, note: "" },
-  { material: "PC-FR", colorname: "White", color: "#FFFFFF", distance: 101.5, note: "" },
-  { material: "PC-FR", colorname: "Gray", color: "#A8A8AA", distance: 63.3, note: "" },
-  { material: "PPS-CF", colorname: "Black", color: "#000000", distance: 98.4, note: "" }
-];
+const MATERIALS_DB_FILE = './data/base_dados_completa.json';
 
 class MaterialsDB {
   constructor() {
@@ -202,15 +13,13 @@ class MaterialsDB {
     if (this.initialized) return;
 
     try {
-      // Try to load existing materials database
+      // Load materials from base_dados_completa.json
       const data = await fs.readFile(MATERIALS_DB_FILE, 'utf8');
       this.materials = JSON.parse(data);
-      console.log(`Loaded ${this.materials.length} materials from database`);
+      console.log(`Loaded ${this.materials.length} materials from base_dados_completa.json`);
     } catch (error) {
-      // File doesn't exist, use defaults
-      console.log('Materials database not found, creating with defaults');
-      this.materials = [...DEFAULT_MATERIALS];
-      await this.save();
+      console.error('ERROR: base_dados_completa.json not found! Please ensure the file exists.');
+      this.materials = [];
     }
 
     this.initialized = true;
@@ -218,9 +27,11 @@ class MaterialsDB {
 
   async save() {
     try {
-      // Ensure data directory exists
+      // Save materials back to base_dados_completa.json
+      // This includes any custom materials added by users
       await fs.mkdir('./data', { recursive: true });
       await fs.writeFile(MATERIALS_DB_FILE, JSON.stringify(this.materials, null, 2));
+      console.log(`Saved ${this.materials.length} materials to base_dados_completa.json`);
     } catch (error) {
       console.error('Error saving materials database:', error);
     }
@@ -310,12 +121,17 @@ class MaterialsDB {
     );
 
     if (!exists) {
+      // Add with full base_dados_completa.json structure
       this.materials.push({
+        manufacturer: "BambuLab",
         material: materialType,
+        name: `Bambu ${materialType}`,
         colorname: colorname,
         color: hexColor.toUpperCase(),
         distance: 0,
-        note: "Custom"
+        note: "Custom",
+        productType: "Spool",
+        ean: ""  // No EAN for custom materials
       });
       await this.save();
       console.log(`Added new material: ${materialType} - ${colorname}`);

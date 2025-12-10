@@ -99,11 +99,14 @@ When accessing from a mobile device, you'll have additional features:
 
 **EAN Lookup System:**
 The barcode scanner uses a sophisticated multi-tier approach to identify products:
-- **Tier 1 (Local)**: Instant lookup from local database with complete product info and color HEX
+- **Tier 1 (Local)**: Instant lookup from `base_dados_completa.json` - the single source of truth for all material data
+  - Contains 240+ BambuLab filament EAN codes with complete product info and color HEX
+  - Normalized material types matching printer_data.yaml specifications
+  - Full product names and color information
 - **Tier 2 (APIs)**: Free public APIs for broader product coverage
 - **Tier 3 (Scraping)**: Web scraping as final fallback
 
-This ensures maximum compatibility with various filament brands while prioritizing fast local lookups for BambuLab products.
+This ensures maximum compatibility with various filament brands while prioritizing fast local lookups for BambuLab products. See [EAN_LOOKUP_SYSTEM.md](EAN_LOOKUP_SYSTEM.md) for detailed documentation.
 
 ## Stock Total View
 The Stock Total tab provides a comprehensive view of all filaments across all users:
