@@ -45,14 +45,26 @@ class MaterialsDB {
 
   // Get colors for a specific material type
   getColorsForMaterial(materialType) {
-    return this.materials
+    const colors = this.materials
       .filter(m => m.material === materialType)
       .map(m => ({
         colorname: m.colorname,
         color: m.color,
-        distance: m.distance,
         note: m.note
       }));
+
+    // Filter duplicates: keep only unique colornames
+    const uniqueColors = [];
+    const seenColorNames = new Set();
+
+    for (const color of colors) {
+      if (!seenColorNames.has(color.colorname)) {
+        seenColorNames.add(color.colorname);
+        uniqueColors.push(color);
+      }
+    }
+
+    return uniqueColors;
   }
 
   // Find color by product name and hex code (for HASS import)
@@ -225,9 +237,7 @@ class MaterialsDB {
         name: `Bambu ${materialType}`,
         colorname: colorname,
         color: hexColor.toUpperCase(),
-        distance: 0,
         note: "Custom",
-        productType: "Spool",
         ean: ""  // No EAN for custom materials
       });
       await this.save();
@@ -243,12 +253,65 @@ class MaterialsDB {
     return this.materials;
   }
 
+  // Update or create material from filament data
+  async updateOrCreateMaterial(filamentData) {
+    const { manufacturer, type, name, colorname, color } = filamentData;
+
+    console.log(`[MaterialsDB] updateOrCreateMaterial - Manufacturer: ${manufacturer}, Type: ${type}, Name: ${name}, ColorName: ${colorname}, Color: ${color}`);
+
+    // Check if material already exists by manufacturer + material + name + colorname + color
+    const existing = this.materials.find(
+      m => m.manufacturer === manufacturer &&
+           m.material === type &&
+           m.name === name &&
+           m.colorname === colorname &&
+           m.color.toUpperCase() === color.toUpperCase()
+    );
+
+    if (existing) {
+      console.log(`[MaterialsDB] Material already exists, no update needed`);
+      return { action: 'exists', material: existing };
+    }
+
+    // Check if we need to update an existing material (same manufacturer + material + name + colorname but different color)
+    const toUpdate = this.materials.find(
+      m => m.manufacturer === manufacturer &&
+           m.material === type &&
+           m.name === name &&
+           m.colorname === colorname
+    );
+
+    if (toUpdate) {
+      // Update the color
+      toUpdate.color = color.toUpperCase();
+      await this.save();
+      console.log(`[MaterialsDB] Updated material color: ${name} - ${colorname}`);
+      return { action: 'updated', material: toUpdate };
+    }
+
+    // Material doesn't exist, create new entry
+    const newMaterial = {
+      manufacturer,
+      material: type,
+      name,
+      colorname,
+      color: color.toUpperCase(),
+      note: "Custom",
+      ean: ""
+    };
+
+    this.materials.push(newMaterial);
+    await this.save();
+    console.log(`[MaterialsDB] Created new material: ${name} - ${colorname}`);
+    return { action: 'created', material: newMaterial };
+  }
+
   // Update existing material with EAN or add new material with EAN
   async updateOrAddEAN(ean, materialData) {
     const { manufacturer, material, name, colorname, color } = materialData;
 
     // Check if EAN already exists in database
-    const existingByEAN = this.materials.find(m => m.ean === ean);
+    const existingByEAN = this.materials.find(m => m.ean && m.ean.split(',').includes(ean));
 
     if (existingByEAN) {
       // EAN exists, update the entry
@@ -263,19 +326,26 @@ class MaterialsDB {
       return { action: 'updated', ean };
     }
 
-    // Check if same material/color combination exists but without EAN
+    // Check if same material/color combination exists
     const existingByMaterial = this.materials.find(
       m => m.manufacturer === manufacturer &&
            m.material === material &&
            m.name === name &&
            m.colorname === colorname &&
-           m.color.toUpperCase() === color.toUpperCase() &&
-           (!m.ean || m.ean === '')
+           m.color.toUpperCase() === color.toUpperCase()
     );
 
     if (existingByMaterial) {
-      // Found matching material without EAN, add EAN to it
-      existingByMaterial.ean = ean;
+      // Found matching material, add or append EAN to it
+      if (existingByMaterial.ean && existingByMaterial.ean !== '') {
+        // Append EAN if not already in the list
+        const eans = existingByMaterial.ean.split(',');
+        if (!eans.includes(ean)) {
+          existingByMaterial.ean = [...eans, ean].join(',');
+        }
+      } else {
+        existingByMaterial.ean = ean;
+      }
       await this.save();
       console.log(`Added EAN ${ean} to existing material: ${name} - ${colorname}`);
       return { action: 'ean_added', ean };
@@ -288,9 +358,7 @@ class MaterialsDB {
       name,
       colorname,
       color: color.toUpperCase(),
-      distance: 98.4,  // Default distance
       note: "Custom",
-      productType: "Spool",
       ean
     });
 

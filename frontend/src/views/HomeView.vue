@@ -4,7 +4,7 @@
       <v-text-field
         v-model="search"
         class="mr-2"
-        :label="t('$vuetify.homeView.search')"
+        label="Search"
         prepend-inner-icon="mdi-magnify"
         single-line
         variant="outlined"
@@ -22,7 +22,7 @@
             elevation="2"
           >
             <v-icon left>mdi-plus</v-icon>
-            {{ t('$vuetify.homeView.form.button') }}
+            {{ "Add Filament" }}
           </v-btn>
         </template>
 
@@ -30,27 +30,28 @@
           <v-card>
             <v-card-title class="bg-primary text-white pa-4">
               <v-icon left class="mr-2">mdi-cube-outline</v-icon>
-              {{ t('$vuetify.homeView.form.title') }}
+              Add New Filament
             </v-card-title>
 
             <v-divider></v-divider>
 
             <v-form v-model="valid" @submit.prevent ref="addForm">
-              <v-card-text class="pa-6" style="max-height: 70vh;">
+              <v-card-text class="pa-6" style="max-height: 60vh; overflow-y: auto;">
                 <v-container>
                   <!-- EAN Code Field -->
                   <v-row>
                     <v-col cols="12">
                       <v-text-field
                         v-model="addModel.ean"
-                        :label="t('$vuetify.homeView.form.ean') || 'EAN / Código de Barras'"
+                        label="EAN / Barcode"
                         prepend-inner-icon="mdi-barcode"
                         variant="outlined"
                         density="comfortable"
-                        hint="Opcional - Código EAN do produto"
+                        hint="Optional - Product EAN code"
                         persistent-hint
                         :error="eanError"
                         :error-messages="eanErrorMessage"
+                        @blur="onEanManualInput"
                       >
                         <template v-slot:append>
                           <v-btn
@@ -74,7 +75,7 @@
                         v-model="addModel.manufacturer"
                         :rules="requiredRules"
                         :items="autocomplete('manufacturer')"
-                        :label="t('$vuetify.homeView.form.manufacturer')"
+                        label="Manufacturer"
                         prepend-inner-icon="mdi-factory"
                         variant="outlined"
                         density="comfortable"
@@ -88,12 +89,29 @@
                         v-model="addModel.type"
                         :rules="requiredRules"
                         :items="isBambuLab ? materialTypes : autocomplete('type')"
-                        :label="t('$vuetify.homeView.form.type')"
+                        label="Material Type"
                         prepend-inner-icon="mdi-cog"
                         variant="outlined"
                         density="comfortable"
                         required
                         @update:model-value="onMaterialTypeChange"
+                      ></v-combobox>
+                    </v-col>
+                  </v-row>
+
+                  <!-- Variation Field (for BambuLab) -->
+                  <v-row v-if="isBambuLab">
+                    <v-col cols="12">
+                      <v-combobox
+                        v-model="addModel.variation"
+                        :items="availableVariations"
+                        label="Variation"
+                        prepend-inner-icon="mdi-shape"
+                        variant="outlined"
+                        density="comfortable"
+                        hint="e.g., Matte, Basic, Support"
+                        persistent-hint
+                        @update:model-value="onVariationChange"
                       ></v-combobox>
                     </v-col>
                   </v-row>
@@ -104,11 +122,12 @@
                       <v-text-field
                         v-model="addModel.name"
                         :rules="requiredRules"
-                        :label="t('$vuetify.homeView.form.name')"
+                        label="Name"
                         prepend-inner-icon="mdi-tag-text"
                         variant="outlined"
                         density="comfortable"
                         required
+                        :readonly="isBambuLab"
                       ></v-text-field>
                     </v-col>
                   </v-row>
@@ -120,7 +139,7 @@
                         v-model="addModel.size"
                         :items="[1000, 500, 250]"
                         :rules="requiredRules"
-                        :label="t('$vuetify.homeView.form.size')"
+                        label="Size"
                         prepend-inner-icon="mdi-weight"
                         variant="outlined"
                         density="comfortable"
@@ -138,7 +157,7 @@
                           :min="0"
                           :max="100"
                           :step="1"
-                          :label="t('$vuetify.homeView.form.remain')"
+                          label="Remaining"
                           color="primary"
                           required
                           thumb-label="always"
@@ -162,7 +181,7 @@
                         required
                         :rules="requiredRules"
                         :items="availableColorNames"
-                        :label="t('$vuetify.homeView.form.colorname')"
+                        label="Color Name"
                         prepend-inner-icon="mdi-palette"
                         variant="outlined"
                         density="comfortable"
@@ -173,7 +192,7 @@
 
                   <v-row>
                     <v-col cols="12" class="text-center">
-                      <div class="text-subtitle-2 mb-2">{{ t('$vuetify.homeView.form.color') || 'Cor' }}</div>
+                      <div class="text-subtitle-2 mb-2">Color</div>
                       <v-color-picker
                         v-model="addModel.color"
                         required
@@ -192,30 +211,22 @@
               <v-divider></v-divider>
 
               <v-card-actions class="pa-4">
-                <v-spacer></v-spacer>
-
                 <v-btn
-                  :text="t('$vuetify.confirmEdit.cancel')"
-                  color="error"
-                  variant="outlined"
-                  size="large"
+                  color="grey"
+                  variant="text"
                   @click="closeAddDialog"
                 >
-                  <v-icon left>mdi-close</v-icon>
-                  {{ t('$vuetify.confirmEdit.cancel') }}
+                  Cancel
                 </v-btn>
-
+                <v-spacer></v-spacer>
                 <v-btn
-                  :text="t('$vuetify.general.save')"
-                  color="success"
+                  color="primary"
                   variant="elevated"
-                  size="large"
-                  type="submit"
                   :disabled="!valid"
                   @click="addFilament"
                 >
                   <v-icon left>mdi-content-save</v-icon>
-                  {{ t('$vuetify.general.save') }}
+                  Save
                 </v-btn>
               </v-card-actions>
             </v-form>
@@ -340,16 +351,15 @@ import { onMounted, ref, computed, watch } from 'vue';
 import { useAppStore } from '@/store/app';
 import { storeToRefs } from 'pinia';
 import { toast } from 'vue3-toastify';
+import { useLocale, useDisplay } from 'vuetify';
 import FilamentDetails from '@/components/FilamentDetails.vue';
 import BarcodeScanner from '@/components/BarcodeScanner.vue';
-import { useLocale, useDisplay } from 'vuetify';
 import axios from 'axios';
 
-const { t } = useLocale();
 const { mobile } = useDisplay()
 
 const requiredRules = [
-  v => !!v || t('$vuetify.general.required')
+  v => !!v || "This field is required"
 ];
 
 const store = useAppStore();
@@ -370,6 +380,7 @@ const availableColors = ref([]);
 const addModel = ref({
   manufacturer: '',
   type: '',
+  variation: '',
   name: '',
   color: '#ffffffff',
   colorname: '',
@@ -398,15 +409,18 @@ const availableColorNames = computed(() => {
   return [];
 });
 
+// Available variations from database
+const availableVariations = ref([]);
+
 const headers = [
-  { title: t('$vuetify.homeView.form.manufacturer'), key: 'manufacturer' },
-  { title: t('$vuetify.homeView.form.type'), key: 'type' },
-  { title: t('$vuetify.homeView.form.name'), key: 'name' },
-  { title: t('$vuetify.homeView.form.color'), key: 'color' },
-  { title: t('$vuetify.homeView.form.colorname'), key: 'colorname' },
-  { title: t('$vuetify.homeView.form.spools'), key: 'filaments' },
-  { title: t('$vuetify.homeView.form.remain'), key: 'remain' },
-  { title: t('$vuetify.homeView.form.actions'), key: 'actions', sortable: false }
+  { title: "Manufacturer", key: 'manufacturer' },
+  { title: "Material Type", key: 'type' },
+  { title: "Name", key: 'name' },
+  { title: "Color", key: 'color' },
+  { title: "Color Name", key: 'colorname' },
+  { title: "Spools", key: 'filaments' },
+  { title: "Remaining", key: 'remain' },
+  { title: "Actions", key: 'actions', sortable: false }
 ];
 
 onMounted(async () => {
@@ -426,25 +440,54 @@ onMounted(async () => {
 
 // Load colors when manufacturer or material type changes
 const onManufacturerChange = () => {
-  // Reset type and colors when manufacturer changes
+  // Reset type, variation and colors when manufacturer changes
   addModel.value.type = '';
+  addModel.value.variation = '';
+  addModel.value.name = '';
   availableColors.value = [];
   addModel.value.colorname = '';
 };
 
 const onMaterialTypeChange = async () => {
-  // Reset color selection
+  // Reset variation, color selection and name
+  addModel.value.variation = '';
   addModel.value.colorname = '';
   availableColors.value = [];
+  availableVariations.value = [];
 
-  // If BambuLab and type selected, load colors
+  // Update name for BambuLab
+  updateBambuLabName();
+
+  // If BambuLab and type selected, load colors and variations
   if (isBambuLab.value && addModel.value.type) {
     try {
-      const response = await axios.get(`/materials/${encodeURIComponent(addModel.value.type)}/colors`);
-      availableColors.value = response.data;
+      // Load colors
+      const colorsResponse = await axios.get(`/materials/${encodeURIComponent(addModel.value.type)}/colors`);
+      availableColors.value = colorsResponse.data;
+
+      // Load variations
+      const variationsResponse = await axios.get(`/materials/${encodeURIComponent(addModel.value.type)}/variations`);
+      availableVariations.value = variationsResponse.data;
     } catch (error) {
-      console.error('Error loading colors:', error);
+      console.error('Error loading colors/variations:', error);
     }
+  }
+};
+
+const onVariationChange = () => {
+  // Update name for BambuLab when variation changes
+  if (isBambuLab.value) {
+    updateBambuLabName();
+  }
+};
+
+const updateBambuLabName = () => {
+  if (isBambuLab.value && addModel.value.type) {
+    let name = `Bambu ${addModel.value.type}`;
+    if (addModel.value.variation) {
+      name += ` ${addModel.value.variation}`;
+    }
+    addModel.value.name = name;
   }
 };
 
@@ -474,6 +517,7 @@ const resetAddModel = () => {
   addModel.value = {
     manufacturer: '',
     type: '',
+    variation: '',
     name: '',
     color: '#ffffffff',
     colorname: '',
@@ -513,15 +557,17 @@ const addFilament = async () => {
         toast.warning('Filamento adicionado mas EAN não foi salvo na base de dados');
       }
     } else if (isBambuLab.value) {
-      // If BambuLab but no EAN, just save material/color combination
+      // If BambuLab but no EAN, save complete material info
       try {
         let hexColor = addModel.value.color;
         if (hexColor.length === 9) {
           hexColor = hexColor.substring(0, 7);
         }
 
-        await axios.post('/materials', {
-          material: addModel.value.type,
+        await axios.post('/materials/update-from-filament', {
+          manufacturer: addModel.value.manufacturer,
+          type: addModel.value.type,
+          name: addModel.value.name,
           colorname: addModel.value.colorname,
           color: hexColor
         });
@@ -564,17 +610,65 @@ const openScanner = () => {
   barcodeScanner.value.open();
 };
 
+const onEanManualInput = async () => {
+  const code = addModel.value.ean;
+
+  // Only search if EAN has at least 8 digits
+  if (!code || code.length < 8) {
+    return;
+  }
+
+  // Search for product info
+  try {
+    const response = await axios.get(`/product-info/${code}`);
+
+    if (response.data) {
+      // Auto-fill the form with scraped data (only if fields are empty)
+      if (!addModel.value.manufacturer) addModel.value.manufacturer = response.data.manufacturer || '';
+      if (!addModel.value.type) addModel.value.type = response.data.type || '';
+      if (!addModel.value.colorname) addModel.value.colorname = response.data.colorname || '';
+      if (!addModel.value.name) addModel.value.name = response.data.name || response.data.type || '';
+
+      // If color is provided directly from local database, use it
+      if (response.data.color && !addModel.value.color) {
+        // Convert HEX to rgba format for v-color-picker
+        const hexColor = response.data.color.startsWith('#') ? response.data.color : '#' + response.data.color;
+        addModel.value.color = hexColor + 'ff';
+      }
+
+      // If BambuLab manufacturer and type, load colors
+      if (isBambuLab.value && addModel.value.type) {
+        await onMaterialTypeChange();
+
+        // If colorname was found and no color was set from database, try to auto-fill the color hex
+        if (addModel.value.colorname && !response.data.color) {
+          await onColorNameChange();
+        }
+      }
+
+      toast.success('Product found in database!');
+      eanError.value = false;
+      eanErrorMessage.value = '';
+    }
+  } catch (error) {
+    // EAN not found - this is OK, user can fill manually
+    console.log('EAN not found in database, user can fill manually');
+    eanError.value = false;
+    eanErrorMessage.value = '';
+  }
+};
+
 const handleCodeScanned = async (code) => {
-  // Procura por um filamento com o código escaneado
+  // Search for filament with scanned code
   const result = await store.searchFilamentByCode(code);
 
   if (result) {
-    toast.success('Filamento encontrado!');
+    toast.success('Filament found!');
     filamentDetails.value.open(result.filaments);
   } else {
     // Filament not found, try to fetch product info from barcode
     try {
-      toast.info('Buscando informações do produto...');
+      toast.info('Searching product info...');
       const response = await axios.get(`/product-info/${code}`);
 
       if (response.data) {
@@ -586,6 +680,7 @@ const handleCodeScanned = async (code) => {
         // Auto-fill the form with scraped data
         addModel.value.manufacturer = response.data.manufacturer || '';
         addModel.value.type = response.data.type || '';
+        addModel.value.variation = response.data.variation || '';
         addModel.value.colorname = response.data.colorname || '';
         addModel.value.name = response.data.name || response.data.type || '';
 
@@ -599,7 +694,23 @@ const handleCodeScanned = async (code) => {
 
         // If BambuLab manufacturer and type, load colors
         if (isBambuLab.value && addModel.value.type) {
+          // Preserve colorname and variation before calling onMaterialTypeChange (which resets them)
+          const preservedColorname = addModel.value.colorname;
+          const preservedVariation = addModel.value.variation;
+          const preservedName = addModel.value.name;
+
           await onMaterialTypeChange();
+
+          // Restore colorname, variation and name after onMaterialTypeChange
+          if (preservedColorname) {
+            addModel.value.colorname = preservedColorname;
+          }
+          if (preservedVariation) {
+            addModel.value.variation = preservedVariation;
+          }
+          if (preservedName) {
+            addModel.value.name = preservedName;
+          }
 
           // If colorname was found and no color was set from database, try to auto-fill the color hex
           if (addModel.value.colorname && !response.data.color) {
@@ -607,18 +718,32 @@ const handleCodeScanned = async (code) => {
           }
         }
 
-        toast.success('Produto identificado! Complete os dados.');
-        openAddDialog.value = true;
+        // Check if all required fields are filled (from local database)
+        const allFieldsFilled = addModel.value.manufacturer &&
+                                addModel.value.type &&
+                                addModel.value.name &&
+                                addModel.value.colorname &&
+                                addModel.value.color;
+
+        if (allFieldsFilled && response.data.source === 'local_database') {
+          // All fields filled from local database, auto-save
+          toast.success('Material found in database! Adding to inventory...');
+          await addFilament();
+        } else {
+          // Some fields missing, let user complete
+          toast.success('Product identified! Complete the data.');
+          openAddDialog.value = true;
+        }
       }
     } catch (error) {
       console.error('Error fetching product info:', error);
 
       // Pre-fill EAN even on error
       addModel.value.ean = code;
-      eanError.value = true;
-      eanErrorMessage.value = 'EAN não encontrado na base de dados - será adicionado ao salvar';
+      eanError.value = false;  // Changed to false - allow user to save manually
+      eanErrorMessage.value = '';
 
-      toast.warning('EAN não encontrado. Preencha os dados manualmente.');
+      toast.warning('EAN not found. Fill data manually.');
       openAddDialog.value = true;
     }
   }

@@ -4,7 +4,7 @@
       <v-col cols="12">
         <h1 class="text-h4 mb-6">
           <v-icon size="large" class="mr-2">mdi-cog</v-icon>
-          {{ t('$vuetify.settings.title') }}
+          Settings
         </h1>
       </v-col>
     </v-row>
@@ -15,20 +15,20 @@
         <v-card elevation="2">
           <v-card-title class="bg-primary">
             <v-icon class="mr-2" color="white">mdi-account</v-icon>
-            <span class="text-white">{{ t('$vuetify.settings.userInfo') }}</span>
+            <span class="text-white">User Information</span>
           </v-card-title>
           <v-card-text class="pa-4">
             <v-list>
               <v-list-item>
-                <v-list-item-title class="text-caption text-grey">{{ t('$vuetify.settings.username') }}</v-list-item-title>
+                <v-list-item-title class="text-caption text-grey">Username</v-list-item-title>
                 <v-list-item-subtitle class="text-h6">{{ store.user?.username }}</v-list-item-subtitle>
               </v-list-item>
               <v-list-item>
-                <v-list-item-title class="text-caption text-grey">{{ t('$vuetify.settings.email') }}</v-list-item-title>
+                <v-list-item-title class="text-caption text-grey">Email</v-list-item-title>
                 <v-list-item-subtitle class="text-h6">{{ store.user?.email }}</v-list-item-subtitle>
               </v-list-item>
               <v-list-item>
-                <v-list-item-title class="text-caption text-grey">{{ t('$vuetify.settings.role') }}</v-list-item-title>
+                <v-list-item-title class="text-caption text-grey">Role</v-list-item-title>
                 <v-list-item-subtitle>
                   <v-chip :color="store.user?.role === 'admin' ? 'error' : 'primary'" size="small">
                     {{ store.user?.role }}
@@ -45,13 +45,13 @@
         <v-card elevation="2">
           <v-card-title class="bg-primary">
             <v-icon class="mr-2" color="white">mdi-home-assistant</v-icon>
-            <span class="text-white">{{ t('$vuetify.settings.hassSettings') }}</span>
+            <span class="text-white">Home Assistant Settings</span>
           </v-card-title>
           <v-card-text class="pa-4">
             <v-form v-model="hassValid">
               <v-text-field
                 v-model="hassUrl"
-                :label="t('$vuetify.settings.hassUrl')"
+                label="Home Assistant URL"
                 prepend-inner-icon="mdi-web"
                 variant="outlined"
                 placeholder="https://homeassistant.local:8123"
@@ -60,7 +60,7 @@
 
               <v-text-field
                 v-model="hassToken"
-                :label="t('$vuetify.settings.hassToken')"
+                label="Long-Lived Access Token"
                 prepend-inner-icon="mdi-key"
                 variant="outlined"
                 type="password"
@@ -70,7 +70,7 @@
 
               <v-text-field
                 v-model="trayName"
-                :label="t('$vuetify.settings.trayName')"
+                label="Tray Name"
                 prepend-inner-icon="mdi-tray"
                 variant="outlined"
                 placeholder="tray"
@@ -88,7 +88,7 @@
                   class="flex-grow-1"
                 >
                   <v-icon start>mdi-cancel</v-icon>
-                  {{ t('$vuetify.confirmEdit.cancel') }}
+                  Cancel
                 </v-btn>
                 <v-btn
                   color="primary"
@@ -97,7 +97,7 @@
                   class="flex-grow-1"
                 >
                   <v-icon start>mdi-content-save</v-icon>
-                  {{ t('$vuetify.general.save') }}
+                  {{ "Save" }}
                 </v-btn>
               </div>
             </v-form>
@@ -112,7 +112,7 @@
         <v-card elevation="2">
           <v-card-title class="bg-primary d-flex align-center">
             <v-icon class="mr-2" color="white">mdi-printer-3d</v-icon>
-            <span class="text-white">{{ t('$vuetify.settings.amsConfig') }}</span>
+            <span class="text-white">AMS Configuration</span>
             <v-spacer></v-spacer>
             <v-btn
               color="white"
@@ -120,7 +120,7 @@
               @click="openAddAMSDialog"
             >
               <v-icon start>mdi-plus</v-icon>
-              {{ t('$vuetify.settings.addAMS') }}
+              Add AMS
             </v-btn>
           </v-card-title>
 
@@ -175,7 +175,7 @@
             </v-list>
 
             <v-alert v-else type="info" variant="tonal">
-              {{ t('$vuetify.settings.noAMS') }}
+              No AMS configured
             </v-alert>
           </v-card-text>
         </v-card>
@@ -187,14 +187,14 @@
       <v-card>
         <v-card-title>
           <v-icon class="mr-2">mdi-printer-3d</v-icon>
-          {{ editingAMS ? t('$vuetify.settings.editAMS') : t('$vuetify.settings.addAMS') }}
+          {{ editingAMS ? 'Edit AMS' : 'Add AMS' }}
         </v-card-title>
 
         <v-card-text>
           <v-form v-model="amsValid">
             <v-text-field
               v-model="amsForm.name"
-              :label="t('$vuetify.settings.amsName')"
+              label="AMS Name"
               :rules="requiredRules"
               variant="outlined"
               class="mb-2"
@@ -202,7 +202,7 @@
 
             <v-select
               v-model="amsForm.type"
-              :label="t('$vuetify.settings.amsType')"
+              label="AMS Type"
               :items="amsTypes"
               item-title="label"
               item-value="value"
@@ -213,7 +213,7 @@
 
             <v-text-field
               v-model="amsForm.sensor"
-              :label="t('$vuetify.settings.amsSensor')"
+              label="Sensor ID"
               :rules="requiredRules"
               variant="outlined"
               placeholder="sensor.x1c_010101010101_ams_1"
@@ -229,14 +229,14 @@
             variant="text"
             @click="amsDialog = false"
           >
-            {{ t('$vuetify.confirmEdit.cancel') }}
+            Cancel
           </v-btn>
           <v-btn
             color="primary"
             :disabled="!amsValid"
             @click="saveAMS"
           >
-            {{ t('$vuetify.general.save') }}
+            {{ "Save" }}
           </v-btn>
         </v-card-actions>
       </v-card>
@@ -248,9 +248,7 @@
 import { ref, onMounted } from 'vue';
 import { useAppStore } from '@/store/app';
 import { toast } from 'vue3-toastify';
-import { useLocale } from 'vuetify';
 
-const { t } = useLocale();
 const store = useAppStore();
 
 const hassValid = ref(false);
@@ -276,7 +274,7 @@ const amsTypes = [
 ];
 
 const requiredRules = [
-  v => !!v || t('$vuetify.general.required')
+  v => !!v || 'This field is required'
 ];
 
 onMounted(async () => {
@@ -314,13 +312,13 @@ const saveHassSettings = async () => {
     const success = await store.updateSettings(settings);
 
     if (success) {
-      toast.success(t('$vuetify.settings.hassSaved'));
+      toast.success('Home Assistant settings saved successfully');
       hassToken.value = ''; // Clear the token field after save
     } else {
-      toast.error(t('$vuetify.settings.hassError'));
+      toast.error('Error saving settings');
     }
   } catch (error) {
-    toast.error(t('$vuetify.settings.hassError'));
+    toast.error('Error saving settings');
   } finally {
     savingHass.value = false;
   }
@@ -355,33 +353,33 @@ const saveAMS = async () => {
   try {
     if (editingAMS.value) {
       await store.updateAMSConfig(editingAMS.value.id, amsForm.value);
-      toast.success(t('$vuetify.settings.amsUpdated'));
+      toast.success('AMS updated successfully');
     } else {
       await store.addAMSConfig(amsForm.value);
-      toast.success(t('$vuetify.settings.amsAdded'));
+      toast.success('AMS added successfully');
     }
     amsDialog.value = false;
   } catch (error) {
-    toast.error(t('$vuetify.settings.amsError'));
+    toast.error('Error with AMS operation');
   }
 };
 
 const toggleAMS = async (ams) => {
   try {
     await store.updateAMSConfig(ams.id, { enabled: !ams.enabled });
-    toast.success(t('$vuetify.settings.amsToggled'));
+    toast.success('AMS status toggled');
   } catch (error) {
-    toast.error(t('$vuetify.settings.amsError'));
+    toast.error('Error with AMS operation');
   }
 };
 
 const deleteAMS = async (ams) => {
-  if (confirm(t('$vuetify.settings.confirmDeleteAMS'))) {
+  if (confirm('Are you sure you want to delete this AMS?')) {
     try {
       await store.deleteAMSConfig(ams.id);
-      toast.success(t('$vuetify.settings.amsDeleted'));
+      toast.success('AMS deleted successfully');
     } catch (error) {
-      toast.error(t('$vuetify.settings.amsError'));
+      toast.error('Error with AMS operation');
     }
   }
 };

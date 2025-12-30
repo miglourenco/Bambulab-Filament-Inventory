@@ -5,7 +5,9 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "migrate": "node scripts/init-migrations.cjs",
+    "start": "node scripts/init-migrations.cjs && node index.js"
   },
   "author": "",
   "license": "ISC",
@@ -18,6 +20,7 @@
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
     "express-jwt": "^8.4.1",
+    "express-session": "^1.18.2",
     "js-yaml": "^4.1.1",
     "jsonwebtoken": "^9.0.2",
     "moment": "^2.29.4",

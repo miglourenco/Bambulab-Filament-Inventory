@@ -17,7 +17,7 @@
 
         <div class="d-flex align-center">
           <v-icon color="white" size="32" class="mr-2">mdi-printer-3d-nozzle</v-icon>
-          <span class="text-h5 font-weight-bold text-white">{{ t('$vuetify.defaultLayout.title') }}</span>
+          <span class="text-h5 font-weight-bold text-white">Filament Inventory</span>
         </div>
 
         <v-spacer />
@@ -33,7 +33,7 @@
           color="white"
           @click="store.logout"
         >
-          <v-icon left>mdi-logout</v-icon> {{ t('$vuetify.defaultLayout.logout') }}
+          <v-icon left>mdi-logout</v-icon> Logout
         </v-btn>
       </v-container>
     </v-app-bar>
@@ -49,7 +49,7 @@
         class="mb-2"
       >
         <v-list-item-title class="text-h6 font-weight-bold">
-          {{ t('$vuetify.defaultLayout.filamentFilter') }}
+          Filter by Type
         </v-list-item-title>
       </v-list-item>
 
@@ -58,7 +58,7 @@
       <v-list-item
         color="primary"
         @click="setFilter(null)"
-        :title="t('$vuetify.defaultLayout.filamentFilterAll')"
+        title="All Types"
         :class="{ 'bg-primary-lighten': store.filter === null, textBold: store.filter === null }"
       >
         <template v-slot:prepend>
@@ -84,13 +84,19 @@
       <v-list-item
         @click="goToStockTotal"
         prepend-icon="mdi-archive-check"
-        :title="t('$vuetify.defaultLayout.stockTotal')"
+        title="Stock Total"
+      ></v-list-item>
+
+      <v-list-item
+        @click="goToMaterialsDatabase"
+        prepend-icon="mdi-database-edit"
+        title="Materials Database"
       ></v-list-item>
 
       <v-list-item
         @click="goToSettings"
         prepend-icon="mdi-cog"
-        :title="t('$vuetify.defaultLayout.settings') || 'Settings'"
+        title="Settings"
       ></v-list-item>
     </v-list>
     </v-navigation-drawer>
@@ -108,15 +114,19 @@
             >
               <v-tab value="inventory" @click="$router.push({ name: 'Home' })">
                 <v-icon start>mdi-home</v-icon>
-                {{ t('$vuetify.defaultLayout.myInventory') }}
+                My Inventory
               </v-tab>
               <v-tab value="stock-total" @click="$router.push({ name: 'StockTotal' })">
                 <v-icon start>mdi-archive-check</v-icon>
-                {{ t('$vuetify.defaultLayout.stockTotal') }}
+                Stock Total
+              </v-tab>
+              <v-tab value="materials-database" @click="$router.push({ name: 'MaterialsDatabase' })">
+                <v-icon start>mdi-database-edit</v-icon>
+                Materials DB
               </v-tab>
               <v-tab value="settings" @click="$router.push({ name: 'Settings' })">
                 <v-icon start>mdi-cog</v-icon>
-                {{ t('$vuetify.defaultLayout.settings') }}
+                Settings
               </v-tab>
             </v-tabs>
           </v-col>
@@ -131,7 +141,7 @@
                   class="mb-2"
                 >
                   <v-list-item-title class="text-subtitle-1 font-weight-bold">
-                    {{ t('$vuetify.defaultLayout.filamentFilter') }}
+                    Filter by Type
                   </v-list-item-title>
                 </v-list-item>
 
@@ -140,7 +150,7 @@
                 <v-list-item
                   color="primary"
                   @click="setFilter(null)"
-                  :title="t('$vuetify.defaultLayout.filamentFilterAll')"
+                  title="All Types"
                   :class="{ 'bg-primary-lighten': store.filter === null, textBold: store.filter === null }"
                 >
                   <template v-slot:prepend>
@@ -200,6 +210,7 @@ const drawer = ref(false);
 const currentTab = computed(() => {
   if (route.name === 'Home') return 'inventory';
   if (route.name === 'StockTotal') return 'stock-total';
+  if (route.name === 'MaterialsDatabase') return 'materials-database';
   if (route.name === 'Settings') return 'settings';
   return 'inventory';
 });
@@ -222,6 +233,11 @@ const setFilter = (filter) => {
 const goToStockTotal = () => {
   drawer.value = false;
   window.location.hash = '#/stock-total';
+};
+
+const goToMaterialsDatabase = () => {
+  drawer.value = false;
+  window.location.hash = '#/materials-database';
 };
 
 const goToSettings = () => {

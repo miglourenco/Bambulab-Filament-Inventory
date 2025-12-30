@@ -5,7 +5,7 @@
         <v-btn icon @click="close">
           <v-icon color="white">mdi-close</v-icon>
         </v-btn>
-        <v-toolbar-title class="text-white">{{ t('$vuetify.scanner.title') || 'Scanner de Código' }}</v-toolbar-title>
+        <v-toolbar-title class="text-white">Barcode Scanner</v-toolbar-title>
         <v-spacer></v-spacer>
         <v-btn icon @click="toggleCamera">
           <v-icon color="white">mdi-camera-flip</v-icon>
@@ -29,7 +29,7 @@
           <div class="scan-overlay">
             <div class="scan-frame"></div>
             <div class="scan-instructions">
-              {{ t('$vuetify.scanner.instructions') || 'Posicione o código dentro da área' }}
+              Position the barcode within the frame
             </div>
           </div>
         </div>
@@ -41,10 +41,7 @@
 <script setup>
 import { ref, onUnmounted, watch } from 'vue';
 import { BrowserMultiFormatReader } from '@zxing/library';
-import { useLocale } from 'vuetify';
 import { toast } from 'vue3-toastify';
-
-const { t } = useLocale();
 const emit = defineEmits(['code-scanned']);
 
 const show = ref(false);
@@ -61,7 +58,7 @@ const open = async () => {
 
   // Check if we're in a secure context (HTTPS or localhost)
   if (!window.isSecureContext) {
-    toast.error('A câmera requer HTTPS. Por favor, acesse via HTTPS ou localhost.', {
+    toast.error('Camera requires HTTPS. Please access via HTTPS or localhost.', {
       autoClose: 5000
     });
     close();
@@ -70,7 +67,7 @@ const open = async () => {
 
   // Check if getUserMedia is available
   if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-    toast.error('Seu navegador não suporta acesso à câmera.', {
+    toast.error('Your browser does not support camera access.', {
       autoClose: 5000
     });
     close();
@@ -106,7 +103,7 @@ const startCamera = async () => {
     } catch (permError) {
       console.error('Permission error:', permError);
       if (permError.name === 'NotAllowedError' || permError.name === 'PermissionDeniedError') {
-        toast.error('Permissão da câmera negada. Por favor, permita o acesso à câmera nas configurações do navegador.');
+        toast.error('Camera permission denied. Please allow camera access in browser settings.');
         return;
       }
       throw permError;
@@ -128,7 +125,7 @@ const startCamera = async () => {
     currentDeviceId = backCamera ? backCamera.deviceId : videoDevices[0]?.deviceId;
 
     if (!currentDeviceId) {
-      toast.error('Nenhuma câmera disponível');
+      toast.error('No camera available');
       return;
     }
 
@@ -145,15 +142,15 @@ const startCamera = async () => {
 
     cameraReady.value = true;
   } catch (error) {
-    console.error('Erro ao iniciar câmera:', error);
+    console.error('Error starting camera:', error);
     if (error.name === 'NotAllowedError' || error.name === 'PermissionDeniedError') {
-      toast.error('Permissão da câmera negada');
+      toast.error('Camera permission denied');
     } else if (error.name === 'NotFoundError' || error.name === 'DevicesNotFoundError') {
-      toast.error('Nenhuma câmera encontrada');
+      toast.error('No camera found');
     } else if (error.name === 'NotReadableError' || error.name === 'TrackStartError') {
-      toast.error('Câmera em uso por outra aplicação');
+      toast.error('Camera in use by another application');
     } else {
-      toast.error('Erro ao acessar a câmera: ' + error.message);
+      toast.error('Error accessing camera: ' + error.message);
     }
   }
 };
@@ -168,7 +165,7 @@ const stopCamera = () => {
 
 const toggleCamera = async () => {
   if (videoDevices.length < 2) {
-    toast.info('Apenas uma câmera disponível');
+    toast.info('Only one camera available');
     return;
   }
 
@@ -183,7 +180,7 @@ const toggleCamera = async () => {
 
 const handleScan = (code) => {
   if (code) {
-    toast.success('Código detectado: ' + code);
+    toast.success('Code detected: ' + code);
     emit('code-scanned', code);
     close();
   }

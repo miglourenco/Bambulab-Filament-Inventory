@@ -1,0 +1,17 @@
+{
+  "users": {
+    "user-1765311664589-boucttcw9": {
+      "id": "user-1765311664589-boucttcw9",
+      "username": "miguellourenco",
+      "password": "$2b$10$Di81BMdr359ezTmZCPO/1u82Ylvyss6O31b0497zY1sWq1giQFsca",
+      "email": "miguel.123.369@gmail.com",
+      "role": "user",
+      "createdAt": "2025-12-09T20:21:04.631Z",
+      "hassUrl": "http://192.168.1.253:8123",
+      "hassToken": "",
+      "trayName": "tray"
+    }
+  },
+  "filaments": {},
+  "amsConfigs": {}
+}

@@ -20,5 +20,6 @@ RUN npm run build
 
 WORKDIR /usr/src/app
 
-CMD [ "node", "." ]
+# Run migrations and start server
+CMD [ "npm", "start" ]
 

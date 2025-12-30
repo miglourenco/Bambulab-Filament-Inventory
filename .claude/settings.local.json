@@ -13,7 +13,9 @@
       "Bash(ls:*)",
       "Bash(node restore-correct-structure.js:*)",
       "Bash(node verify-structure.js:*)",
-      "Bash(node validate-materials.js:*)"
+      "Bash(node validate-materials.js:*)",
+      "Bash(node scripts/database-maintenance/aggregate-products.js:*)",
+      "Bash(node:*)"
     ]
   }
 }

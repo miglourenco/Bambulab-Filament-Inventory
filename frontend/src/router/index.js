@@ -24,6 +24,11 @@ const routes = [
         name: 'StockTotal',
         component: () => import('@/views/StockTotalView.vue'),
       },
+      {
+        path: '/materials-database',
+        name: 'MaterialsDatabase',
+        component: () => import('@/views/MaterialsDatabaseView.vue'),
+      },
     ],
   },
   {

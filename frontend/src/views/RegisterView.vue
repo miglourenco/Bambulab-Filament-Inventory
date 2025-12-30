@@ -5,14 +5,14 @@
         <v-card elevation="8" rounded="lg">
           <v-card-title class="text-h5 text-center pa-6 bg-primary">
             <v-icon size="large" class="mr-2" color="white">mdi-account-plus</v-icon>
-            <span class="text-white">{{ t('$vuetify.registerPage.title') }}</span>
+            <span class="text-white">Create Account</span>
           </v-card-title>
 
           <v-card-text class="pa-6">
             <v-form v-model="valid" @submit.prevent="registerUser">
               <v-text-field
                 v-model="username"
-                :label="t('$vuetify.registerPage.username')"
+                label="Username"
                 :rules="requiredRules"
                 prepend-inner-icon="mdi-account"
                 variant="outlined"
@@ -21,7 +21,7 @@
 
               <v-text-field
                 v-model="email"
-                :label="t('$vuetify.registerPage.email')"
+                label="Email"
                 :rules="emailRules"
                 prepend-inner-icon="mdi-email"
                 variant="outlined"
@@ -31,7 +31,7 @@
 
               <v-text-field
                 v-model="adminKey"
-                :label="t('$vuetify.registerPage.adminKey')"
+                label="Admin Registration Key"
                 :rules="requiredRules"
                 prepend-inner-icon="mdi-key-variant"
                 :type="showAdminKey ? 'text' : 'password'"
@@ -45,7 +45,7 @@
 
               <v-text-field
                 v-model="password"
-                :label="t('$vuetify.registerPage.password')"
+                label="Password"
                 :rules="passwordRules"
                 prepend-inner-icon="mdi-lock"
                 :type="showPassword ? 'text' : 'password'"
@@ -57,7 +57,7 @@
 
               <v-text-field
                 v-model="confirmPassword"
-                :label="t('$vuetify.registerPage.confirmPassword')"
+                label="Confirm Password"
                 :rules="confirmPasswordRules"
                 prepend-inner-icon="mdi-lock-check"
                 :type="showConfirmPassword ? 'text' : 'password'"
@@ -80,20 +80,20 @@
                 :loading="loading"
               >
                 <v-icon start>mdi-account-plus</v-icon>
-                {{ t('$vuetify.registerPage.register') }}
+                Register
               </v-btn>
 
               <v-divider class="my-4"></v-divider>
 
               <div class="text-center">
-                <span class="text-body-2">{{ t('$vuetify.registerPage.haveAccount') }}</span>
+                <span class="text-body-2">Already have an account?</span>
                 <v-btn
                   variant="text"
                   color="primary"
                   @click="router.push({ name: 'Login' })"
                   class="ml-1"
                 >
-                  {{ t('$vuetify.registerPage.loginLink') }}
+                  Login
                 </v-btn>
               </div>
             </v-form>
@@ -109,9 +109,7 @@ import { ref } from 'vue';
 import { useAppStore } from '@/store/app';
 import { useRouter } from 'vue-router';
 import { toast } from 'vue3-toastify';
-import { useLocale } from 'vuetify';
 
-const { t } = useLocale();
 const store = useAppStore();
 const router = useRouter();
 
@@ -128,22 +126,22 @@ const loading = ref(false);
 const error = ref('');
 
 const requiredRules = [
-  v => !!v || t('$vuetify.general.required')
+  v => !!v || 'This field is required'
 ];
 
 const emailRules = [
-  v => !!v || t('$vuetify.general.required'),
-  v => /.+@.+\..+/.test(v) || t('$vuetify.registerPage.invalidEmail')
+  v => !!v || 'Email is required',
+  v => /.+@.+\..+/.test(v) || 'Email must be valid'
 ];
 
 const passwordRules = [
-  v => !!v || t('$vuetify.general.required'),
-  v => v.length >= 6 || t('$vuetify.registerPage.passwordLength')
+  v => !!v || 'Password is required',
+  v => v.length >= 6 || 'Password must be at least 6 characters'
 ];
 
 const confirmPasswordRules = [
-  v => !!v || t('$vuetify.general.required'),
-  v => v === password.value || t('$vuetify.registerPage.passwordMismatch')
+  v => !!v || 'Please confirm your password',
+  v => v === password.value || 'Passwords do not match'
 ];
 
 const registerUser = async () => {
@@ -152,7 +150,7 @@ const registerUser = async () => {
 
   try {
     await store.register(username.value, password.value, email.value, adminKey.value);
-    toast.success(t('$vuetify.registerPage.success'));
+    toast.success('Registration successful! Logging you in...');
 
     // Auto login after successful registration
     const loginSuccess = await store.checkLogin(username.value, password.value);
@@ -164,11 +162,11 @@ const registerUser = async () => {
     }
   } catch (err) {
     if (err.response?.status === 409) {
-      error.value = t('$vuetify.registerPage.usernameExists');
+      error.value = 'Username already exists';
     } else if (err.response?.status === 403) {
-      error.value = t('$vuetify.registerPage.invalidAdminKey');
+      error.value = 'Invalid admin key';
     } else {
-      error.value = t('$vuetify.registerPage.error');
+      error.value = 'Registration failed. Please try again.';
     }
     toast.error(error.value);
   } finally {

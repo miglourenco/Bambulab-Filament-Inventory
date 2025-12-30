@@ -181,6 +181,7 @@ class Database {
       type: filamentData.type || 'Unknown',
       manufacturer: filamentData.manufacturer || 'Unknown',
       name: filamentData.name || 'Unknown',
+      variation: filamentData.variation || '',
       color: filamentData.color || '#FFFFFFFF',
       colorname: filamentData.colorname || '',
       size: filamentData.size || 1000,

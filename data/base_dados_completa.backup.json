@@ -6,8 +6,7 @@
     "colorname": "Azure",
     "color": "#489FDF",
     "note": "",
-    "ean": "",
-    "variation": ""
+    "ean": ""
   },
   {
     "manufacturer": "BambuLab",
@@ -16,8 +15,7 @@
     "colorname": "Bambu Green",
     "color": "#00AE42",
     "note": "",
-    "ean": "6975337032144",
-    "variation": ""
+    "ean": "6975337032144"
   },
   {
     "manufacturer": "BambuLab",
@@ -26,8 +24,7 @@
     "colorname": "Beige",
     "color": "#DFD1A7",
     "note": "Discontinued",
-    "ean": "",
-    "variation": ""
+    "ean": ""
   },
   {
     "manufacturer": "BambuLab",
@@ -36,8 +33,7 @@
     "colorname": "Black",
     "color": "#000000",
     "note": "",
-    "ean": "6975337032878,6975337030331",
-    "variation": ""
+    "ean": "6975337032878,6975337030331"
   },
   {
     "manufacturer": "BambuLab",
@@ -46,8 +42,7 @@
     "colorname": "Blue",
     "color": "#0A2CA5",
     "note": "",
-    "ean": "6975337032861,6975337030379",
-    "variation": ""
+    "ean": "6975337032861,6975337030379"
   },
   {
     "manufacturer": "BambuLab",
@@ -56,8 +51,7 @@
     "colorname": "Lavender",
     "color": "#7248BD",
     "note": "Discontinued",
-    "ean": "",
-    "variation": ""
+    "ean": ""
   },
   {
     "manufacturer": "BambuLab",
@@ -66,8 +60,7 @@
     "colorname": "Mint",
     "color": "#7AE1BF",
     "note": "Discontinued",
-    "ean": "",
-    "variation": ""
+    "ean": ""
   },
   {
     "manufacturer": "BambuLab",
@@ -76,8 +69,7 @@
     "colorname": "Navy Blue",
     "color": "#0C2340",
     "note": "",
-    "ean": "6975337033783,6975337039587",
-    "variation": ""
+    "ean": "6975337033783,6975337039587"
   },
   {
     "manufacturer": "BambuLab",
@@ -86,8 +78,7 @@
     "colorname": "Olive",
     "color": "#789D4A",
     "note": "",
-    "ean": "",
-    "variation": ""
+    "ean": ""
   },
   {
     "manufacturer": "BambuLab",
@@ -96,8 +87,7 @@
     "colorname": "Orange",
     "color": "#FF6A13",
     "note": "",
-    "ean": "6975337032168",
-    "variation": ""
+    "ean": "6975337032168"
   },
   {
     "manufacturer": "BambuLab",
@@ -106,8 +96,7 @@
     "colorname": "Purple",
     "color": "#AF1685",
     "note": "Discontinued",
-    "ean": "",
-    "variation": ""
+    "ean": ""
   },
   {
     "manufacturer": "BambuLab",
@@ -116,8 +105,7 @@
     "colorname": "Red",
     "color": "#D32941",
     "note": "",
-    "ean": "6975337032892,6975337030355",
-    "variation": ""
+    "ean": "6975337032892,6975337030355"
   },
   {
     "manufacturer": "BambuLab",
@@ -126,18 +114,16 @@
     "colorname": "Silver",
     "color": "#87909A",
     "note": "",
-    "ean": "6975337032151,6975337039563",
-    "variation": ""
+    "ean": "6975337032151,6975337039563"
   },
   {
     "manufacturer": "BambuLab",
     "material": "ABS",
-    "variation": "",
     "name": "Bambu ABS",
     "colorname": "Tangerine Yellow",
     "color": "#FFC72C",
     "note": "",
-    "ean": "6975337039617"
+    "ean": ""
   },
   {
     "manufacturer": "BambuLab",
@@ -146,8 +132,7 @@
     "colorname": "White",
     "color": "#FFFFFF",
     "note": "",
-    "ean": "6975337032885,6975337030348",
-    "variation": ""
+    "ean": "6975337032885,6975337030348"
   },
   {
     "manufacturer": "BambuLab",
@@ -156,8 +141,7 @@
     "colorname": "Yellow",
     "color": "#FCE900",
     "note": "Discontinued",
-    "ean": "",
-    "variation": ""
+    "ean": ""
   },
   {
     "manufacturer": "BambuLab",
@@ -166,8 +150,7 @@
     "colorname": "Black",
     "color": "#000000",
     "note": "",
-    "ean": "",
-    "variation": ""
+    "ean": ""
   },
   {
     "manufacturer": "BambuLab",
@@ -176,8 +159,7 @@
     "colorname": "Blue",
     "color": "#0C3B95",
     "note": "",
-    "ean": "6975337037972",
-    "variation": ""
+    "ean": "6975337037972"
   },
   {
     "manufacturer": "BambuLab",
@@ -186,8 +168,7 @@
     "colorname": "Gray",
     "color": "#C6C6C6",
     "note": "",
-    "ean": "",
-    "variation": ""
+    "ean": ""
   },
   {
     "manufacturer": "BambuLab",
@@ -196,8 +177,7 @@
     "colorname": "Green",
     "color": "#61BF36",
     "note": "Discontinued",
-    "ean": "",
-    "variation": ""
+    "ean": ""
   },
   {
     "manufacturer": "BambuLab",
@@ -206,8 +186,7 @@
     "colorname": "Orange",
     "color": "#F48438",
     "note": "",
-    "ean": "6975337037286",
-    "variation": ""
+    "ean": "6975337037286"
   },
   {
     "manufacturer": "BambuLab",
@@ -216,8 +195,7 @@
     "colorname": "Red",
     "color": "#E83100",
     "note": "",
-    "ean": "6975337037279",
-    "variation": ""
+    "ean": "6975337037279"
   },
   {
     "manufacturer": "BambuLab",
@@ -226,8 +204,7 @@
     "colorname": "White",
     "color": "#FFFFFF",
     "note": "",
-    "ean": "",
-    "variation": ""
+    "ean": ""
   },
   {
     "manufacturer": "BambuLab",
@@ -236,8 +213,7 @@
     "colorname": "Yellow",
     "color": "#FFE133",
     "note": "Discontinued",
-    "ean": "",
-    "variation": ""
+    "ean": ""
   },
   {
     "manufacturer": "BambuLab",
@@ -246,8 +222,7 @@
     "colorname": "Black",
     "color": "#000000",
     "note": "",
-    "ean": "6975337032915",
-    "variation": ""
+    "ean": "6975337032915"
   },
   {
     "manufacturer": "BambuLab",
@@ -256,18 +231,16 @@
     "colorname": "Blue",
     "color": "#2140B4",
     "note": "",
-    "ean": "6975337032960",
-    "variation": ""
+    "ean": "6975337032960"
   },
   {
     "manufacturer": "BambuLab",
     "material": "ASA",
-    "variation": "",
     "name": "Bambu ASA",
     "colorname": "Gray",
     "color": "#8A949E",
     "note": "",
-    "ean": "6975337032939"
+    "ean": ""
   },
   {
     "manufacturer": "BambuLab",
@@ -276,8 +249,7 @@
     "colorname": "Green",
     "color": "#00A6A0",
     "note": "",
-    "ean": "6975337032953",
-    "variation": ""
+    "ean": "6975337032953"
   },
   {
     "manufacturer": "BambuLab",
@@ -286,8 +258,7 @@
     "colorname": "Red",
     "color": "#E02928",
     "note": "",
-    "ean": "6975337032946",
-    "variation": ""
+    "ean": "6975337032946"
   },
   {
     "manufacturer": "BambuLab",
@@ -296,8 +267,7 @@
     "colorname": "White",
     "color": "#FFFAF2",
     "note": "",
-    "ean": "6975337032922",
-    "variation": ""
+    "ean": "6975337032922"
   },
   {
     "manufacturer": "BambuLab",
@@ -306,8 +276,7 @@
     "colorname": "White",
     "color": "#F5F1DD",
     "note": "",
-    "ean": "6975337036715",
-    "variation": ""
+    "ean": "6975337036715"
   },
   {
     "manufacturer": "BambuLab",
@@ -316,8 +285,7 @@
     "colorname": "Black",
     "color": "#000000",
     "note": "",
-    "ean": "6977252424783",
-    "variation": ""
+    "ean": "6977252424783"
   },
   {
     "manufacturer": "BambuLab",
@@ -326,8 +294,7 @@
     "colorname": "Black",
     "color": "#000000",
     "note": "",
-    "ean": "6975337031833",
-    "variation": ""
+    "ean": "6975337031833"
   },
   {
     "manufacturer": "BambuLab",
@@ -336,8 +303,7 @@
     "colorname": "Black",
     "color": "#000000",
     "note": "",
-    "ean": "6975337036968",
-    "variation": ""
+    "ean": "6975337036968"
   },
   {
     "manufacturer": "BambuLab",
@@ -346,8 +312,7 @@
     "colorname": "Blue",
     "color": "#75AED8",
     "note": "",
-    "ean": "6975337036975",
-    "variation": ""
+    "ean": "6975337036975"
   },
   {
     "manufacturer": "BambuLab",
@@ -356,8 +321,7 @@
     "colorname": "Brown",
     "color": "#5B492F",
     "note": "",
-    "ean": "",
-    "variation": ""
+    "ean": ""
   },
   {
     "manufacturer": "BambuLab",
@@ -366,8 +330,7 @@
     "colorname": "Gray",
     "color": "#353533",
     "note": "",
-    "ean": "",
-    "variation": ""
+    "ean": ""
   },
   {
     "manufacturer": "BambuLab",
@@ -376,8 +339,7 @@
     "colorname": "Lime",
     "color": "#C5ED48",
     "note": "",
-    "ean": "",
-    "variation": ""
+    "ean": ""
   },
   {
     "manufacturer": "BambuLab",
@@ -386,8 +348,7 @@
     "colorname": "Orange",
     "color": "#FF4800",
     "note": "",
-    "ean": "6975337036999",
-    "variation": ""
+    "ean": "6975337036999"
   },
   {
     "manufacturer": "BambuLab",
@@ -396,8 +357,7 @@
     "colorname": "White",
     "color": "#EAEAE4",
     "note": "",
-    "ean": "6975337036951",
-    "variation": ""
+    "ean": "6975337036951"
   },
   {
     "manufacturer": "BambuLab",
@@ -406,8 +366,7 @@
     "colorname": "Yellow",
     "color": "#FFCE00",
     "note": "",
-    "ean": "",
-    "variation": ""
+    "ean": ""
   },
   {
     "manufacturer": "BambuLab",
@@ -416,8 +375,7 @@
     "colorname": "Black",
     "color": "#000000",
     "note": "",
-    "ean": "6975337032977",
-    "variation": ""
+    "ean": "6975337032977"
   },
   {
     "manufacturer": "BambuLab",
@@ -426,8 +384,7 @@
     "colorname": "Black",
     "color": "#000000",
     "note": "",
-    "ean": "6975337032205",
-    "variation": ""
+    "ean": "6975337032205"
   },
   {
     "manufacturer": "BambuLab",
@@ -436,8 +393,7 @@
     "colorname": "Black",
     "color": "#000000",
     "note": "",
-    "ean": "",
-    "variation": "FR"
+    "ean": ""
   },
   {
     "manufacturer": "BambuLab",
@@ -446,8 +402,7 @@
     "colorname": "Clear Black",
     "color": "#000000",
     "note": "",
-    "ean": "6975337031086",
-    "variation": ""
+    "ean": "6975337031086"
   },
   {
     "manufacturer": "BambuLab",
@@ -456,8 +411,7 @@
     "colorname": "Gray",
     "color": "#A8A8AA",
     "note": "",
-    "ean": "",
-    "variation": "FR"
+    "ean": ""
   },
   {
     "manufacturer": "BambuLab",
@@ -466,8 +420,7 @@
     "colorname": "Transparent",
     "color": "#FFFFFF",
     "note": "",
-    "ean": "6975337032199",
-    "variation": ""
+    "ean": "6975337032199"
   },
   {
     "manufacturer": "BambuLab",
@@ -476,8 +429,7 @@
     "colorname": "White",
     "color": "#FFFFFF",
     "note": "",
-    "ean": "6975337031093",
-    "variation": ""
+    "ean": "6975337031093"
   },
   {
     "manufacturer": "BambuLab",
@@ -486,8 +438,7 @@
     "colorname": "White",
     "color": "#FFFFFF",
     "note": "",
-    "ean": "",
-    "variation": "FR"
+    "ean": ""
   },
   {
     "manufacturer": "BambuLab",
@@ -496,8 +447,7 @@
     "colorname": "Black",
     "color": "#000000",
     "note": "",
-    "ean": "6975337032250",
-    "variation": ""
+    "ean": "6975337032250"
   },
   {
     "manufacturer": "BambuLab",
@@ -506,8 +456,7 @@
     "colorname": "Black",
     "color": "#000000",
     "note": "",
-    "ean": "6975337038221,6975337038580",
-    "variation": "HF"
+    "ean": "6975337038221,6975337038580"
   },
   {
     "manufacturer": "BambuLab",
@@ -516,8 +465,7 @@
     "colorname": "Blue",
     "color": "#002E96",
     "note": "",
-    "ean": "6975337038269",
-    "variation": "HF"
+    "ean": "6975337038269"
   },
   {
     "manufacturer": "BambuLab",
@@ -526,8 +474,7 @@
     "colorname": "Clear",
     "color": "#FFFFFF",
     "note": "",
-    "ean": "6975337038016",
-    "variation": "Translucent"
+    "ean": "6975337038016"
   },
   {
     "manufacturer": "BambuLab",
@@ -536,18 +483,16 @@
     "colorname": "Cream",
     "color": "#F9DFB9",
     "note": "",
-    "ean": "6977252424691",
-    "variation": "HF"
+    "ean": "6977252424691"
   },
   {
     "manufacturer": "BambuLab",
     "material": "PETG",
-    "variation": "HF",
     "name": "Bambu PETG HF",
     "colorname": "Dark Gray",
     "color": "#515151",
     "note": "",
-    "ean": "6977252424707"
+    "ean": ""
   },
   {
     "manufacturer": "BambuLab",
@@ -556,18 +501,16 @@
     "colorname": "Forest Green",
     "color": "#39541A",
     "note": "",
-    "ean": "6977252424721",
-    "variation": "HF"
+    "ean": "6977252424721"
   },
   {
     "manufacturer": "BambuLab",
     "material": "PETG",
-    "variation": "HF",
     "name": "Bambu PETG HF",
     "colorname": "Gray",
     "color": "#ADB1B2",
     "note": "",
-    "ean": "6975337038214"
+    "ean": ""
   },
   {
     "manufacturer": "BambuLab",
@@ -576,8 +519,7 @@
     "colorname": "Green",
     "color": "#00AE42",
     "note": "",
-    "ean": "",
-    "variation": "HF"
+    "ean": ""
   },
   {
     "manufacturer": "BambuLab",
@@ -586,8 +528,7 @@
     "colorname": "Lake Blue",
     "color": "#1F79E5",
     "note": "",
-    "ean": "6977252424677",
-    "variation": "HF"
+    "ean": "6977252424677"
   },
   {
     "manufacturer": "BambuLab",
@@ -596,18 +537,16 @@
     "colorname": "Lime Green",
     "color": "#6EE53C",
     "note": "",
-    "ean": "6977252424684",
-    "variation": "HF"
+    "ean": "6977252424684"
   },
   {
     "manufacturer": "BambuLab",
     "material": "PETG",
-    "variation": "HF",
     "name": "Bambu PETG HF",
     "colorname": "Orange",
     "color": "#F75403",
     "note": "",
-    "ean": "6975337038610"
+    "ean": ""
   },
   {
     "manufacturer": "BambuLab",
@@ -616,8 +555,7 @@
     "colorname": "Peanut Brown",
     "color": "#875718",
     "note": "",
-    "ean": "6977252424714",
-    "variation": "HF"
+    "ean": "6977252424714"
   },
   {
     "manufacturer": "BambuLab",
@@ -626,8 +564,7 @@
     "colorname": "Red",
     "color": "#EB3A3A",
     "note": "",
-    "ean": "6975337038245,6975337038566",
-    "variation": "HF"
+    "ean": "6975337038245,6975337038566"
   },
   {
     "manufacturer": "BambuLab",
@@ -636,8 +573,7 @@
     "colorname": "Translucent Brown",
     "color": "#C9A381",
     "note": "",
-    "ean": "6975337035985,6975337038993",
-    "variation": "Translucent"
+    "ean": "6975337035985,6975337038993"
   },
   {
     "manufacturer": "BambuLab",
@@ -646,8 +582,7 @@
     "colorname": "Translucent Gray",
     "color": "#8E8E8E",
     "note": "",
-    "ean": "6975337035954,6975337039006",
-    "variation": "Translucent"
+    "ean": "6975337035954,6975337039006"
   },
   {
     "manufacturer": "BambuLab",
@@ -656,8 +591,7 @@
     "colorname": "Translucent Light Blue",
     "color": "#61B0FF",
     "note": "",
-    "ean": "6975337035961",
-    "variation": "Translucent"
+    "ean": "6975337035961"
   },
   {
     "manufacturer": "BambuLab",
@@ -666,8 +600,7 @@
     "colorname": "Translucent Olive",
     "color": "#748C45",
     "note": "",
-    "ean": "6975337039013",
-    "variation": "Translucent"
+    "ean": "6975337039013"
   },
   {
     "manufacturer": "BambuLab",
@@ -676,8 +609,7 @@
     "colorname": "Translucent Orange",
     "color": "#FF911A",
     "note": "",
-    "ean": "6975337036005,6975337039051",
-    "variation": "Translucent"
+    "ean": "6975337036005,6975337039051"
   },
   {
     "manufacturer": "BambuLab",
@@ -686,8 +618,7 @@
     "colorname": "Translucent Pink",
     "color": "#F9C1BD",
     "note": "",
-    "ean": "6975337036098",
-    "variation": "Translucent"
+    "ean": "6975337036098"
   },
   {
     "manufacturer": "BambuLab",
@@ -696,8 +627,7 @@
     "colorname": "Translucent Purple",
     "color": "#D6ABFF",
     "note": "",
-    "ean": "6975337036104,6975337039044",
-    "variation": "Translucent"
+    "ean": "6975337036104,6975337039044"
   },
   {
     "manufacturer": "BambuLab",
@@ -706,8 +636,7 @@
     "colorname": "Translucent Teal",
     "color": "#77EDD7",
     "note": "",
-    "ean": "6975337035992",
-    "variation": "Translucent"
+    "ean": "6975337035992"
   },
   {
     "manufacturer": "BambuLab",
@@ -716,8 +645,7 @@
     "colorname": "White",
     "color": "#FFFFFF",
     "note": "",
-    "ean": "6975337038207",
-    "variation": "HF"
+    "ean": "6975337038207"
   },
   {
     "manufacturer": "BambuLab",
@@ -726,18 +654,16 @@
     "colorname": "Yellow",
     "color": "#FFD00B",
     "note": "",
-    "ean": "6975337038573",
-    "variation": "HF"
+    "ean": "6975337038573"
   },
   {
     "manufacturer": "BambuLab",
     "material": "PETG-CF",
-    "variation": "",
     "name": "Bambu PETG-CF",
     "colorname": "Black",
     "color": "#000000",
     "note": "",
-    "ean": "6975337032243"
+    "ean": ""
   },
   {
     "manufacturer": "BambuLab",
@@ -746,8 +672,7 @@
     "colorname": "Brick Red",
     "color": "#9f332a",
     "note": "",
-    "ean": "",
-    "variation": ""
+    "ean": ""
   },
   {
     "manufacturer": "BambuLab",
@@ -756,8 +681,7 @@
     "colorname": "Indigo Blue",
     "color": "#324585",
     "note": "",
-    "ean": "",
-    "variation": ""
+    "ean": ""
   },
   {
     "manufacturer": "BambuLab",
@@ -766,8 +690,7 @@
     "colorname": "Malachite Green",
     "color": "#16b08e",
     "note": "",
-    "ean": "",
-    "variation": ""
+    "ean": ""
   },
   {
     "manufacturer": "BambuLab",
@@ -776,8 +699,7 @@
     "colorname": "Titan Gray",
     "color": "#565656",
     "note": "",
-    "ean": "",
-    "variation": ""
+    "ean": ""
   },
   {
     "manufacturer": "BambuLab",
@@ -786,8 +708,7 @@
     "colorname": "Violet Purple",
     "color": "#583061",
     "note": "",
-    "ean": "",
-    "variation": ""
+    "ean": ""
   },
   {
     "manufacturer": "BambuLab",
@@ -796,8 +717,7 @@
     "colorname": "Apple Green",
     "color": "#C2E189",
     "note": "",
-    "ean": "6977252427524",
-    "variation": "Matte"
+    "ean": "6977252427524"
   },
   {
     "manufacturer": "BambuLab",
@@ -806,8 +726,7 @@
     "colorname": "Ash Gray",
     "color": "#9B9EA0",
     "note": "",
-    "ean": "",
-    "variation": "Matte"
+    "ean": ""
   },
   {
     "manufacturer": "BambuLab",
@@ -816,8 +735,7 @@
     "colorname": "Baby Blue",
     "color": "#A8C6EE",
     "note": "",
-    "ean": "",
-    "variation": "Silk+"
+    "ean": ""
   },
   {
     "manufacturer": "BambuLab",
@@ -826,8 +744,7 @@
     "colorname": "Bambu Green",
     "color": "#00AE42",
     "note": "",
-    "ean": "6975337031901,6975337035817",
-    "variation": "Basic"
+    "ean": "6975337031901,6975337035817"
   },
   {
     "manufacturer": "BambuLab",
@@ -836,8 +753,7 @@
     "colorname": "Beige",
     "color": "#F7E6DE",
     "note": "",
-    "ean": "6975337032335,6975337030201",
-    "variation": "Basic"
+    "ean": "6975337032335,6975337030201"
   },
   {
     "manufacturer": "BambuLab",
@@ -846,8 +762,7 @@
     "colorname": "Black",
     "color": "#000000",
     "note": "",
-    "ean": "6975337031383,6975337031178",
-    "variation": "Basic"
+    "ean": "6975337031383,6975337031178"
   },
   {
     "manufacturer": "BambuLab",
@@ -856,8 +771,7 @@
     "colorname": "Black Walnut",
     "color": "#4F3F24",
     "note": "",
-    "ean": "6977252424769",
-    "variation": "Wood"
+    "ean": "6977252424769"
   },
   {
     "manufacturer": "BambuLab",
@@ -866,8 +780,7 @@
     "colorname": "Blue",
     "color": "#0A2989",
     "note": "",
-    "ean": "6975337031406,6975337032038",
-    "variation": "Basic"
+    "ean": "6975337031406,6975337032038"
   },
   {
     "manufacturer": "BambuLab",
@@ -876,8 +789,7 @@
     "colorname": "Blue",
     "color": "#008BDA",
     "note": "",
-    "ean": "",
-    "variation": "Silk+"
+    "ean": ""
   },
   {
     "manufacturer": "BambuLab",
@@ -886,8 +798,7 @@
     "colorname": "Blue Gray",
     "color": "#5B6579",
     "note": "",
-    "ean": "6975337030232,6975337032342",
-    "variation": "Basic"
+    "ean": "6975337030232,6975337032342"
   },
   {
     "manufacturer": "BambuLab",
@@ -896,8 +807,7 @@
     "colorname": "Bone White",
     "color": "#CBC6B8",
     "note": "",
-    "ean": "6977252427012",
-    "variation": "Matte"
+    "ean": "6977252427012"
   },
   {
     "manufacturer": "BambuLab",
@@ -906,8 +816,7 @@
     "colorname": "Bright Green",
     "color": "#BECF00",
     "note": "",
-    "ean": "",
-    "variation": "Basic"
+    "ean": ""
   },
   {
     "manufacturer": "BambuLab",
@@ -916,8 +825,7 @@
     "colorname": "Bronze",
     "color": "#847D48",
     "note": "",
-    "ean": "6975337031918",
-    "variation": "Basic"
+    "ean": "6975337031918"
   },
   {
     "manufacturer": "BambuLab",
@@ -926,8 +834,7 @@
     "colorname": "Brown",
     "color": "#9D432C",
     "note": "",
-    "ean": "6975337032373",
-    "variation": "Basic"
+    "ean": "6975337032373"
   },
   {
     "manufacturer": "BambuLab",
@@ -936,8 +843,7 @@
     "colorname": "Candy Green",
     "color": "#018814",
     "note": "",
-    "ean": "",
-    "variation": "Silk+"
+    "ean": ""
   },
   {
     "manufacturer": "BambuLab",
@@ -946,8 +852,7 @@
     "colorname": "Candy Red",
     "color": "#D02727",
     "note": "",
-    "ean": "",
-    "variation": "Silk+"
+    "ean": ""
   },
   {
     "manufacturer": "BambuLab",
@@ -956,8 +861,7 @@
     "colorname": "Caramel",
     "color": "#AE835B",
     "note": "",
-    "ean": "6977252427814",
-    "variation": "Matte"
+    "ean": "6977252427814"
   },
   {
     "manufacturer": "BambuLab",
@@ -966,8 +870,7 @@
     "colorname": "Champagne",
     "color": "#F3CFB2",
     "note": "",
-    "ean": "",
-    "variation": "Silk+"
+    "ean": ""
   },
   {
     "manufacturer": "BambuLab",
@@ -976,8 +879,7 @@
     "colorname": "Charcoal",
     "color": "#000000",
     "note": "",
-    "ean": "6975337031338,6975337030102",
-    "variation": "Matte"
+    "ean": "6975337031338,6975337030102"
   },
   {
     "manufacturer": "BambuLab",
@@ -986,8 +888,7 @@
     "colorname": "Classic Birch",
     "color": "#918669",
     "note": "",
-    "ean": "6977252424752",
-    "variation": "Wood"
+    "ean": "6977252424752"
   },
   {
     "manufacturer": "BambuLab",
@@ -996,8 +897,7 @@
     "colorname": "Clay Brown",
     "color": "#995F11",
     "note": "",
-    "ean": "",
-    "variation": "Wood"
+    "ean": ""
   },
   {
     "manufacturer": "BambuLab",
@@ -1006,8 +906,7 @@
     "colorname": "Cobalt Blue",
     "color": "#0056B8",
     "note": "",
-    "ean": "",
-    "variation": "Basic"
+    "ean": ""
   },
   {
     "manufacturer": "BambuLab",
@@ -1016,8 +915,7 @@
     "colorname": "Cobalt Blue Metallic",
     "color": "#39699E",
     "note": "",
-    "ean": "6975337030317",
-    "variation": "Metal"
+    "ean": "6975337030317"
   },
   {
     "manufacturer": "BambuLab",
@@ -1026,8 +924,7 @@
     "colorname": "Cocoa Brown",
     "color": "#6F5034",
     "note": "",
-    "ean": "",
-    "variation": "Basic"
+    "ean": ""
   },
   {
     "manufacturer": "BambuLab",
@@ -1036,8 +933,7 @@
     "colorname": "Copper Brown Metallic",
     "color": "#AA6443",
     "note": "",
-    "ean": "6975337032106",
-    "variation": "Metal"
+    "ean": "6975337032106"
   },
   {
     "manufacturer": "BambuLab",
@@ -1046,8 +942,7 @@
     "colorname": "Cyan",
     "color": "#0086D6",
     "note": "Part of CMYK kit",
-    "ean": "6975337032052",
-    "variation": "Basic"
+    "ean": "6975337032052"
   },
   {
     "manufacturer": "BambuLab",
@@ -1056,8 +951,7 @@
     "colorname": "Dark Blue",
     "color": "#042F56",
     "note": "",
-    "ean": "6975337031871,6975337037347",
-    "variation": "Matte"
+    "ean": "6975337031871,6975337037347"
   },
   {
     "manufacturer": "BambuLab",
@@ -1066,8 +960,7 @@
     "colorname": "Dark Brown",
     "color": "#7D6556",
     "note": "",
-    "ean": "6975337031895,6975337037316",
-    "variation": "Matte"
+    "ean": "6975337031895,6975337037316"
   },
   {
     "manufacturer": "BambuLab",
@@ -1076,18 +969,16 @@
     "colorname": "Dark Chocolate",
     "color": "#4D3324",
     "note": "",
-    "ean": "6977252427531",
-    "variation": "Matte"
+    "ean": "6977252427531"
   },
   {
     "manufacturer": "BambuLab",
     "material": "PLA",
-    "variation": "Basic",
     "name": "Bambu PLA Basic",
     "colorname": "Dark Gray",
     "color": "#545454",
     "note": "",
-    "ean": "6975337039075"
+    "ean": ""
   },
   {
     "manufacturer": "BambuLab",
@@ -1096,8 +987,7 @@
     "colorname": "Dark Green",
     "color": "#68724D",
     "note": "",
-    "ean": "6975337031864,6975337037330",
-    "variation": "Matte"
+    "ean": "6975337031864,6975337037330"
   },
   {
     "manufacturer": "BambuLab",
@@ -1106,8 +996,7 @@
     "colorname": "Dark Red",
     "color": "#BB3D43",
     "note": "",
-    "ean": "6975337031888,6975337037323",
-    "variation": "Matte"
+    "ean": "6975337031888,6975337037323"
   },
   {
     "manufacturer": "BambuLab",
@@ -1116,8 +1005,7 @@
     "colorname": "Desert Tan",
     "color": "#E8DBB7",
     "note": "",
-    "ean": "6975337035053,6975337038177",
-    "variation": "Matte"
+    "ean": "6975337035053,6975337038177"
   },
   {
     "manufacturer": "BambuLab",
@@ -1126,8 +1014,7 @@
     "colorname": "Gold",
     "color": "#E4BD68",
     "note": "",
-    "ean": "6975337031925",
-    "variation": "Basic"
+    "ean": "6975337031925"
   },
   {
     "manufacturer": "BambuLab",
@@ -1136,8 +1023,7 @@
     "colorname": "Gold",
     "color": "#F4A925",
     "note": "",
-    "ean": "",
-    "variation": "Silk+"
+    "ean": ""
   },
   {
     "manufacturer": "BambuLab",
@@ -1146,18 +1032,16 @@
     "colorname": "Grass Green",
     "color": "#61C680",
     "note": "",
-    "ean": "6975337032410,6975337030119",
-    "variation": "Matte"
+    "ean": "6975337032410,6975337030119"
   },
   {
     "manufacturer": "BambuLab",
     "material": "PLA",
-    "variation": "Basic",
     "name": "Bambu PLA Basic",
     "colorname": "Gray",
     "color": "#8E9089",
     "note": "",
-    "ean": "6975337032328"
+    "ean": ""
   },
   {
     "manufacturer": "BambuLab",
@@ -1166,8 +1050,7 @@
     "colorname": "Hot Pink",
     "color": "#F5547C",
     "note": "",
-    "ean": "",
-    "variation": "Basic"
+    "ean": ""
   },
   {
     "manufacturer": "BambuLab",
@@ -1176,8 +1059,7 @@
     "colorname": "Ice Blue",
     "color": "#A3D8E1",
     "note": "",
-    "ean": "6975337031857,6975337030140",
-    "variation": "Matte"
+    "ean": "6975337031857,6975337030140"
   },
   {
     "manufacturer": "BambuLab",
@@ -1186,8 +1068,7 @@
     "colorname": "Indigo Purple",
     "color": "#482960",
     "note": "",
-    "ean": "",
-    "variation": "Basic"
+    "ean": ""
   },
   {
     "manufacturer": "BambuLab",
@@ -1196,8 +1077,7 @@
     "colorname": "Iridium Gold Metallic",
     "color": "#B39B84",
     "note": "",
-    "ean": "6975337030294",
-    "variation": "Metal"
+    "ean": "6975337030294"
   },
   {
     "manufacturer": "BambuLab",
@@ -1206,8 +1086,7 @@
     "colorname": "Iron Gray Metallic",
     "color": "#43403D",
     "note": "",
-    "ean": "6975337032090",
-    "variation": "Metal"
+    "ean": "6975337032090"
   },
   {
     "manufacturer": "BambuLab",
@@ -1216,8 +1095,7 @@
     "colorname": "Ivory White",
     "color": "#FFFFFF",
     "note": "",
-    "ean": "6975337031345,6975337030041",
-    "variation": "Matte"
+    "ean": "6975337031345,6975337030041"
   },
   {
     "manufacturer": "BambuLab",
@@ -1226,8 +1104,7 @@
     "colorname": "Jade White",
     "color": "#FFFFFF",
     "note": "Part of CMYK kit",
-    "ean": "6975337031024,6975337030164",
-    "variation": "Basic"
+    "ean": "6975337031024,6975337030164"
   },
   {
     "manufacturer": "BambuLab",
@@ -1236,8 +1113,7 @@
     "colorname": "Latte Brown",
     "color": "#D3B7A7",
     "note": "",
-    "ean": "6975337030126",
-    "variation": "Matte"
+    "ean": "6975337030126"
   },
   {
     "manufacturer": "BambuLab",
@@ -1246,8 +1122,7 @@
     "colorname": "Lemon Yellow",
     "color": "#F7D959",
     "note": "",
-    "ean": "6975337032403,6975337030096",
-    "variation": "Matte"
+    "ean": "6975337032403,6975337030096"
   },
   {
     "manufacturer": "BambuLab",
@@ -1256,8 +1131,7 @@
     "colorname": "Light Gray",
     "color": "#D1D3D5",
     "note": "",
-    "ean": "",
-    "variation": "Basic"
+    "ean": ""
   },
   {
     "manufacturer": "BambuLab",
@@ -1266,8 +1140,7 @@
     "colorname": "Lilac Purple",
     "color": "#AE96D4",
     "note": "",
-    "ean": "6975337032434,6975337030157",
-    "variation": "Matte"
+    "ean": "6975337032434,6975337030157"
   },
   {
     "manufacturer": "BambuLab",
@@ -1276,8 +1149,7 @@
     "colorname": "Magenta",
     "color": "#EC008C",
     "note": "Part of CMYK kit",
-    "ean": "6975337032045",
-    "variation": "Basic"
+    "ean": "6975337032045"
   },
   {
     "manufacturer": "BambuLab",
@@ -1286,8 +1158,7 @@
     "colorname": "Mandarin Orange",
     "color": "#F99963",
     "note": "",
-    "ean": "6975337032380,6975337030065",
-    "variation": "Matte"
+    "ean": "6975337032380,6975337030065"
   },
   {
     "manufacturer": "BambuLab",
@@ -1296,8 +1167,7 @@
     "colorname": "Marine Blue",
     "color": "#0078BF",
     "note": "",
-    "ean": "6975337031369,6975337030089",
-    "variation": "Matte"
+    "ean": "6975337031369,6975337030089"
   },
   {
     "manufacturer": "BambuLab",
@@ -1306,8 +1176,7 @@
     "colorname": "Maroon Red",
     "color": "#9D2235",
     "note": "",
-    "ean": "",
-    "variation": "Basic"
+    "ean": ""
   },
   {
     "manufacturer": "BambuLab",
@@ -1316,8 +1185,7 @@
     "colorname": "Mint",
     "color": "#96DCB9",
     "note": "",
-    "ean": "",
-    "variation": "Silk+"
+    "ean": ""
   },
   {
     "manufacturer": "BambuLab",
@@ -1326,8 +1194,7 @@
     "colorname": "Mistletoe Green",
     "color": "#3F8E43",
     "note": "",
-    "ean": "6975337035787",
-    "variation": "Basic"
+    "ean": "6975337035787"
   },
   {
     "manufacturer": "BambuLab",
@@ -1336,8 +1203,7 @@
     "colorname": "Nardo Gray",
     "color": "#757575",
     "note": "",
-    "ean": "6977252428200",
-    "variation": "Matte"
+    "ean": "6977252428200"
   },
   {
     "manufacturer": "BambuLab",
@@ -1346,8 +1212,7 @@
     "colorname": "Ochre Yellow",
     "color": "#C98935",
     "note": "",
-    "ean": "6977252424660",
-    "variation": "Wood"
+    "ean": "6977252424660"
   },
   {
     "manufacturer": "BambuLab",
@@ -1356,8 +1221,7 @@
     "colorname": "Orange",
     "color": "#FF6A13",
     "note": "",
-    "ean": "6975337032311,6975337030898",
-    "variation": "Basic"
+    "ean": "6975337032311,6975337030898"
   },
   {
     "manufacturer": "BambuLab",
@@ -1366,8 +1230,7 @@
     "colorname": "Oxide Green Metallic",
     "color": "#1D7C6A",
     "note": "",
-    "ean": "6975337030324",
-    "variation": "Metal"
+    "ean": "6975337030324"
   },
   {
     "manufacturer": "BambuLab",
@@ -1376,8 +1239,7 @@
     "colorname": "Pink",
     "color": "#F55A74",
     "note": "",
-    "ean": "6975337032359",
-    "variation": "Basic"
+    "ean": "6975337032359"
   },
   {
     "manufacturer": "BambuLab",
@@ -1386,8 +1248,7 @@
     "colorname": "Pink",
     "color": "#F7ADA6",
     "note": "",
-    "ean": "",
-    "variation": "Silk+"
+    "ean": ""
   },
   {
     "manufacturer": "BambuLab",
@@ -1396,18 +1257,16 @@
     "colorname": "Plum",
     "color": "#950051",
     "note": "",
-    "ean": "6977252427500",
-    "variation": "Matte"
+    "ean": "6977252427500"
   },
   {
     "manufacturer": "BambuLab",
     "material": "PLA",
-    "variation": "Basic",
     "name": "Bambu PLA Basic",
     "colorname": "Pumpkin Orange",
     "color": "#FF9016",
     "note": "",
-    "ean": "6977252429085"
+    "ean": ""
   },
   {
     "manufacturer": "BambuLab",
@@ -1416,8 +1275,7 @@
     "colorname": "Purple",
     "color": "#5E43B7",
     "note": "",
-    "ean": "6975337031932,6975337037378",
-    "variation": "Basic"
+    "ean": "6975337031932,6975337037378"
   },
   {
     "manufacturer": "BambuLab",
@@ -1426,8 +1284,7 @@
     "colorname": "Purple",
     "color": "#8671CB",
     "note": "",
-    "ean": "",
-    "variation": "Silk+"
+    "ean": ""
   },
   {
     "manufacturer": "BambuLab",
@@ -1436,8 +1293,7 @@
     "colorname": "Red",
     "color": "#C12E1F",
     "note": "",
-    "ean": "6975337031413,6975337030270",
-    "variation": "Basic"
+    "ean": "6975337031413,6975337030270"
   },
   {
     "manufacturer": "BambuLab",
@@ -1446,8 +1302,7 @@
     "colorname": "Red Granite",
     "color": "#AD4E38",
     "note": "",
-    "ean": "",
-    "variation": "Marble"
+    "ean": ""
   },
   {
     "manufacturer": "BambuLab",
@@ -1456,8 +1311,7 @@
     "colorname": "Rose Gold",
     "color": "#BA9594",
     "note": "",
-    "ean": "",
-    "variation": "Silk+"
+    "ean": ""
   },
   {
     "manufacturer": "BambuLab",
@@ -1466,8 +1320,7 @@
     "colorname": "Rosewood",
     "color": "#4C241C",
     "note": "",
-    "ean": "",
-    "variation": "Wood"
+    "ean": ""
   },
   {
     "manufacturer": "BambuLab",
@@ -1476,18 +1329,16 @@
     "colorname": "Sakura Pink",
     "color": "#E8AFCF",
     "note": "",
-    "ean": "6975337032397,6975337030072",
-    "variation": "Matte"
+    "ean": "6975337032397,6975337030072"
   },
   {
     "manufacturer": "BambuLab",
     "material": "PLA",
     "name": "Bambu PLA Matte",
     "colorname": "Scarlet Red",
-    "color": "#DE4343FF",
+    "color": "#DE4343",
     "note": "",
-    "ean": "6975337031376,6975337030133",
-    "variation": "Matte"
+    "ean": "6975337031376,6975337030133"
   },
   {
     "manufacturer": "BambuLab",
@@ -1496,8 +1347,7 @@
     "colorname": "Silver",
     "color": "#A6A9AA",
     "note": "",
-    "ean": "6975337031390,6975337030218",
-    "variation": "Basic"
+    "ean": "6975337031390,6975337030218"
   },
   {
     "manufacturer": "BambuLab",
@@ -1506,8 +1356,7 @@
     "colorname": "Silver",
     "color": "#C8C8C8",
     "note": "",
-    "ean": "",
-    "variation": "Silk+"
+    "ean": ""
   },
   {
     "manufacturer": "BambuLab",
@@ -1516,8 +1365,7 @@
     "colorname": "Sky Blue",
     "color": "#56B7E6",
     "note": "",
-    "ean": "6977252427517",
-    "variation": "Matte"
+    "ean": "6977252427517"
   },
   {
     "manufacturer": "BambuLab",
@@ -1526,8 +1374,7 @@
     "colorname": "Sunflower Yellow",
     "color": "#FEC600",
     "note": "",
-    "ean": "",
-    "variation": "Basic"
+    "ean": ""
   },
   {
     "manufacturer": "BambuLab",
@@ -1536,8 +1383,7 @@
     "colorname": "Terracotta",
     "color": "#B15533",
     "note": "",
-    "ean": "6977252428194",
-    "variation": "Matte"
+    "ean": "6977252428194"
   },
   {
     "manufacturer": "BambuLab",
@@ -1546,8 +1392,7 @@
     "colorname": "Titan Gray",
     "color": "#5F6367",
     "note": "",
-    "ean": "",
-    "variation": "Silk+"
+    "ean": ""
   },
   {
     "manufacturer": "BambuLab",
@@ -1556,8 +1401,7 @@
     "colorname": "Turquoise",
     "color": "#00B1B7",
     "note": "",
-    "ean": "",
-    "variation": "Basic"
+    "ean": ""
   },
   {
     "manufacturer": "BambuLab",
@@ -1566,8 +1410,7 @@
     "colorname": "White",
     "color": "#FFFFFF",
     "note": "",
-    "ean": "",
-    "variation": "Silk+"
+    "ean": ""
   },
   {
     "manufacturer": "BambuLab",
@@ -1576,8 +1419,7 @@
     "colorname": "White Marble",
     "color": "#F7F3F0",
     "note": "",
-    "ean": "",
-    "variation": "Marble"
+    "ean": ""
   },
   {
     "manufacturer": "BambuLab",
@@ -1586,8 +1428,7 @@
     "colorname": "White Oak",
     "color": "#D6CCA3",
     "note": "",
-    "ean": "6977252424745",
-    "variation": "Wood"
+    "ean": "6977252424745"
   },
   {
     "manufacturer": "BambuLab",
@@ -1596,8 +1437,7 @@
     "colorname": "Yellow",
     "color": "#F4EE2A",
     "note": "Part of CMYK kit",
-    "ean": "6975337031956,6975337030225",
-    "variation": "Basic"
+    "ean": "6975337031956,6975337030225"
   },
   {
     "manufacturer": "BambuLab",
@@ -1606,8 +1446,7 @@
     "colorname": "Black",
     "color": "#000000",
     "note": "Discontinued",
-    "ean": "6975337032595",
-    "variation": ""
+    "ean": "6975337032595"
   },
   {
     "manufacturer": "BambuLab",
@@ -1616,8 +1455,7 @@
     "colorname": "Gray",
     "color": "#CDCECA",
     "note": "",
-    "ean": "",
-    "variation": ""
+    "ean": ""
   },
   {
     "manufacturer": "BambuLab",
@@ -1626,8 +1464,7 @@
     "colorname": "White",
     "color": "#F5F1DD",
     "note": "",
-    "ean": "6975337032588",
-    "variation": ""
+    "ean": "6975337032588"
   },
   {
     "manufacturer": "BambuLab",
@@ -1636,8 +1473,7 @@
     "colorname": "Black",
     "color": "#000000",
     "note": "",
-    "ean": "6975337031758",
-    "variation": ""
+    "ean": "6975337031758"
   },
   {
     "manufacturer": "BambuLab",
@@ -1646,8 +1482,7 @@
     "colorname": "Burgundy Red",
     "color": "#951e23",
     "note": "",
-    "ean": "6975337032458",
-    "variation": ""
+    "ean": "6975337032458"
   },
   {
     "manufacturer": "BambuLab",
@@ -1656,8 +1491,7 @@
     "colorname": "Iris Purple",
     "color": "#69398E",
     "note": "",
-    "ean": "",
-    "variation": ""
+    "ean": ""
   },
   {
     "manufacturer": "BambuLab",
@@ -1666,8 +1500,7 @@
     "colorname": "Jeans Blue",
     "color": "#6e88bc",
     "note": "",
-    "ean": "6975337032472",
-    "variation": ""
+    "ean": "6975337032472"
   },
   {
     "manufacturer": "BambuLab",
@@ -1676,8 +1509,7 @@
     "colorname": "Lava Gray",
     "color": "#4d5054",
     "note": "",
-    "ean": "",
-    "variation": ""
+    "ean": ""
   },
   {
     "manufacturer": "BambuLab",
@@ -1686,8 +1518,7 @@
     "colorname": "Matcha Green",
     "color": "#5c9748",
     "note": "",
-    "ean": "6975337032465",
-    "variation": ""
+    "ean": "6975337032465"
   },
   {
     "manufacturer": "BambuLab",
@@ -1696,8 +1527,7 @@
     "colorname": "Royal Blue",
     "color": "#2842AD",
     "note": "",
-    "ean": "6975337033400",
-    "variation": ""
+    "ean": "6975337033400"
   },
   {
     "manufacturer": "BambuLab",
@@ -1706,8 +1536,7 @@
     "colorname": "Black",
     "color": "#000000",
     "note": "",
-    "ean": "6977252422192",
-    "variation": ""
+    "ean": "6977252422192"
   },
   {
     "manufacturer": "BambuLab",
@@ -1716,8 +1545,7 @@
     "colorname": "Black",
     "color": "#000000",
     "note": "",
-    "ean": "6975337038283",
-    "variation": ""
+    "ean": "6975337038283"
   },
   {
     "manufacturer": "BambuLab",
@@ -1726,8 +1554,7 @@
     "colorname": "Black",
     "color": "#101820",
     "note": "",
-    "ean": "6975337033493",
-    "variation": "95A HF"
+    "ean": "6975337033493"
   },
   {
     "manufacturer": "BambuLab",
@@ -1736,8 +1563,7 @@
     "colorname": "Blue",
     "color": "#0072CE",
     "note": "",
-    "ean": "6975337033486",
-    "variation": "95A HF"
+    "ean": "6975337033486"
   },
   {
     "manufacturer": "BambuLab",
@@ -1746,8 +1572,7 @@
     "colorname": "Gray",
     "color": "#898D8D",
     "note": "",
-    "ean": "",
-    "variation": "95A HF"
+    "ean": ""
   },
   {
     "manufacturer": "BambuLab",
@@ -1756,8 +1581,7 @@
     "colorname": "Red",
     "color": "#C8102E",
     "note": "",
-    "ean": "6975337034858",
-    "variation": "95A HF"
+    "ean": "6975337034858"
   },
   {
     "manufacturer": "BambuLab",
@@ -1766,8 +1590,7 @@
     "colorname": "White",
     "color": "#FFFFFF",
     "note": "",
-    "ean": "6975337034865",
-    "variation": "95A HF"
+    "ean": "6975337034865"
   },
   {
     "manufacturer": "BambuLab",
@@ -1776,8 +1599,7 @@
     "colorname": "Yellow",
     "color": "#F3E600",
     "note": "",
-    "ean": "6975337033479",
-    "variation": "95A HF"
+    "ean": "6975337033479"
   },
   {
     "manufacturer": "BambuLab",
@@ -1786,8 +1608,7 @@
     "colorname": "Black",
     "color": "#000000",
     "note": "",
-    "ean": "",
-    "variation": ""
+    "ean": ""
   },
   {
     "manufacturer": "BambuLab",
@@ -1796,8 +1617,7 @@
     "colorname": "Blue",
     "color": "#5898DD",
     "note": "",
-    "ean": "",
-    "variation": ""
+    "ean": ""
   },
   {
     "manufacturer": "BambuLab",
@@ -1806,8 +1626,7 @@
     "colorname": "Gray",
     "color": "#939393",
     "note": "",
-    "ean": "",
-    "variation": ""
+    "ean": ""
   },
   {
     "manufacturer": "BambuLab",
@@ -1816,8 +1635,7 @@
     "colorname": "Neon Green",
     "color": "#90FF1A",
     "note": "",
-    "ean": "",
-    "variation": ""
+    "ean": ""
   },
   {
     "manufacturer": "BambuLab",
@@ -1826,8 +1644,7 @@
     "colorname": "Red",
     "color": "#ED0000",
     "note": "",
-    "ean": "",
-    "variation": ""
+    "ean": ""
   },
   {
     "manufacturer": "BambuLab",
@@ -1836,8 +1653,7 @@
     "colorname": "White",
     "color": "#FFFFFF",
     "note": "",
-    "ean": "",
-    "variation": ""
+    "ean": ""
   },
   {
     "manufacturer": "BambuLab",
@@ -1846,7 +1662,6 @@
     "colorname": "Yellow",
     "color": "#F9EF41",
     "note": "",
-    "ean": "",
-    "variation": ""
+    "ean": ""
   }
 ]

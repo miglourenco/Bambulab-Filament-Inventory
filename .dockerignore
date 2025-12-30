@@ -1,3 +1,7 @@
 node_modules/
 data/database.json
 .env
+/.claude
+/.github
+/.vscode
+.gitignore

@@ -1,8 +1,7 @@
 import 'dotenv/config';
 import express from 'express';
-import { expressjwt } from 'express-jwt';
+import session from 'express-session';
 import cryptoRandomString from 'crypto-random-string';
-import jwt from 'jsonwebtoken';
 import fs from 'fs/promises';
 import cors from 'cors';
 import axios from 'axios';
@@ -16,27 +15,27 @@ await materialsDB.initialize();
 
 const app = express();
 
-// Generate or load JWT secret
-let secret = process.env.JWT_SECRET;
+// Generate or load session secret
+let secret = process.env.SESSION_SECRET || process.env.JWT_SECRET;
 
 if (!secret) {
   try {
-    const secretFile = './data/jwt-secret.txt';
+    const secretFile = './data/session-secret.txt';
     try {
       secret = await fs.readFile(secretFile, 'utf8');
-      console.log('Using existing JWT secret from file');
+      console.log('Using existing session secret from file');
     } catch (e) {
       // File doesn't exist, generate new secret
       secret = process.env.DEBUG ? 'unsecure' : cryptoRandomString({ length: 64 });
       try {
         await fs.writeFile(secretFile, secret);
-        console.log('Generated new JWT secret and saved to file');
+        console.log('Generated new session secret and saved to file');
       } catch (writeError) {
-        console.error('Could not save JWT secret to file:', writeError);
+        console.error('Could not save session secret to file:', writeError);
       }
     }
   } catch (e) {
-    console.error('Error handling JWT secret:', e);
+    console.error('Error handling session secret:', e);
     secret = process.env.DEBUG ? 'unsecure' : cryptoRandomString({ length: 64 });
   }
 }
@@ -47,64 +46,64 @@ app.use(express.json());
 // Add CORS
 app.use(cors());
 
-// Use Express JWT to validate JWT tokens
-// Disable JWT validation for /oauth/token, /register and all static files
-app.use(
-  expressjwt({
-    secret,
-    algorithms: ['HS256'],
-  }).unless((path) => {
-    var url = path.originalUrl;
-
-    if (url === '/oauth/token' || url === '/register') {
-      return true;
-    }
-
-    if (url === '/') {
-      return true;
-    }
-
-    if (url.startsWith('/assets/')) {
-      return true;
-    }
-
-    if (url.startsWith('/favicon.ico')) {
-      return true;
-    }
-
-    if (url === '/login') {
-      return true;
-    }
-
-    // Allow access to materials endpoints (needed for barcode scanner)
-    if (url.startsWith('/materials/')) {
-      return true;
-    }
-
-    // Allow access to product info endpoint (needed for barcode scanner)
-    if (url.startsWith('/product-info/')) {
-      return true;
-    }
-
-    return false;
-  })
-);
-
-// Error handler for JWT authentication
-app.use((err, _req, res, next) => {
-  if (err.name === 'UnauthorizedError') {
-    // JWT token is invalid or missing
-    // For API requests, return 401
-    // For page requests, the frontend will handle redirect to login
-    return res.status(401).json({
-      error: 'Invalid or expired token',
-      code: 'TOKEN_EXPIRED'
-    });
+// Configure express-session
+app.use(session({
+  secret: secret,
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    secure: process.env.NODE_ENV === 'production', // Use secure cookies in production
+    httpOnly: true,
+    maxAge: process.env.DEBUG ? 315360000000 : 28800000, // 10 years in debug, 8 hours in production
+    sameSite: 'lax'
   }
-  next(err);
-});
+}));
 
-// Implement OAuth 2.0 password grant with database
+// Session check middleware
+// Skip session validation for public routes
+const publicRoutes = [
+  '/oauth/token',
+  '/logout',
+  '/register',
+  '/',
+  '/login',
+  '/favicon.ico'
+];
+
+const publicRoutePrefixes = [
+  '/assets/',
+  '/materials/',
+  '/product-info/'
+];
+
+const requireAuth = (req, res, next) => {
+  const url = req.originalUrl;
+
+  // Check if route is public
+  if (publicRoutes.includes(url)) {
+    return next();
+  }
+
+  // Check if route starts with public prefix
+  if (publicRoutePrefixes.some(prefix => url.startsWith(prefix))) {
+    return next();
+  }
+
+  // Check if user has valid session
+  if (req.session && req.session.user) {
+    return next();
+  }
+
+  // No valid session, return 401
+  return res.status(401).json({
+    error: 'Authentication required',
+    code: 'SESSION_REQUIRED'
+  });
+};
+
+app.use(requireAuth);
+
+// Login endpoint with session-based authentication
 app.post('/oauth/token', async (req, res) => {
   try {
     if (req.body.grant_type !== 'password') {
@@ -119,18 +118,18 @@ app.post('/oauth/token', async (req, res) => {
       return;
     }
 
-    const tokenData = {
-      sub: user.id,
+    // Create session
+    req.session.user = {
+      id: user.id,
       username: user.username,
+      email: user.email,
       role: user.role
     };
 
+    // Return user data (keeping similar structure for frontend compatibility)
     res.json({
-      access_token: jwt.sign(tokenData, secret, {
-        algorithm: 'HS256',
-        expiresIn: process.env.DEBUG ? '10y' : '8h',
-      }),
-      token_type: 'Bearer',
+      access_token: 'session-based-auth', // Dummy token for compatibility
+      token_type: 'Session',
       expires_in: process.env.DEBUG ? 315360000 : 28800,
       user: {
         id: user.id,
@@ -143,6 +142,18 @@ app.post('/oauth/token', async (req, res) => {
     console.error('Login error:', error);
     res.status(500).send('Internal server error');
   }
+});
+
+// Logout endpoint
+app.post('/logout', (req, res) => {
+  req.session.destroy((err) => {
+    if (err) {
+      console.error('Logout error:', err);
+      return res.status(500).json({ error: 'Failed to logout' });
+    }
+    res.clearCookie('connect.sid');
+    res.json({ message: 'Logged out successfully' });
+  });
 });
 
 // Register new user (admin only)
@@ -193,7 +204,7 @@ app.post('/register', async (req, res) => {
 // Get current user info
 app.get('/user/me', async (req, res) => {
   try {
-    const userId = req.auth.sub;
+    const userId = req.session.user.id;
     const user = await db.getUserById(userId);
 
     if (!user) {
@@ -218,7 +229,7 @@ app.get('/user/me', async (req, res) => {
 // Update user settings
 app.put('/user/settings', async (req, res) => {
   try {
-    const userId = req.auth.sub;
+    const userId = req.session.user.id;
     const { hassUrl, hassToken, email, trayName } = req.body;
 
     const updates = {};
@@ -250,7 +261,7 @@ app.put('/user/settings', async (req, res) => {
 // Get user's filaments
 app.get('/filaments', async (req, res) => {
   try {
-    const userId = req.auth.sub;
+    const userId = req.session.user.id;
     const user = await db.getUserById(userId);
 
     if (!user) {
@@ -275,7 +286,7 @@ app.get('/filaments', async (req, res) => {
 // Search filament by code
 app.get('/filaments/search/:code', async (req, res) => {
   try {
-    const userId = req.auth.sub;
+    const userId = req.session.user.id;
     const { code } = req.params;
 
     const filament = db.findFilamentByCode(userId, code);
@@ -294,7 +305,7 @@ app.get('/filaments/search/:code', async (req, res) => {
 // Add or update filament
 app.post('/update', async (req, res) => {
   try {
-    const userId = req.auth.sub;
+    const userId = req.session.user.id;
     let { tag_uid, ...filamentData } = req.body;
 
     // Normalize color
@@ -309,8 +320,53 @@ app.post('/update', async (req, res) => {
       // Update existing
       await db.updateFilament(tag_uid, filamentData);
     } else {
-      // Add new
+      // Add new filament
       await db.addFilament(userId, { tag_uid, ...filamentData });
+
+      // Add material to database if it doesn't exist
+      if (filamentData.manufacturer && filamentData.type && filamentData.name &&
+          filamentData.colorname && filamentData.color) {
+
+        await materialsDB.initialize();
+        const materials = materialsDB.getAllMaterials();
+
+        // Check if material already exists
+        const exists = materials.some(
+          m => m.manufacturer === filamentData.manufacturer &&
+               m.material === filamentData.type &&
+               m.name === filamentData.name &&
+               m.colorname === filamentData.colorname &&
+               m.color.toUpperCase() === filamentData.color.toUpperCase()
+        );
+
+        if (!exists) {
+          console.log('[Add Filament] Adding new material to database:', {
+            manufacturer: filamentData.manufacturer,
+            material: filamentData.type,
+            name: filamentData.name,
+            colorname: filamentData.colorname
+          });
+
+          // Add material to database
+          materials.push({
+            manufacturer: filamentData.manufacturer,
+            material: filamentData.type,
+            variation: filamentData.variation || '',
+            name: filamentData.name,
+            colorname: filamentData.colorname,
+            color: filamentData.color.toUpperCase(),
+            note: '',
+            ean: filamentData.ean || ''
+          });
+
+          await materialsDB.save();
+
+          // Reload EAN database to include the new material
+          await reloadEANDatabase();
+
+          console.log('[Add Filament] Material added to database and EAN database reloaded');
+        }
+      }
     }
 
     const userFilaments = db.getUserFilaments(userId);
@@ -324,7 +380,7 @@ app.post('/update', async (req, res) => {
 // Delete filament
 app.post('/delete', async (req, res) => {
   try {
-    const userId = req.auth.sub;
+    const userId = req.session.user.id;
     const { tag_uid } = req.body;
 
     const filament = db.getFilament(tag_uid);
@@ -353,7 +409,7 @@ app.post('/delete', async (req, res) => {
 // Get user's AMS configurations
 app.get('/ams-config', async (req, res) => {
   try {
-    const userId = req.auth.sub;
+    const userId = req.session.user.id;
     const configs = db.getUserAMSConfigs(userId);
     res.json(configs);
   } catch (error) {
@@ -365,7 +421,7 @@ app.get('/ams-config', async (req, res) => {
 // Add AMS configuration
 app.post('/ams-config', async (req, res) => {
   try {
-    const userId = req.auth.sub;
+    const userId = req.session.user.id;
     const { name, type, sensor } = req.body;
 
     if (!name || !type || !sensor) {
@@ -388,7 +444,7 @@ app.post('/ams-config', async (req, res) => {
 // Update AMS configuration
 app.put('/ams-config/:amsId', async (req, res) => {
   try {
-    const userId = req.auth.sub;
+    const userId = req.session.user.id;
     const { amsId } = req.params;
     const { name, type, sensor, enabled } = req.body;
 
@@ -414,7 +470,7 @@ app.put('/ams-config/:amsId', async (req, res) => {
 // Delete AMS configuration
 app.delete('/ams-config/:amsId', async (req, res) => {
   try {
-    const userId = req.auth.sub;
+    const userId = req.session.user.id;
     const { amsId } = req.params;
 
     const success = await db.deleteAMSConfig(userId, amsId);
@@ -431,7 +487,20 @@ app.delete('/ams-config/:amsId', async (req, res) => {
 });
 
 // Load EAN database
-import eanDatabase from './data/base_dados_completa.json' assert { type: 'json' };
+import eanDatabaseImport from './data/base_dados_completa.json' assert { type: 'json' };
+let eanDatabase = eanDatabaseImport;
+
+// Function to reload EAN database from disk
+async function reloadEANDatabase() {
+  try {
+    const eanDbPath = './data/base_dados_completa.json';
+    const data = await fs.readFile(eanDbPath, 'utf8');
+    eanDatabase = JSON.parse(data);
+    console.log('[EAN Database] Reloaded successfully');
+  } catch (error) {
+    console.error('[EAN Database] Failed to reload:', error);
+  }
+}
 
 // Helper function to delay between API calls
 const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
@@ -521,6 +590,61 @@ async function searchEANInAPIs(ean) {
   return { found: false };
 }
 
+// Helper function to normalize material type and find best match in database
+function normalizeMaterialType(detectedType) {
+  // If no type detected, return empty
+  if (!detectedType) return '';
+
+  console.log(`[Type Normalization] Input type: "${detectedType}"`);
+
+  // First, try to find exact match in database
+  const exactMatch = eanDatabase.find(item =>
+    item.material && item.material.toLowerCase() === detectedType.toLowerCase()
+  );
+
+  if (exactMatch) {
+    console.log(`[Type Normalization] ✅ Exact match found: "${exactMatch.material}"`);
+    return exactMatch.material;
+  }
+
+  // Try to find partial match (e.g., "PLA Basic" -> "PLA")
+  const partialMatch = eanDatabase.find(item => {
+    if (!item.material) return false;
+
+    const itemMaterial = item.material.toLowerCase();
+    const detectedLower = detectedType.toLowerCase();
+
+    // Check if detected type contains the database material type
+    // e.g., "PLA Basic" contains "PLA"
+    return detectedLower.includes(itemMaterial) || itemMaterial.includes(detectedLower);
+  });
+
+  if (partialMatch) {
+    console.log(`[Type Normalization] ✅ Partial match found: "${partialMatch.material}" (from "${detectedType}")`);
+    return partialMatch.material;
+  }
+
+  // If no match found, try to extract base material type
+  // e.g., "PLA Basic" -> "PLA", "PETG CF" -> "PETG"
+  const baseMaterials = ['PLA', 'PETG', 'ABS', 'TPU', 'ASA', 'PC', 'PA', 'PP', 'PVA', 'HIPS', 'Nylon'];
+  for (const baseMat of baseMaterials) {
+    if (detectedType.toUpperCase().includes(baseMat)) {
+      // Check if this base material exists in database
+      const baseMatch = eanDatabase.find(item =>
+        item.material && item.material.toLowerCase() === baseMat.toLowerCase()
+      );
+      if (baseMatch) {
+        console.log(`[Type Normalization] ✅ Base material match: "${baseMat}" (from "${detectedType}")`);
+        return baseMat;
+      }
+    }
+  }
+
+  // If still no match, return original type
+  console.log(`[Type Normalization] ⚠️ No match found, returning original: "${detectedType}"`);
+  return detectedType;
+}
+
 // Helper function to parse product title from API results
 function parseAPIProductTitle(apiResult) {
   const title = apiResult.rawTitle || '';
@@ -540,7 +664,7 @@ function parseAPIProductTitle(apiResult) {
       'PETG', 'PLA', 'ABS', 'TPU', 'ASA', 'PC', 'PA', 'PP', 'PVA', 'HIPS', 'Nylon'
     ];
 
-    let type = '';
+    let detectedType = '';
     let colorname = '';
     let manufacturer = 'BambuLab';
 
@@ -548,11 +672,14 @@ function parseAPIProductTitle(apiResult) {
     for (const matType of materialTypes) {
       const regex = new RegExp(`\\b${matType.replace(/\s+/g, '\\s+')}\\b`, 'i');
       if (regex.test(titleBeforeComma)) {
-        type = matType;
-        console.log(`[API Parse] Found material type: ${type}`);
+        detectedType = matType;
+        console.log(`[API Parse] Found material type: ${detectedType}`);
         break;
       }
     }
+
+    // Normalize the detected type to match database
+    const type = normalizeMaterialType(detectedType);
 
     // Extract color name
     // Format: "Bambu Lab - 1.75mm PLA Glow Filament - Glow Blue"
@@ -566,8 +693,8 @@ function parseAPIProductTitle(apiResult) {
     }
 
     // If no color found in parts, try to extract from title after material type
-    if (!colorname && type) {
-      const afterType = titleBeforeComma.split(new RegExp(type, 'i'))[1];
+    if (!colorname && detectedType) {
+      const afterType = titleBeforeComma.split(new RegExp(detectedType, 'i'))[1];
       if (afterType) {
         colorname = afterType.replace(/\d+(\.\d+)?\s*mm/gi, '')
           .replace(/filament/gi, '')
@@ -585,7 +712,7 @@ function parseAPIProductTitle(apiResult) {
   // Generic parsing for non-Bambu Lab products
   const parts = title.split(/\s*-\s*/);
   let manufacturer = '';
-  let type = '';
+  let detectedType = '';
   let colorname = '';
   let name = '';
 
@@ -593,13 +720,16 @@ function parseAPIProductTitle(apiResult) {
     manufacturer = parts[0].trim();
   }
   if (parts.length >= 2) {
-    type = parts[1].trim();
-    // For generic products, name = manufacturer + type
-    name = manufacturer && type ? `${manufacturer} ${type}` : type;
+    detectedType = parts[1].trim();
   }
   if (parts.length >= 3) {
     colorname = parts[2].trim();
   }
+
+  // Normalize type for generic products too
+  const type = normalizeMaterialType(detectedType);
+  // For generic products, name = manufacturer + type
+  name = manufacturer && type ? `${manufacturer} ${type}` : type;
 
   console.log(`[API Parse] Generic result - Manufacturer: ${manufacturer}, Type: ${type}, Name: ${name}, Color: ${colorname}`);
   return { manufacturer, type, name, colorname };
@@ -612,7 +742,12 @@ app.get('/product-info/:ean', async (req, res) => {
     console.log(`[Product Search] Searching for EAN: ${ean}`);
 
     // First, try to find in local database
-    const localProduct = eanDatabase.find(item => item.ean === ean);
+    // Check if EAN matches or is contained in the comma-separated EAN list
+    const localProduct = eanDatabase.find(item => {
+      if (!item.ean) return false;
+      const eans = item.ean.split(',').map(e => e.trim());
+      return eans.includes(ean);
+    });
 
     if (localProduct) {
       console.log(`[Product Search] Found in local database:`, localProduct);
@@ -621,6 +756,7 @@ app.get('/product-info/:ean', async (req, res) => {
         rawTitle: `Bambu Lab ${localProduct.material} - ${localProduct.colorname}`,
         manufacturer: localProduct.manufacturer,
         type: localProduct.material,
+        variation: localProduct.variation || '',
         name: localProduct.name,
         colorname: localProduct.colorname,
         color: localProduct.color,
@@ -826,6 +962,32 @@ app.get('/materials/:materialType/colors', async (req, res) => {
   }
 });
 
+// Get variations for a specific material type (BambuLab only)
+app.get('/materials/:materialType/variations', async (req, res) => {
+  try {
+    const { materialType } = req.params;
+
+    // Filter BambuLab materials of the specified type
+    const bambuMaterials = eanDatabase.filter(item =>
+      item.manufacturer && item.manufacturer.toLowerCase().includes('bambu') &&
+      item.material === materialType
+    );
+
+    // Extract unique variations
+    const variations = new Set();
+    bambuMaterials.forEach(item => {
+      if (item.variation) {
+        variations.add(item.variation);
+      }
+    });
+
+    res.json(Array.from(variations).sort());
+  } catch (error) {
+    console.error('Get variations error:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
 // Add new material/color combination
 app.post('/materials', async (req, res) => {
   try {
@@ -865,6 +1027,193 @@ app.post('/materials/update-ean', async (req, res) => {
     res.json({ success: true, ...result });
   } catch (error) {
     console.error('Update EAN error:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// Update or create material from filament edit
+app.post('/materials/update-from-filament', async (req, res) => {
+  try {
+    const { manufacturer, type, name, colorname, color } = req.body;
+
+    if (!manufacturer || !type || !name || !colorname || !color) {
+      return res.status(400).json({
+        error: 'Manufacturer, type, name, colorname, and color are required'
+      });
+    }
+
+    const result = await materialsDB.updateOrCreateMaterial({
+      manufacturer,
+      type,
+      name,
+      colorname,
+      color
+    });
+
+    res.json({ success: true, ...result });
+  } catch (error) {
+    console.error('Update material from filament error:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// Get all materials for database management
+app.get('/materials/all', async (req, res) => {
+  try {
+    await materialsDB.initialize();
+    const materials = materialsDB.getAllMaterials();
+    res.json(materials);
+  } catch (error) {
+    console.error('Get all materials error:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// Add new material to database
+app.post('/materials/add', async (req, res) => {
+  try {
+    const { manufacturer, material, variation, name, colorname, color, note, ean } = req.body;
+
+    if (!manufacturer || !material || !name || !colorname || !color) {
+      return res.status(400).json({
+        error: 'Manufacturer, material, name, colorname, and color are required'
+      });
+    }
+
+    await materialsDB.initialize();
+
+    // Check if material already exists
+    const materials = materialsDB.getAllMaterials();
+    const exists = materials.some(
+      m => m.manufacturer === manufacturer &&
+           m.material === material &&
+           m.name === name &&
+           m.colorname === colorname &&
+           m.color.toUpperCase() === color.toUpperCase()
+    );
+
+    if (exists) {
+      return res.status(400).json({
+        error: 'Material already exists with the same properties'
+      });
+    }
+
+    // Add material
+    materials.push({
+      manufacturer,
+      material,
+      variation: variation || '',
+      name,
+      colorname,
+      color: color.toUpperCase(),
+      note: note || '',
+      ean: ean || ''
+    });
+
+    await materialsDB.save();
+
+    // Reload EAN database to include the new material
+    await reloadEANDatabase();
+
+    res.json({ success: true, message: 'Material added successfully' });
+  } catch (error) {
+    console.error('Add material error:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// Update existing material in database
+app.put('/materials/update', async (req, res) => {
+  try {
+    const { manufacturer, material, variation, name, colorname, color, note, ean } = req.body;
+
+    if (!manufacturer || !material || !name || !colorname || !color) {
+      return res.status(400).json({
+        error: 'Manufacturer, material, name, colorname, and color are required'
+      });
+    }
+
+    await materialsDB.initialize();
+
+    // Find and update material
+    const materials = materialsDB.getAllMaterials();
+    const materialIndex = materials.findIndex(
+      m => m.manufacturer === manufacturer &&
+           m.material === material &&
+           m.name === name &&
+           m.colorname === colorname
+    );
+
+    if (materialIndex === -1) {
+      return res.status(404).json({
+        error: 'Material not found'
+      });
+    }
+
+    // Update material
+    materials[materialIndex] = {
+      manufacturer,
+      material,
+      variation: variation || materials[materialIndex].variation || '',
+      name,
+      colorname,
+      color: color.toUpperCase(),
+      note: note || materials[materialIndex].note,
+      ean: ean || materials[materialIndex].ean
+    };
+
+    await materialsDB.save();
+
+    // Reload EAN database to include the updated material
+    await reloadEANDatabase();
+
+    res.json({ success: true, message: 'Material updated successfully' });
+  } catch (error) {
+    console.error('Update material error:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// Delete material from database
+app.delete('/materials/delete', async (req, res) => {
+  try {
+    const { manufacturer, material, name, colorname, color } = req.body;
+
+    if (!manufacturer || !material || !name || !colorname || !color) {
+      return res.status(400).json({
+        error: 'Manufacturer, material, name, colorname, and color are required'
+      });
+    }
+
+    await materialsDB.initialize();
+
+    // Find and remove material
+    const materials = materialsDB.getAllMaterials();
+    const materialIndex = materials.findIndex(
+      m => m.manufacturer === manufacturer &&
+           m.material === material &&
+           m.name === name &&
+           m.colorname === colorname &&
+           m.color.toUpperCase() === color.toUpperCase()
+    );
+
+    if (materialIndex === -1) {
+      return res.status(404).json({
+        error: 'Material not found'
+      });
+    }
+
+    // Remove material
+    materials.splice(materialIndex, 1);
+
+    await materialsDB.save();
+
+    // Reload EAN database to remove the deleted material
+    await reloadEANDatabase();
+
+    res.json({ success: true, message: 'Material deleted successfully' });
+  } catch (error) {
+    console.error('Delete material error:', error);
     res.status(500).json({ error: 'Internal server error' });
   }
 });
