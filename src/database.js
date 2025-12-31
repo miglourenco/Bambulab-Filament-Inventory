@@ -1,5 +1,6 @@
 import fs from 'fs/promises';
 import bcrypt from 'bcrypt';
+import crypto from 'crypto';
 
 class Database {
   constructor() {
@@ -96,7 +97,9 @@ class Database {
       createdAt: new Date().toISOString(),
       hassUrl: userData.hassUrl || process.env.HASS_URL || '',
       hassToken: userData.hassToken || '',
-      trayName: userData.trayName || 'tray'
+      trayName: userData.trayName || 'tray',
+      hassMode: userData.hassMode || 'disabled', // 'polling', 'webhook', 'disabled'
+      webhookToken: crypto.randomUUID() // Generate unique webhook token for each user
     };
 
     await this.save();
@@ -109,6 +112,26 @@ class Database {
 
   async getUserById(userId) {
     return this.data.users[userId];
+  }
+
+  async getUserByWebhookToken(token) {
+    if (!token) return null;
+    return Object.values(this.data.users).find(u => u.webhookToken === token);
+  }
+
+  async regenerateWebhookToken(userId) {
+    if (this.data.users[userId]) {
+      const newToken = crypto.randomUUID();
+      this.data.users[userId].webhookToken = newToken;
+      this.data.users[userId].updatedAt = new Date().toISOString();
+      await this.save();
+      return newToken;
+    }
+    return null;
+  }
+
+  getAllUsers() {
+    return Object.values(this.data.users);
   }
 
   async updateUser(userId, updates) {

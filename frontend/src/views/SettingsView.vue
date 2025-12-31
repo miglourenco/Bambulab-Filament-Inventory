@@ -49,35 +49,116 @@
           </v-card-title>
           <v-card-text class="pa-4">
             <v-form v-model="hassValid">
-              <v-text-field
-                v-model="hassUrl"
-                label="Home Assistant URL"
-                prepend-inner-icon="mdi-web"
+              <!-- Mode Selector -->
+              <v-select
+                v-model="hassMode"
+                label="Integration Mode"
+                :items="hassModes"
+                item-title="label"
+                item-value="value"
                 variant="outlined"
-                placeholder="https://homeassistant.local:8123"
-                class="mb-2"
-              ></v-text-field>
-
-              <v-text-field
-                v-model="hassToken"
-                label="Long-Lived Access Token"
-                prepend-inner-icon="mdi-key"
-                variant="outlined"
-                type="password"
-                placeholder="eyJ0eXAi..."
-                class="mb-2"
-              ></v-text-field>
-
-              <v-text-field
-                v-model="trayName"
-                label="Tray Name"
-                prepend-inner-icon="mdi-tray"
-                variant="outlined"
-                placeholder="tray"
-                hint="Default: 'tray'. Change if your HASS uses a different name (e.g., 'ams_tray', 'slot')"
-                persistent-hint
                 class="mb-4"
-              ></v-text-field>
+              >
+                <template v-slot:item="{ props, item }">
+                  <v-list-item v-bind="props">
+                    <template v-slot:subtitle>
+                      <span class="text-caption">{{ item.raw.description }}</span>
+                    </template>
+                  </v-list-item>
+                </template>
+              </v-select>
+
+              <!-- Polling Mode Fields -->
+              <div v-if="hassMode === 'polling'">
+                <v-text-field
+                  v-model="hassUrl"
+                  label="Home Assistant URL"
+                  prepend-inner-icon="mdi-web"
+                  variant="outlined"
+                  placeholder="https://homeassistant.local:8123"
+                  class="mb-2"
+                ></v-text-field>
+
+                <v-text-field
+                  v-model="hassToken"
+                  label="Long-Lived Access Token"
+                  prepend-inner-icon="mdi-key"
+                  variant="outlined"
+                  type="password"
+                  placeholder="eyJ0eXAi..."
+                  class="mb-2"
+                ></v-text-field>
+
+                <v-text-field
+                  v-model="trayName"
+                  label="Tray Name"
+                  prepend-inner-icon="mdi-tray"
+                  variant="outlined"
+                  placeholder="tray"
+                  hint="Default: 'tray'. Change if your HASS uses a different name (e.g., 'ams_tray', 'slot')"
+                  persistent-hint
+                  class="mb-4"
+                ></v-text-field>
+              </div>
+
+              <!-- Webhook Mode Fields -->
+              <div v-if="hassMode === 'webhook'">
+                <v-alert type="info" variant="tonal" class="mb-4" density="compact">
+                  Configure your Home Assistant to send data to this app via webhook.
+                </v-alert>
+
+                <v-text-field
+                  :model-value="webhookUrl"
+                  label="Webhook URL"
+                  prepend-inner-icon="mdi-link"
+                  variant="outlined"
+                  readonly
+                  class="mb-2"
+                >
+                  <template v-slot:append>
+                    <v-btn icon size="small" @click="copyWebhookUrl" variant="text">
+                      <v-icon>mdi-content-copy</v-icon>
+                    </v-btn>
+                  </template>
+                </v-text-field>
+
+                <v-text-field
+                  :model-value="store.user?.webhookToken || ''"
+                  label="Webhook Token"
+                  prepend-inner-icon="mdi-key"
+                  variant="outlined"
+                  readonly
+                  class="mb-2"
+                >
+                  <template v-slot:append>
+                    <v-btn icon size="small" @click="copyWebhookToken" variant="text">
+                      <v-icon>mdi-content-copy</v-icon>
+                    </v-btn>
+                    <v-btn icon size="small" @click="regenerateToken" variant="text" color="warning">
+                      <v-icon>mdi-refresh</v-icon>
+                    </v-btn>
+                  </template>
+                </v-text-field>
+
+                <v-expansion-panels class="mb-4">
+                  <v-expansion-panel title="Home Assistant Configuration Example">
+                    <v-expansion-panel-text>
+                      <pre class="text-caption bg-grey-lighten-4 pa-2 rounded overflow-auto">{{ yamlExample }}</pre>
+                      <v-btn size="small" variant="text" @click="copyYamlExample" class="mt-2">
+                        <v-icon start>mdi-content-copy</v-icon>
+                        Copy YAML
+                      </v-btn>
+                    </v-expansion-panel-text>
+                  </v-expansion-panel>
+                </v-expansion-panels>
+              </div>
+
+              <!-- Disabled Mode -->
+              <div v-if="hassMode === 'disabled'">
+                <v-alert type="warning" variant="tonal" class="mb-4">
+                  Home Assistant integration is disabled. Select a mode to enable automatic filament syncing.
+                </v-alert>
+              </div>
 
               <div class="d-flex gap-2">
                 <v-btn
@@ -97,7 +178,7 @@
                   class="flex-grow-1"
                 >
                   <v-icon start>mdi-content-save</v-icon>
-                  {{ "Save" }}
+                  Save
                 </v-btn>
               </div>
             </v-form>
@@ -245,7 +326,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import { useAppStore } from '@/store/app';
 import { toast } from 'vue3-toastify';
 
@@ -255,7 +336,14 @@ const hassValid = ref(false);
 const hassUrl = ref('');
 const hassToken = ref('');
 const trayName = ref('tray');
+const hassMode = ref('disabled');
 const savingHass = ref(false);
+
+const hassModes = [
+  { label: 'Disabled', value: 'disabled', description: 'Home Assistant integration is disabled' },
+  { label: 'Polling', value: 'polling', description: 'This app connects to Home Assistant' },
+  { label: 'Webhook', value: 'webhook', description: 'Home Assistant sends data to this app' }
+];
 
 const amsDialog = ref(false);
 const amsValid = ref(false);
@@ -277,12 +365,54 @@ const requiredRules = [
   v => !!v || 'This field is required'
 ];
 
+// Webhook URL based on current location
+const webhookUrl = computed(() => {
+  return `${window.location.origin}/api/hass/webhook`;
+});
+
+// YAML example for Home Assistant configuration
+const yamlExample = computed(() => {
+  const token = store.user?.webhookToken || 'YOUR_WEBHOOK_TOKEN';
+  const url = webhookUrl.value;
+
+  return `# configuration.yaml
+rest_command:
+  filament_sync:
+    url: "${url}"
+    method: POST
+    headers:
+      Authorization: "Bearer ${token}"
+      Content-Type: "application/json"
+    payload: >
+      {
+        "tag_uid": "{{ state_attr(sensor, 'tag_uid') }}",
+        "type": "{{ state_attr(sensor, 'type') }}",
+        "color": "{{ state_attr(sensor, 'color') }}",
+        "remain": {{ state_attr(sensor, 'remain') | int }},
+        "empty": {{ state_attr(sensor, 'empty') | lower }},
+        "name": "{{ state_attr(sensor, 'name') }}",
+        "manufacturer": "{{ state_attr(sensor, 'manufacturer') | default('BambuLab') }}"
+      }
+
+# automations.yaml
+automation:
+  - alias: "Sync AMS Tray 1"
+    trigger:
+      - platform: state
+        entity_id: sensor.x1c_ams_1_tray_1
+    action:
+      - service: rest_command.filament_sync
+        data:
+          sensor: "sensor.x1c_ams_1_tray_1"`;
+});
+
 onMounted(async () => {
   await store.getUserInfo();
   await store.getAMSConfigs();
 
   hassUrl.value = store.user?.hassUrl || '';
   trayName.value = store.user?.trayName || 'tray';
+  hassMode.value = store.user?.hassMode || 'disabled';
   // Token is not returned from API for security, so we keep it empty
   hassToken.value = '';
 });
@@ -291,6 +421,7 @@ const resetHassSettings = async () => {
   await store.getUserInfo();
   hassUrl.value = store.user?.hassUrl || '';
   trayName.value = store.user?.trayName || 'tray';
+  hassMode.value = store.user?.hassMode || 'disabled';
   hassToken.value = '';
   toast.info('Settings reset');
 };
@@ -300,13 +431,18 @@ const saveHassSettings = async () => {
 
   try {
     const settings = {
-      hassUrl: hassUrl.value,
-      trayName: trayName.value || 'tray'
+      hassMode: hassMode.value
     };
 
-    // Only send token if it's been changed
-    if (hassToken.value && hassToken.value.trim() !== '') {
-      settings.hassToken = hassToken.value;
+    // Only include polling settings if mode is polling
+    if (hassMode.value === 'polling') {
+      settings.hassUrl = hassUrl.value;
+      settings.trayName = trayName.value || 'tray';
+
+      // Only send token if it's been changed
+      if (hassToken.value && hassToken.value.trim() !== '') {
+        settings.hassToken = hassToken.value;
+      }
     }
 
     const success = await store.updateSettings(settings);
@@ -321,6 +457,44 @@ const saveHassSettings = async () => {
     toast.error('Error saving settings');
   } finally {
     savingHass.value = false;
+  }
+};
+
+const copyWebhookUrl = async () => {
+  try {
+    await navigator.clipboard.writeText(webhookUrl.value);
+    toast.success('Webhook URL copied to clipboard');
+  } catch (error) {
+    toast.error('Failed to copy');
+  }
+};
+
+const copyWebhookToken = async () => {
+  try {
+    await navigator.clipboard.writeText(store.user?.webhookToken || '');
+    toast.success('Webhook token copied to clipboard');
+  } catch (error) {
+    toast.error('Failed to copy');
+  }
+};
+
+const copyYamlExample = async () => {
+  try {
+    await navigator.clipboard.writeText(yamlExample.value);
+    toast.success('YAML copied to clipboard');
+  } catch (error) {
+    toast.error('Failed to copy');
+  }
+};
+
+const regenerateToken = async () => {
+  if (confirm('Are you sure you want to regenerate the webhook token? The old token will stop working.')) {
+    const newToken = await store.regenerateWebhookToken();
+    if (newToken) {
+      toast.success('Webhook token regenerated successfully');
+    } else {
+      toast.error('Failed to regenerate token');
+    }
   }
 };
 

@@ -1,140 +1,299 @@
-## What this is for
-This code generates a readme.md Markdown file for the project. The project aims to present a list of 3D print filaments for BambuLab 3D printers with AMS systems. It also includes functionality to automatically update the remaining amount if BambuLab RFID compatible filaments are used.
+# BambuLab Filament Inventory
+
+A web application for managing 3D printing filament inventory with automatic synchronization for BambuLab 3D printers with AMS systems.
 
 ## Features
-- 📊 Modern and responsive UI with improved design
-- 👥 **Multi-User Support** - Multiple users can manage their own filament inventory
-- 🔐 **Secure Authentication** - User registration and login with admin-controlled access
-- 🏠 **Per-User Home Assistant Integration** - Each user can configure their own HASS connection
-- 🎨 Color-coded inventory with visual indicators
-- 📱 Mobile-optimized interface
-- 📷 **QR Code and Barcode Scanner** - Scan filament codes directly from your mobile device
-- 🔖 **NFC Tag Reading** - Read NFC tags from filament spools for quick inventory updates
-- 🔍 Quick search and filtering by filament type
-- 📈 **Stock Total View** - See all users' filaments with ownership information
-- ✨ Automatic sync with BambuLab AMS systems (per-user configuration)
-- 📦 Manual filament management for non-BambuLab spools
-- 🔄 **Automatic Serial Number Association** - Manual spools get automatically linked when placed in AMS
 
-## Installation:
-The recommended way to install this software is Docker using a docker compose.
+- **Multi-User Support** - Multiple users can manage their own filament inventory
+- **Secure Authentication** - User registration with admin-controlled access
+- **Home Assistant Integration** - Two modes available:
+  - **Polling Mode** - App connects to Home Assistant
+  - **Webhook Mode** - Home Assistant sends data to the app
+- **Materials Database** - Comprehensive database of BambuLab materials with colors
+- **Barcode/QR Scanner** - Scan EAN codes to auto-fill filament info
+- **NFC Tag Reading** - Read NFC tags from filament spools
+- **Stock Total View** - See all users' filaments with ownership info
+- **Automatic Serial Association** - Manual spools get linked when placed in AMS
+- **Mobile Optimized** - Responsive design for all devices
 
-This is a sample `docker-compose.yml`:
+## Installation
+
+### Docker (Recommended)
+
+Create a `docker-compose.yml`:
+
 ```yaml
 version: "3"
 services:
   filamentinventory:
     image: mymartek/bambulab-filament-inventory:latest
     environment:
-      PORT=3000
-      # Admin registration key - required for creating new users
-      ADMIN_REGISTRATION_KEY=your-secure-admin-key-here
-      # JWT secret for authentication (will be auto-generated if not provided)
-      JWT_SECRET=your-secure-jwt-secret-here
+      PORT: 3000
+      ADMIN_REGISTRATION_KEY: your-secure-admin-key-here
     ports:
-      - '3000:3000'
+      - "3000:3000"
     restart: unless-stopped
     volumes:
       - ./data:/usr/src/app/data
 ```
 
+Run:
+```bash
+docker-compose up -d
+```
+
 ### Environment Variables
 
-- `PORT` - Port to run the application (default: 3000)
-- `ADMIN_REGISTRATION_KEY` - **Required** - Secret key needed for user registration (prevents unauthorized access)
-- `JWT_SECRET` - Secret key for JWT token generation (recommended for production). If not provided, a secret will be automatically generated and saved to `./data/jwt-secret.txt` to persist across restarts
+| Variable | Required | Description |
+|----------|----------|-------------|
+| `PORT` | No | Application port (default: 3000) |
+| `ADMIN_REGISTRATION_KEY` | Yes | Secret key for user registration |
+| `JWT_SECRET` | No | JWT token secret (auto-generated if not set) |
 
-### First Time Setup
+## First Time Setup
 
 1. Start the Docker container
-2. Open your browser at http://localhost:3000
-3. Click "Register here" on the login page
-4. Enter your details and the `ADMIN_REGISTRATION_KEY` you set in docker-compose
-5. After registration, you'll be automatically logged in
+2. Open http://localhost:3000
+3. Click "Register here"
+4. Enter your details and the `ADMIN_REGISTRATION_KEY`
+5. After registration, you'll be logged in
 
-### User Configuration
+## Home Assistant Integration
 
-Each user can configure their own settings:
+The app supports two integration modes with Home Assistant:
 
-1. **Home Assistant Integration**
-   - Go to Settings → Home Assistant Settings
-   - Enter your Home Assistant URL (e.g., https://homeassistant.local:8123)
-   - Enter your Long-Lived Access Token
-   - Click Save
+### Option 1: Polling Mode (App connects to HASS)
 
-2. **AMS Configuration**
-   - Go to Settings → AMS Configuration
-   - Click "Add AMS"
-   - Choose AMS type (AMS, AMS 2 Pro, AMS HT, or AMS Lite)
-   - Enter the HASS sensor name (e.g., sensor.x1c_010101010101_ams_1)
-   - Click Save
+Use this when the app can reach your Home Assistant instance.
 
-The system will automatically sync BambuLab filaments with colors and remaining amounts from your configured AMS units.
+1. Go to **Settings**
+2. Set **Integration Mode** to "Polling"
+3. Enter your Home Assistant URL (e.g., `https://homeassistant.local:8123`)
+4. Enter your Long-Lived Access Token
+5. Configure your AMS units in the AMS Configuration section
+6. Click **Save**
 
-For non-BambuLab filaments, you can manually add and manage them in your inventory.
+The app will poll Home Assistant every 60 seconds for filament updates.
+
+### Option 2: Webhook Mode (HASS sends to App)
+
+Use this when the app can't reach Home Assistant (e.g., Docker with NAT, different networks).
+
+1. Go to **Settings**
+2. Set **Integration Mode** to "Webhook"
+3. Copy the **Webhook URL** and **Webhook Token**
+4. Configure Home Assistant with the provided YAML example
+5. Click **Save**
+
+#### Home Assistant Configuration
+
+Add to your Home Assistant `configuration.yaml`:
+
+```yaml
+rest_command:
+  filament_sync:
+    url: "https://your-app-url/api/hass/webhook"
+    method: POST
+    headers:
+      Authorization: "Bearer YOUR_WEBHOOK_TOKEN"
+      Content-Type: "application/json"
+    payload: >
+      {
+        "tag_uid": "{{ state_attr(sensor, 'tag_uid') }}",
+        "type": "{{ state_attr(sensor, 'type') }}",
+        "color": "{{ state_attr(sensor, 'color') }}",
+        "remain": {{ state_attr(sensor, 'remain') | int }},
+        "empty": {{ state_attr(sensor, 'empty') | lower }},
+        "name": "{{ state_attr(sensor, 'name') }}",
+        "manufacturer": "{{ state_attr(sensor, 'manufacturer') | default('BambuLab') }}"
+      }
+```
+
+Add to `automations.yaml` (one per tray):
+
+```yaml
+automation:
+  - alias: "Sync AMS Tray 1"
+    trigger:
+      - platform: state
+        entity_id: sensor.x1c_ams_1_tray_1
+    action:
+      - service: rest_command.filament_sync
+        data:
+          sensor: "sensor.x1c_ams_1_tray_1"
+```
+
+## AMS Configuration
+
+Configure your AMS units to enable automatic syncing:
+
+1. Go to **Settings** → **AMS Configuration**
+2. Click **Add AMS**
+3. Select AMS type:
+   - **AMS** - 4 trays
+   - **AMS 2 Pro** - 4 trays
+   - **AMS HT** - 1 tray
+   - **AMS Lite** - 4 trays
+4. Enter the sensor ID (e.g., `sensor.x1c_010101010101_ams_1`)
+5. Click **Save**
+
+## Materials Database
+
+The app includes a comprehensive materials database with:
+
+- 400+ BambuLab filament entries
+- Material types (PLA, PETG, ABS, TPU, etc.)
+- Color names and HEX values
+- EAN/barcode codes for scanning
+- Variations (Basic, Matte, Silk, HF, etc.)
+
+### Managing Materials
+
+Go to **Materials Database** to:
+
+- View all materials
+- Filter by material type
+- Filter by "In Stock" (materials you own)
+- Add new materials
+- Edit existing materials
+- Delete materials
 
 ## Mobile Features
-When accessing from a mobile device, you'll have additional features:
 
-### QR Code / Barcode Scanner
-- Tap the floating scanner button (bottom-right corner)
-- Point your camera at the QR code or barcode on your filament box
-- The app will automatically:
-  - Search for existing filament in your inventory
-  - If not found, fetch product information from the barcode using a multi-tier lookup system:
-    1. **Local Database** - Searches 400+ BambuLab EAN codes with color HEX values
-    2. **UPCItemDB API** - Free API with 100 requests/day (trial tier)
-    3. **EAN-Search.org** - Free tier barcode lookup
-    4. **OpenFoodFacts API** - Free product database
-    5. **Web Scraping** - Fallback to product-search.net if APIs fail
-  - Auto-fill manufacturer, material type, and color name
-  - Open the add dialog with pre-filled data for you to complete
+### Barcode Scanner
 
-**Important:** Camera access requires HTTPS or localhost. When accessing from Android or iOS devices on your local network, you must use HTTPS (not HTTP). This is a browser security requirement for accessing the camera on mobile devices.
+1. Tap the scanner button (bottom-right)
+2. Point camera at the barcode on filament box
+3. The app will:
+   - Search local database for matching EAN
+   - Fetch from online APIs if not found
+   - Auto-fill manufacturer, type, color, and name
 
-**Setting up HTTPS for local network access:**
-- Use a reverse proxy like Nginx or Caddy with SSL certificates
-- Or use a service like ngrok or Cloudflare Tunnel
-- Or access via localhost if running directly on the mobile device
+**Note:** Camera requires HTTPS or localhost. Use a reverse proxy for HTTPS on local network.
 
-**EAN Lookup System:**
-The barcode scanner uses a sophisticated multi-tier approach to identify products:
-- **Tier 1 (Local)**: Instant lookup from `base_dados_completa.json` - the single source of truth for all material data
-  - Contains 240+ BambuLab filament EAN codes with complete product info and color HEX
-  - Normalized material types matching printer_data.yaml specifications
-  - Full product names and color information
-- **Tier 2 (APIs)**: Free public APIs for broader product coverage
-- **Tier 3 (Scraping)**: Web scraping as final fallback
+### NFC Tag Reading
 
-This ensures maximum compatibility with various filament brands while prioritizing fast local lookups for BambuLab products. See [EAN_LOOKUP_SYSTEM.md](EAN_LOOKUP_SYSTEM.md) for detailed documentation.
+Scan NFC tags from BambuLab filament spools to quickly identify and update inventory.
 
 ## Stock Total View
-The Stock Total tab provides a comprehensive view of all filaments across all users:
 
-- **Owner Information** - See which user owns each filament with color-coded badges
-- **Advanced Filters** - Filter by owner, type, manufacturer, or search by name
-- **Serial Number Tracking** - View which spools are tracked via RFID vs manually added
-- **Calculated Weight** - See actual remaining weight in grams
-- **Detailed View** - Click the eye icon to see complete filament information
-- **Sortable Columns** - Sort by any column for easy organization
-- **Responsive Design** - Works perfectly on mobile and desktop
+View all filaments across all users:
 
-This view is perfect for workshops, makerspaces, or households with multiple 3D printer users who want to see the complete inventory at a glance.
+- **Owner badges** - Color-coded user identification
+- **Advanced filters** - Filter by owner, type, manufacturer
+- **User statistics** - Click owner to see their stats (total spools, kg, types)
+- **Detailed view** - Click eye icon for full information
+- **Sortable columns** - Sort by any column
 
-## Contribution
-When you want to run this locally:
+## API Endpoints
 
-```
-git clone git@github.com:myMartek/Bambulab-Filament-Inventory.git
+### Authentication Required
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/user/me` | Get current user info |
+| PUT | `/user/settings` | Update user settings |
+| POST | `/user/webhook-token/regenerate` | Regenerate webhook token |
+| GET | `/filaments` | Get user's filaments |
+| POST | `/update` | Add/update filament |
+| POST | `/delete` | Delete filament |
+| GET | `/ams-config` | Get AMS configurations |
+| POST | `/ams-config` | Add AMS configuration |
+| PUT | `/ams-config/:id` | Update AMS configuration |
+| DELETE | `/ams-config/:id` | Delete AMS configuration |
+
+### Webhook Endpoints (Token Auth)
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | `/api/hass/webhook` | Receive single tray data |
+| POST | `/api/hass/sync` | Receive bulk tray data |
+
+## Development
+
+### Prerequisites
+
+- Node.js 18+
+- npm
+
+### Setup
+
+```bash
+# Clone repository
+git clone https://github.com/myMartek/Bambulab-Filament-Inventory.git
 cd Bambulab-Filament-Inventory
+
+# Install backend dependencies
 npm install
-node .
-```
-and in a second terminal:
-```
-cd Bambulab-Filament-Inventory/frontend
+
+# Install frontend dependencies
+cd frontend
 npm install
+cd ..
+```
+
+### Running in Development
+
+Terminal 1 (Backend):
+```bash
+npm start
+```
+
+Terminal 2 (Frontend):
+```bash
+cd frontend
 npm run dev
 ```
-Now open http://localhost:8080
 
+Open http://localhost:8080
+
+### Building
+
+```bash
+cd frontend
+npm run build
+```
+
+The built files are placed in `frontend/dist/` and served by the backend.
+
+### Docker Build
+
+```bash
+docker build -t bambulab-filament-inventory .
+```
+
+## Data Storage
+
+All data is stored in the `./data` directory:
+
+- `database.json` - Users, filaments, and AMS configurations
+- `base_dados_completa.json` - Materials database
+- `session-secret.txt` - Auto-generated session secret
+
+**Important:** Mount this directory as a volume to persist data.
+
+## Project Structure
+
+```
+├── index.js                 # Express server
+├── src/
+│   ├── database.js          # User/filament database
+│   ├── materials-db.js      # Materials database
+│   └── hass-sync.js         # Home Assistant sync
+├── frontend/
+│   ├── src/
+│   │   ├── views/           # Vue components
+│   │   ├── store/           # Pinia store
+│   │   └── router/          # Vue router
+│   └── dist/                # Built frontend
+├── data/
+│   ├── database.json        # Application data
+│   └── base_dados_completa.json  # Materials DB
+├── scripts/
+│   └── init-migrations.cjs  # Database migrations
+└── Dockerfile
+```
+
+## License
+
+MIT

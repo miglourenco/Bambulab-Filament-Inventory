@@ -8,7 +8,7 @@ import axios from 'axios';
 import * as cheerio from 'cheerio';
 import db from './src/database.js';
 import materialsDB from './src/materials-db.js';
-import './src/hass-sync.js';
+import { processTrayData } from './src/hass-sync.js';
 
 // Initialize materials database
 await materialsDB.initialize();
@@ -218,6 +218,8 @@ app.get('/user/me', async (req, res) => {
       role: user.role,
       hassUrl: user.hassUrl || '',
       trayName: user.trayName || 'tray',
+      hassMode: user.hassMode || 'disabled',
+      webhookToken: user.webhookToken || '',
       createdAt: user.createdAt
     });
   } catch (error) {
@@ -230,13 +232,14 @@ app.get('/user/me', async (req, res) => {
 app.put('/user/settings', async (req, res) => {
   try {
     const userId = req.session.user.id;
-    const { hassUrl, hassToken, email, trayName } = req.body;
+    const { hassUrl, hassToken, email, trayName, hassMode } = req.body;
 
     const updates = {};
     if (hassUrl !== undefined) updates.hassUrl = hassUrl;
     if (hassToken !== undefined) updates.hassToken = hassToken;
     if (email !== undefined) updates.email = email;
     if (trayName !== undefined) updates.trayName = trayName;
+    if (hassMode !== undefined) updates.hassMode = hassMode;
 
     const user = await db.updateUser(userId, updates);
 
@@ -250,10 +253,29 @@ app.put('/user/settings', async (req, res) => {
       email: user.email,
       role: user.role,
       hassUrl: user.hassUrl || '',
-      trayName: user.trayName || 'tray'
+      trayName: user.trayName || 'tray',
+      hassMode: user.hassMode || 'disabled',
+      webhookToken: user.webhookToken || ''
     });
   } catch (error) {
     console.error('Update settings error:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// Regenerate webhook token
+app.post('/user/webhook-token/regenerate', async (req, res) => {
+  try {
+    const userId = req.session.user.id;
+    const newToken = await db.regenerateWebhookToken(userId);
+
+    if (!newToken) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    res.json({ webhookToken: newToken });
+  } catch (error) {
+    console.error('Regenerate webhook token error:', error);
     res.status(500).json({ error: 'Internal server error' });
   }
 });
@@ -1217,6 +1239,99 @@ app.delete('/materials/delete', async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 });
+
+// ============================================
+// HASS Webhook Endpoints (no session required)
+// ============================================
+
+// Process single tray data from Home Assistant webhook
+app.post('/api/hass/webhook', async (req, res) => {
+  try {
+    // Extract token from Authorization header
+    const authHeader = req.headers.authorization;
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+      return res.status(401).json({ error: 'Missing or invalid authorization header' });
+    }
+
+    const token = authHeader.replace('Bearer ', '');
+    const user = await db.getUserByWebhookToken(token);
+
+    if (!user) {
+      return res.status(401).json({ error: 'Invalid webhook token' });
+    }
+
+    // Check if user has webhook mode enabled
+    if (user.hassMode !== 'webhook') {
+      return res.status(403).json({ error: 'Webhook mode is not enabled for this user' });
+    }
+
+    const trayData = req.body;
+
+    // Validate required fields
+    if (!trayData.tag_uid) {
+      return res.status(400).json({ error: 'Missing required field: tag_uid' });
+    }
+
+    console.log(`[HASS Webhook] Received data from user ${user.username}:`, trayData.tag_uid);
+
+    const result = await processTrayData(user.id, trayData);
+
+    res.json(result);
+  } catch (error) {
+    console.error('HASS webhook error:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// Process multiple trays from Home Assistant (bulk sync)
+app.post('/api/hass/sync', async (req, res) => {
+  try {
+    // Extract token from Authorization header
+    const authHeader = req.headers.authorization;
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+      return res.status(401).json({ error: 'Missing or invalid authorization header' });
+    }
+
+    const token = authHeader.replace('Bearer ', '');
+    const user = await db.getUserByWebhookToken(token);
+
+    if (!user) {
+      return res.status(401).json({ error: 'Invalid webhook token' });
+    }
+
+    // Check if user has webhook mode enabled
+    if (user.hassMode !== 'webhook') {
+      return res.status(403).json({ error: 'Webhook mode is not enabled for this user' });
+    }
+
+    const { trays } = req.body;
+
+    if (!trays || !Array.isArray(trays)) {
+      return res.status(400).json({ error: 'Missing or invalid trays array' });
+    }
+
+    console.log(`[HASS Webhook] Received bulk sync from user ${user.username}: ${trays.length} trays`);
+
+    const results = [];
+    for (const tray of trays) {
+      if (tray.tag_uid) {
+        const result = await processTrayData(user.id, tray);
+        results.push(result);
+      }
+    }
+
+    res.json({
+      success: true,
+      processed: results.length,
+      results
+    });
+  } catch (error) {
+    console.error('HASS bulk sync error:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// ============================================
 
 // deliver static files from frontend/dist
 app.use(express.static('frontend/dist'));

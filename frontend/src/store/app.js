@@ -136,7 +136,7 @@ export const useAppStore = defineStore('app', {
           return;
         }
 
-        const params = this.viewAll && this.isAdmin ? { viewAll: 'true' } : {};
+        const params = this.viewAll ? { viewAll: 'true' } : {};
 
         const { data } = await axios.get(host + '/filaments', {
           headers: {
@@ -285,6 +285,27 @@ export const useAppStore = defineStore('app', {
       } catch (error) {
         console.log(error);
         return false;
+      }
+    },
+    async regenerateWebhookToken() {
+      try {
+        if (!this.isLoggedIn) {
+          return null;
+        }
+
+        const { data } = await axios.post(host + '/user/webhook-token/regenerate', {}, {
+          headers: {
+            Authorization: `Bearer ${this.login}`,
+          },
+        });
+
+        this.user = { ...this.user, webhookToken: data.webhookToken };
+        sessionStorage.setItem('user', JSON.stringify(this.user));
+
+        return data.webhookToken;
+      } catch (error) {
+        console.log(error);
+        return null;
       }
     },
     async getAMSConfigs() {

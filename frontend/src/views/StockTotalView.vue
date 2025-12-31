@@ -373,10 +373,46 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed, onMounted, watch } from 'vue';
 import { useAppStore } from '@/store/app';
 
 const store = useAppStore();
+
+// Process filaments from store into grouped format
+const processFilaments = () => {
+  const grouped = {};
+
+  store.filaments.forEach(f => {
+    const key = `${f.userId}_${f.type}_${f.manufacturer}_${f.name}_${f.color}_${f.colorname}_${f.size}`;
+
+    if (!grouped[key]) {
+      grouped[key] = {
+        ...f,
+        owner: f.username || 'Unknown',
+        spools: [f],
+        spoolCount: 1,
+        totalWeight: Math.round(f.size * f.remain / 100),
+        weight: Math.round(f.size * f.remain / 100)
+      };
+    } else {
+      grouped[key].spools.push(f);
+      grouped[key].spoolCount++;
+      grouped[key].totalWeight += Math.round(f.size * f.remain / 100);
+      grouped[key].weight = grouped[key].totalWeight;
+
+      // Update remain to average
+      const totalRemain = grouped[key].spools.reduce((sum, spool) => sum + spool.remain, 0);
+      grouped[key].remain = Math.round(totalRemain / grouped[key].spoolCount);
+
+      // If any spool has serial number, show the first one
+      if (f.serialNumber && !grouped[key].serialNumber) {
+        grouped[key].serialNumber = f.serialNumber;
+      }
+    }
+  });
+
+  allFilaments.value = Object.values(grouped);
+};
 
 const search = ref('');
 const filterOwner = ref(null);
@@ -496,44 +532,15 @@ const viewDetails = (filament) => {
   detailsDialog.value = true;
 };
 
+// Watch for filaments changes and reprocess
+watch(() => store.filaments, () => {
+  processFilaments();
+}, { immediate: true });
+
 // Load all filaments with viewAll flag
-onMounted(async () => {
+onMounted(() => {
   // Force viewAll and fetch all filaments
   store.setViewAll(true);
-
-  // Group filaments by owner + type + manufacturer + name + color + colorname + size
-  const grouped = {};
-
-  store.filaments.forEach(f => {
-    const key = `${f.userId}_${f.type}_${f.manufacturer}_${f.name}_${f.color}_${f.colorname}_${f.size}`;
-
-    if (!grouped[key]) {
-      grouped[key] = {
-        ...f,
-        owner: f.username || 'Unknown',
-        spools: [f],
-        spoolCount: 1,
-        totalWeight: Math.round(f.size * f.remain / 100),
-        weight: Math.round(f.size * f.remain / 100)
-      };
-    } else {
-      grouped[key].spools.push(f);
-      grouped[key].spoolCount++;
-      grouped[key].totalWeight += Math.round(f.size * f.remain / 100);
-      grouped[key].weight = grouped[key].totalWeight;
-
-      // Update remain to average
-      const totalRemain = grouped[key].spools.reduce((sum, spool) => sum + spool.remain, 0);
-      grouped[key].remain = Math.round(totalRemain / grouped[key].spoolCount);
-
-      // If any spool has serial number, show the first one
-      if (f.serialNumber && !grouped[key].serialNumber) {
-        grouped[key].serialNumber = f.serialNumber;
-      }
-    }
-  });
-
-  allFilaments.value = Object.values(grouped);
 });
 </script>
 
