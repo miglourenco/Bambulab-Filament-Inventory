@@ -140,19 +140,35 @@ function migrateUserFilaments() {
 }
 
 // ========================================
+// MIGRATION 3: Normalize Colors (RGBA -> RGB)
+// ========================================
+
+function normalizeColors() {
+  console.log('[MIGRATION 3] Color Normalization - Converting RGBA to RGB');
+  console.log('-'.repeat(60));
+
+  const normalizeColorScript = require('./normalize-colors.cjs');
+  const result = normalizeColorScript.run();
+
+  console.log('');
+  return result;
+}
+
+// ========================================
 // RUN ALL MIGRATIONS
 // ========================================
 
 try {
   migrateMaterialsDatabase();
   migrateUserFilaments();
+  normalizeColors();
 
   console.log('='.repeat(60));
-  console.log('✨ All migrations completed successfully!');
+  console.log('All migrations completed successfully!');
   console.log('='.repeat(60));
   console.log('');
 } catch (error) {
-  console.error('❌ Migration failed:', error);
+  console.error('Migration failed:', error);
   console.error(error.stack);
   process.exit(1);
 }

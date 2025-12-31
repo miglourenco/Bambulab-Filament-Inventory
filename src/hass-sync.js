@@ -50,9 +50,15 @@ export const processTrayData = async (userId, tray) => {
 
   // Look up material info from database using name and color
   const trayName = tray.name || '';
-  const trayColor = tray.color || '#FFFFFFFF';
 
-  console.log(`[HASS] Processing tray - Name: "${trayName}", Color: "${trayColor}"`);
+  // Normalize color to RGB format (handles RGBA from HASS like #RRGGBBAA or #RRGGBBAAAA)
+  let trayColor = tray.color || '#FFFFFF';
+  if (trayColor.length > 7) {
+    trayColor = trayColor.slice(0, 7);
+  }
+  trayColor = trayColor.toUpperCase();
+
+  console.log(`[HASS] Processing tray - Name: "${trayName}", Color: "${trayColor}" (original: "${tray.color}")`);
 
   // Fetch material data from database (ignores manufacturer/type sent by HASS)
   const materialInfo = materialsDB.findMaterialByNameAndColor(trayName, trayColor);
@@ -64,7 +70,7 @@ export const processTrayData = async (userId, tray) => {
 
   console.log(`[HASS] Material info - Manufacturer: "${manufacturer}", Type: "${type}", ColorName: "${colorname}"`);
 
-  // Normalize tray data with database-sourced info
+  // Normalize tray data with database-sourced info (always use RGB color)
   const normalizedTray = {
     tag_uid: tray.tag_uid,
     type: type,

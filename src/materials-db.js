@@ -3,6 +3,30 @@ import path from 'path';
 
 const MATERIALS_DB_FILE = './data/base_dados_completa.json';
 
+/**
+ * Normalize a hex color to RGB format (#RRGGBB)
+ * Handles RGBA (#RRGGBBAA), extra long formats (#RRGGBBAAAA), and lowercase
+ * @param {string} color - The color string to normalize
+ * @returns {string} - Normalized color in #RRGGBB format
+ */
+function normalizeColor(color) {
+  if (!color || typeof color !== 'string') return color;
+
+  let normalized = color.toUpperCase().trim();
+
+  // Ensure it starts with #
+  if (!normalized.startsWith('#')) {
+    normalized = '#' + normalized;
+  }
+
+  // If longer than 7 chars (#RRGGBB), truncate to RGB only
+  if (normalized.length > 7) {
+    normalized = normalized.slice(0, 7);
+  }
+
+  return normalized;
+}
+
 class MaterialsDB {
   constructor() {
     this.materials = [];
@@ -69,15 +93,15 @@ class MaterialsDB {
 
   // Find color by product name and hex code (for HASS import)
   findColorByNameAndHex(productName, hexColor) {
-    // Normalize hex color
-    const normalizedHex = hexColor.toUpperCase();
+    // Normalize hex color (handles RGBA, extra long formats, case)
+    const normalizedHex = normalizeColor(hexColor);
 
     console.log(`[MaterialsDB] findColorByNameAndHex - Looking for name: "${productName}", color: "${normalizedHex}"`);
     console.log(`[MaterialsDB] Database has ${this.materials.length} materials loaded`);
 
     // First try exact match by name and color
     let match = this.materials.find(
-      m => m.name === productName && m.color.toUpperCase() === normalizedHex
+      m => m.name === productName && normalizeColor(m.color) === normalizedHex
     );
 
     if (match) {
@@ -125,7 +149,7 @@ class MaterialsDB {
     let minDistance = 30;
 
     for (const material of materialsWithName) {
-      const distance = colorDistance(normalizedHex, material.color);
+      const distance = colorDistance(normalizedHex, normalizeColor(material.color));
       if (distance < minDistance) {
         minDistance = distance;
         closest = material;
@@ -133,18 +157,18 @@ class MaterialsDB {
     }
 
     if (closest) {
-      console.log(`[MaterialsDB] ✅ Closest match found by name: "${closest.colorname}" (distance: ${minDistance.toFixed(2)})`);
+      console.log(`[MaterialsDB] Closest match found by name: "${closest.colorname}" (distance: ${minDistance.toFixed(2)})`);
       return closest.colorname;
     } else {
-      console.log(`[MaterialsDB] ❌ No close match found by name (all colors had distance > 30)`);
+      console.log(`[MaterialsDB] No close match found by name (all colors had distance > 30)`);
       return null;
     }
   }
 
   // Find color by material type and hex code (fallback method)
   findColorByMaterialType(materialType, hexColor) {
-    // Normalize hex color
-    const normalizedHex = hexColor.toUpperCase();
+    // Normalize hex color (handles RGBA, extra long formats, case)
+    const normalizedHex = normalizeColor(hexColor);
 
     console.log(`[MaterialsDB] findColorByMaterialType - Looking for material: "${materialType}", color: "${normalizedHex}"`);
 
@@ -157,7 +181,7 @@ class MaterialsDB {
 
     // First try exact match
     let match = this.materials.find(
-      m => m.material === actualMaterialType && m.color.toUpperCase() === normalizedHex
+      m => m.material === actualMaterialType && normalizeColor(m.color) === normalizedHex
     );
 
     if (match) {
@@ -204,7 +228,7 @@ class MaterialsDB {
     let minDistance = 30;
 
     for (const material of materialsOfType) {
-      const distance = colorDistance(normalizedHex, material.color);
+      const distance = colorDistance(normalizedHex, normalizeColor(material.color));
       if (distance < minDistance) {
         minDistance = distance;
         closest = material;
@@ -212,21 +236,23 @@ class MaterialsDB {
     }
 
     if (closest) {
-      console.log(`[MaterialsDB] ✅ Closest match found: "${closest.colorname}" (distance: ${minDistance.toFixed(2)})`);
+      console.log(`[MaterialsDB] Closest match found: "${closest.colorname}" (distance: ${minDistance.toFixed(2)})`);
       return closest.colorname;
     } else {
-      console.log(`[MaterialsDB] ❌ No close match found (all colors had distance > 30)`);
+      console.log(`[MaterialsDB] No close match found (all colors had distance > 30)`);
       return null;
     }
   }
 
   // Add new material/color combination
   async addMaterial(materialType, colorname, hexColor) {
+    const normalizedInputColor = normalizeColor(hexColor);
+
     // Check if already exists
     const exists = this.materials.some(
       m => m.material === materialType &&
            m.colorname === colorname &&
-           m.color.toUpperCase() === hexColor.toUpperCase()
+           normalizeColor(m.color) === normalizedInputColor
     );
 
     if (!exists) {
@@ -236,7 +262,7 @@ class MaterialsDB {
         material: materialType,
         name: `Bambu ${materialType}`,
         colorname: colorname,
-        color: hexColor.toUpperCase(),
+        color: normalizedInputColor,
         note: "Custom",
         ean: ""  // No EAN for custom materials
       });
@@ -255,18 +281,15 @@ class MaterialsDB {
 
   // Find material by name and color (for HASS webhook - returns full material info)
   findMaterialByNameAndColor(productName, hexColor) {
-    // Normalize hex color (remove alpha channel if present - RGBA to RGB)
-    let normalizedHex = hexColor.toUpperCase();
-    if (normalizedHex.length === 9) {
-      // Remove last 2 characters (alpha channel) - #RRGGBBAA -> #RRGGBB
-      normalizedHex = normalizedHex.slice(0, 7);
-    }
+    // Normalize hex color using the standard normalizeColor function
+    // This handles RGBA, extra long formats (#RRGGBBAAAA), and case normalization
+    const normalizedHex = normalizeColor(hexColor);
 
     console.log(`[MaterialsDB] findMaterialByNameAndColor - Looking for name: "${productName}", color: "${normalizedHex}"`);
 
-    // First try exact match by name and color
+    // First try exact match by name and color (normalize DB colors too for comparison)
     let match = this.materials.find(
-      m => m.name === productName && m.color.toUpperCase() === normalizedHex
+      m => m.name === productName && normalizeColor(m.color) === normalizedHex
     );
 
     if (match) {
@@ -316,7 +339,7 @@ class MaterialsDB {
     let minDistance = 30;
 
     for (const material of materialsWithName) {
-      const distance = colorDistance(normalizedHex, material.color);
+      const distance = colorDistance(normalizedHex, normalizeColor(material.color));
       if (distance < minDistance) {
         minDistance = distance;
         closest = material;
@@ -324,7 +347,7 @@ class MaterialsDB {
     }
 
     if (closest) {
-      console.log(`[MaterialsDB] ✅ Closest match found: manufacturer="${closest.manufacturer}", material="${closest.material}", colorname="${closest.colorname}" (distance: ${minDistance.toFixed(2)})`);
+      console.log(`[MaterialsDB] Closest match found: manufacturer="${closest.manufacturer}", material="${closest.material}", colorname="${closest.colorname}" (distance: ${minDistance.toFixed(2)})`);
       return {
         manufacturer: closest.manufacturer,
         type: closest.material,
@@ -333,15 +356,16 @@ class MaterialsDB {
       };
     }
 
-    console.log(`[MaterialsDB] ❌ No close match found (all colors had distance > 30)`);
+    console.log(`[MaterialsDB] No close match found (all colors had distance > 30)`);
     return null;
   }
 
   // Update or create material from filament data
   async updateOrCreateMaterial(filamentData) {
     const { manufacturer, type, name, colorname, color } = filamentData;
+    const normalizedInputColor = normalizeColor(color);
 
-    console.log(`[MaterialsDB] updateOrCreateMaterial - Manufacturer: ${manufacturer}, Type: ${type}, Name: ${name}, ColorName: ${colorname}, Color: ${color}`);
+    console.log(`[MaterialsDB] updateOrCreateMaterial - Manufacturer: ${manufacturer}, Type: ${type}, Name: ${name}, ColorName: ${colorname}, Color: ${normalizedInputColor}`);
 
     // Check if material already exists by manufacturer + material + name + colorname + color
     const existing = this.materials.find(
@@ -349,7 +373,7 @@ class MaterialsDB {
            m.material === type &&
            m.name === name &&
            m.colorname === colorname &&
-           m.color.toUpperCase() === color.toUpperCase()
+           normalizeColor(m.color) === normalizedInputColor
     );
 
     if (existing) {
@@ -366,8 +390,8 @@ class MaterialsDB {
     );
 
     if (toUpdate) {
-      // Update the color
-      toUpdate.color = color.toUpperCase();
+      // Update the color (normalized to RGB)
+      toUpdate.color = normalizedInputColor;
       await this.save();
       console.log(`[MaterialsDB] Updated material color: ${name} - ${colorname}`);
       return { action: 'updated', material: toUpdate };
@@ -379,7 +403,7 @@ class MaterialsDB {
       material: type,
       name,
       colorname,
-      color: color.toUpperCase(),
+      color: normalizedInputColor,
       note: "Custom",
       ean: ""
     };
@@ -393,6 +417,7 @@ class MaterialsDB {
   // Update existing material with EAN or add new material with EAN
   async updateOrAddEAN(ean, materialData) {
     const { manufacturer, material, name, colorname, color } = materialData;
+    const normalizedInputColor = normalizeColor(color);
 
     // Check if EAN already exists in database
     const existingByEAN = this.materials.find(m => m.ean && m.ean.split(',').includes(ean));
@@ -403,7 +428,7 @@ class MaterialsDB {
       existingByEAN.material = material;
       existingByEAN.name = name;
       existingByEAN.colorname = colorname;
-      existingByEAN.color = color.toUpperCase();
+      existingByEAN.color = normalizedInputColor;
 
       await this.save();
       console.log(`Updated existing material with EAN ${ean}: ${name} - ${colorname}`);
@@ -416,7 +441,7 @@ class MaterialsDB {
            m.material === material &&
            m.name === name &&
            m.colorname === colorname &&
-           m.color.toUpperCase() === color.toUpperCase()
+           normalizeColor(m.color) === normalizedInputColor
     );
 
     if (existingByMaterial) {
@@ -441,7 +466,7 @@ class MaterialsDB {
       material,
       name,
       colorname,
-      color: color.toUpperCase(),
+      color: normalizedInputColor,
       note: "Custom",
       ean
     });

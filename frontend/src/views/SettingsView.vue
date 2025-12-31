@@ -426,28 +426,28 @@ const yamlExample = computed(() => {
     });
   }
 
-  // Generate triggers
+  // Generate triggers (with proper 6-space indentation for YAML)
   let triggers = '';
   sensors.forEach(s => {
-    triggers += `
-  - trigger: state
-    entity_id:
-      - ${s.sensor}
-    id: "${s.id}"`;
+    triggers += `      - trigger: state
+        entity_id:
+          - ${s.sensor}
+        id: "${s.id}"
+`;
   });
 
-  // Generate actions
+  // Generate actions (with proper 6-space indentation for YAML)
   let actions = '';
   sensors.forEach(s => {
-    actions += `
-  - if:
-      - condition: trigger
-        id:
-          - "${s.id}"
-    then:
-      - action: rest_command.filament_sync
-        data:
-          sensor: "${s.sensor}"`;
+    actions += `      - if:
+          - condition: trigger
+            id:
+              - "${s.id}"
+        then:
+          - action: rest_command.filament_sync
+            data:
+              sensor: "${s.sensor}"
+`;
   });
 
   return `# configuration.yaml
@@ -473,9 +473,11 @@ automation:
     description: "Sync all AMS trays to Filament Inventory app"
     mode: parallel
     max: 10
-    triggers:${triggers}
+    triggers:
+${triggers}
     conditions: []
-    actions:${actions}`;
+    actions:
+${actions}`;
 });
 
 onMounted(async () => {

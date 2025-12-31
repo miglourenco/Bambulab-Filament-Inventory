@@ -31,8 +31,8 @@ jobs:
         id: meta
         uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
         with:
-          images: mymartek/bambulab-filament-inventory
-      
+          images: azmonsterkill/bambulab-filament-inventory
+
       - name: Build and push Docker image
         uses: docker/build-push-action@3b5e8027fcad23fda98b2e3ac259d8d67585f671
         with:
@@ -41,11 +41,12 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+
       - name: Update Description
         uses: meeDamian/sync-readme@v1.0.6
         with:
           user: ${{ secrets.DOCKER_USERNAME }}
           pass: ${{ secrets.DOCKER_PASSWORD }}
-          slug: mymartek/bambulab-filament-inventory
+          slug: azmonsterkill/bambulab-filament-inventory
           readme: ./README.md
-          description: A web frontend for managing bambulab filament inventory
+          description: Web app for managing BambuLab 3D printer filament inventory with AMS sync via Home Assistant

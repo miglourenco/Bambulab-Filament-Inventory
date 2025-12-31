@@ -1,6 +1,11 @@
 # BambuLab Filament Inventory
 
+[![Docker Pulls](https://img.shields.io/docker/pulls/azmonsterkill/bambulab-filament-inventory)](https://hub.docker.com/r/azmonsterkill/bambulab-filament-inventory)
+[![Docker Image Size](https://img.shields.io/docker/image-size/azmonsterkill/bambulab-filament-inventory/latest)](https://hub.docker.com/r/azmonsterkill/bambulab-filament-inventory)
+
 A web application for managing 3D printing filament inventory with automatic synchronization for BambuLab 3D printers with AMS systems.
+
+![Filament Inventory Screenshot](https://raw.githubusercontent.com/myMartek/Bambulab-Filament-Inventory/main/docs/screenshot.png)
 
 ## Features
 
@@ -26,7 +31,7 @@ Create a `docker-compose.yml`:
 version: "3"
 services:
   filamentinventory:
-    image: mymartek/bambulab-filament-inventory:latest
+    image: azmonsterkill/bambulab-filament-inventory:latest
     environment:
       PORT: 3000
       ADMIN_REGISTRATION_KEY: your-secure-admin-key-here
@@ -109,19 +114,46 @@ rest_command:
 
 **Note:** The app automatically looks up the manufacturer, material type, and color name from its materials database using the filament name and color.
 
-Add to `automations.yaml` (one per tray):
+Add to `automations.yaml` (single automation for all trays):
 
 ```yaml
 automation:
-  - alias: "Sync AMS Tray 1"
-    trigger:
-      - platform: state
-        entity_id: sensor.x1c_ams_1_tray_1
-    action:
-      - service: rest_command.filament_sync
-        data:
-          sensor: "sensor.x1c_ams_1_tray_1"
+  - alias: "Sync Filament Inventory"
+    description: "Sync all AMS trays to Filament Inventory app"
+    mode: parallel
+    max: 10
+    triggers:
+      - trigger: state
+        entity_id:
+          - sensor.x1c_ams_1_tray_1
+        id: "ams_1_1"
+      - trigger: state
+        entity_id:
+          - sensor.x1c_ams_1_tray_2
+        id: "ams_1_2"
+      # Add more triggers for each tray...
+    conditions: []
+    actions:
+      - if:
+          - condition: trigger
+            id:
+              - "ams_1_1"
+        then:
+          - action: rest_command.filament_sync
+            data:
+              sensor: "sensor.x1c_ams_1_tray_1"
+      - if:
+          - condition: trigger
+            id:
+              - "ams_1_2"
+        then:
+          - action: rest_command.filament_sync
+            data:
+              sensor: "sensor.x1c_ams_1_tray_2"
+      # Add more actions for each tray...
 ```
+
+**Tip:** The app generates the complete YAML configuration automatically based on your AMS configuration. Go to **Settings** → **Webhook Mode** → **Home Assistant Configuration Example** to copy the ready-to-use YAML.
 
 ## AMS Configuration
 

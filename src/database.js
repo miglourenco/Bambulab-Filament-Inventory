@@ -2,6 +2,27 @@ import fs from 'fs/promises';
 import bcrypt from 'bcrypt';
 import crypto from 'crypto';
 
+/**
+ * Normalize a hex color to RGB format (#RRGGBB)
+ * Handles RGBA (#RRGGBBAA), extra long formats (#RRGGBBAAAA), and lowercase
+ */
+function normalizeColor(color) {
+  if (!color || typeof color !== 'string') return '#FFFFFF';
+
+  let normalized = color.toUpperCase().trim();
+
+  if (!normalized.startsWith('#')) {
+    normalized = '#' + normalized;
+  }
+
+  // Truncate to RGB only (remove alpha channel)
+  if (normalized.length > 7) {
+    normalized = normalized.slice(0, 7);
+  }
+
+  return normalized;
+}
+
 class Database {
   constructor() {
     this.dbPath = './data/database.json';
@@ -205,7 +226,7 @@ class Database {
       manufacturer: filamentData.manufacturer || 'Unknown',
       name: filamentData.name || 'Unknown',
       variation: filamentData.variation || '',
-      color: filamentData.color || '#FFFFFFFF',
+      color: normalizeColor(filamentData.color),
       colorname: filamentData.colorname || '',
       size: filamentData.size || 1000,
       remain: filamentData.remain || 0,
@@ -251,13 +272,14 @@ class Database {
   // Find filament without serial number that matches specifications
   findUnassignedFilament(userId, specifications) {
     const filaments = this.getUserFilaments(userId);
+    const specColor = normalizeColor(specifications.color);
     return filaments.find(f =>
       !f.serialNumber &&
       !f.tracking &&
       f.type === specifications.type &&
       f.manufacturer === specifications.manufacturer &&
       f.name === specifications.name &&
-      f.color === specifications.color
+      normalizeColor(f.color) === specColor
     );
   }
 
