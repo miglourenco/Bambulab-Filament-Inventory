@@ -73,7 +73,8 @@ const publicRoutes = [
 const publicRoutePrefixes = [
   '/assets/',
   '/materials/',
-  '/product-info/'
+  '/product-info/',
+  '/api/hass/'  // Webhook endpoints (authentication handled internally)
 ];
 
 const requireAuth = (req, res, next) => {

@@ -253,6 +253,90 @@ class MaterialsDB {
     return this.materials;
   }
 
+  // Find material by name and color (for HASS webhook - returns full material info)
+  findMaterialByNameAndColor(productName, hexColor) {
+    // Normalize hex color (remove alpha channel if present - RGBA to RGB)
+    let normalizedHex = hexColor.toUpperCase();
+    if (normalizedHex.length === 9) {
+      // Remove last 2 characters (alpha channel) - #RRGGBBAA -> #RRGGBB
+      normalizedHex = normalizedHex.slice(0, 7);
+    }
+
+    console.log(`[MaterialsDB] findMaterialByNameAndColor - Looking for name: "${productName}", color: "${normalizedHex}"`);
+
+    // First try exact match by name and color
+    let match = this.materials.find(
+      m => m.name === productName && m.color.toUpperCase() === normalizedHex
+    );
+
+    if (match) {
+      console.log(`[MaterialsDB] ✅ Exact match found: manufacturer="${match.manufacturer}", material="${match.material}", colorname="${match.colorname}"`);
+      return {
+        manufacturer: match.manufacturer,
+        type: match.material,
+        colorname: match.colorname,
+        name: match.name
+      };
+    }
+
+    // Try to find closest color by distance calculation for this product name
+    const materialsWithName = this.materials.filter(m => m.name === productName);
+
+    console.log(`[MaterialsDB] Found ${materialsWithName.length} materials with name "${productName}"`);
+
+    if (materialsWithName.length === 0) {
+      console.log(`[MaterialsDB] ❌ No materials with name "${productName}" in database`);
+      return null;
+    }
+
+    // Calculate color distance
+    const hexToRgb = (hex) => {
+      const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+      return result ? {
+        r: parseInt(result[1], 16),
+        g: parseInt(result[2], 16),
+        b: parseInt(result[3], 16)
+      } : null;
+    };
+
+    const colorDistance = (color1, color2) => {
+      const c1 = hexToRgb(color1);
+      const c2 = hexToRgb(color2);
+      if (!c1 || !c2) return Infinity;
+
+      return Math.sqrt(
+        Math.pow(c1.r - c2.r, 2) +
+        Math.pow(c1.g - c2.g, 2) +
+        Math.pow(c1.b - c2.b, 2)
+      );
+    };
+
+    // Find closest color (threshold of 30 for similar colors)
+    let closest = null;
+    let minDistance = 30;
+
+    for (const material of materialsWithName) {
+      const distance = colorDistance(normalizedHex, material.color);
+      if (distance < minDistance) {
+        minDistance = distance;
+        closest = material;
+      }
+    }
+
+    if (closest) {
+      console.log(`[MaterialsDB] ✅ Closest match found: manufacturer="${closest.manufacturer}", material="${closest.material}", colorname="${closest.colorname}" (distance: ${minDistance.toFixed(2)})`);
+      return {
+        manufacturer: closest.manufacturer,
+        type: closest.material,
+        colorname: closest.colorname,
+        name: closest.name
+      };
+    }
+
+    console.log(`[MaterialsDB] ❌ No close match found (all colors had distance > 30)`);
+    return null;
+  }
+
   // Update or create material from filament data
   async updateOrCreateMaterial(filamentData) {
     const { manufacturer, type, name, colorname, color } = filamentData;

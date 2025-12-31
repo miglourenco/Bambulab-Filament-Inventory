@@ -36,7 +36,7 @@ const getAMSTrays = async (hassUrl, hassToken, sensor, trayNumber, trayName = 't
  * Process a single tray data and update the database
  * This function is used both by polling (syncUserHASS) and webhook endpoints
  * @param {string} userId - The user ID
- * @param {object} tray - The tray data with tag_uid, type, color, name, remain, empty, manufacturer
+ * @param {object} tray - The tray data with tag_uid, color, name, remain, empty (manufacturer and type are fetched from materials DB)
  * @returns {object} - Result of the operation
  */
 export const processTrayData = async (userId, tray) => {
@@ -45,17 +45,37 @@ export const processTrayData = async (userId, tray) => {
     return { success: false, message: 'Invalid or empty tag_uid' };
   }
 
-  // Normalize tray data
+  // Ensure materialsDB is initialized
+  await materialsDB.initialize();
+
+  // Look up material info from database using name and color
+  const trayName = tray.name || '';
+  const trayColor = tray.color || '#FFFFFFFF';
+
+  console.log(`[HASS] Processing tray - Name: "${trayName}", Color: "${trayColor}"`);
+
+  // Fetch material data from database (ignores manufacturer/type sent by HASS)
+  const materialInfo = materialsDB.findMaterialByNameAndColor(trayName, trayColor);
+
+  // Use database info if found, otherwise use fallbacks
+  const manufacturer = materialInfo?.manufacturer || 'BambuLab';
+  const type = materialInfo?.type || tray.type || 'Unknown';
+  const colorname = materialInfo?.colorname || '';
+
+  console.log(`[HASS] Material info - Manufacturer: "${manufacturer}", Type: "${type}", ColorName: "${colorname}"`);
+
+  // Normalize tray data with database-sourced info
   const normalizedTray = {
     tag_uid: tray.tag_uid,
-    type: tray.type || 'Unknown',
-    manufacturer: tray.manufacturer || 'BambuLab',
+    type: type,
+    manufacturer: manufacturer,
     tracking: true,
     size: tray.size || 1000,
     remain: typeof tray.remain === 'number' ? tray.remain : 0,
-    color: tray.color || '#FFFFFFFF',
+    color: trayColor,
+    colorname: colorname,
     empty: tray.empty || false,
-    name: tray.name || '',
+    name: trayName,
     serialNumber: tray.tag_uid
   };
 
@@ -98,41 +118,25 @@ export const processTrayData = async (userId, tray) => {
       });
       return { success: true, action: 'associated', tag_uid };
     } else {
-      // Try to identify colorname from materials database
-      let colorname = '';
+      // Fallback: Find if there's a colorname for this combination in user's existing filaments
+      let finalColorname = normalizedTray.colorname;
 
-      // Ensure materialsDB is initialized
-      await materialsDB.initialize();
-
-      console.log(`[HASS] Looking for colorname - Name: "${normalizedTray.name}", Color: "${normalizedTray.color}", Type: "${normalizedTray.type}"`);
-
-      // First try to find from materials database by product name and hex color
-      const colorHex = normalizedTray.color.length === 9 ? normalizedTray.color.slice(0, -2) : normalizedTray.color;
-      const identifiedColorName = materialsDB.findColorByNameAndHex(normalizedTray.name, colorHex);
-      if (identifiedColorName) {
-        colorname = identifiedColorName;
-        console.log(`[HASS] ✅ Found colorname in database: "${colorname}"`);
-      } else {
-        console.log(`[HASS] ⚠️ Colorname not found in database for name "${normalizedTray.name}" and color "${normalizedTray.color}"`);
-
-        // Fallback: Find if there's a colorname for this combination in user's existing filaments
+      if (!finalColorname) {
         const userFilaments = db.getUserFilaments(userId);
         const withColorname = userFilaments.find(f => {
           const localkey = f.color + f.type + f.name + f.manufacturer;
           return localkey === key && f.colorname;
         });
-        colorname = withColorname?.colorname || '';
+        finalColorname = withColorname?.colorname || '';
 
-        if (colorname) {
-          console.log(`[HASS] ✅ Found colorname in user filaments: "${colorname}"`);
-        } else {
-          console.log(`[HASS] ❌ No colorname found - will be empty`);
+        if (finalColorname) {
+          console.log(`[HASS] ✅ Found colorname in user filaments: "${finalColorname}"`);
         }
       }
 
       await db.addFilament(userId, {
         ...normalizedTray,
-        colorname,
+        colorname: finalColorname,
         userId
       });
       return { success: true, action: 'created', tag_uid };

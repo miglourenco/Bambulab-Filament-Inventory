@@ -100,14 +100,14 @@ rest_command:
     payload: >
       {
         "tag_uid": "{{ state_attr(sensor, 'tag_uid') }}",
-        "type": "{{ state_attr(sensor, 'type') }}",
         "color": "{{ state_attr(sensor, 'color') }}",
         "remain": {{ state_attr(sensor, 'remain') | int }},
         "empty": {{ state_attr(sensor, 'empty') | lower }},
-        "name": "{{ state_attr(sensor, 'name') }}",
-        "manufacturer": "{{ state_attr(sensor, 'manufacturer') | default('BambuLab') }}"
+        "name": "{{ state_attr(sensor, 'name') }}"
       }
 ```
+
+**Note:** The app automatically looks up the manufacturer, material type, and color name from its materials database using the filament name and color.
 
 Add to `automations.yaml` (one per tray):
 

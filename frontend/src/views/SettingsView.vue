@@ -140,9 +140,23 @@
                   </template>
                 </v-text-field>
 
+                <v-text-field
+                  v-model="trayName"
+                  label="Tray Name"
+                  prepend-inner-icon="mdi-tray"
+                  variant="outlined"
+                  placeholder="tray"
+                  hint="Default: 'tray'. Change if your HASS uses a different name (e.g., 'ams_tray', 'slot')"
+                  persistent-hint
+                  class="mb-4"
+                ></v-text-field>
+
                 <v-expansion-panels class="mb-4">
                   <v-expansion-panel title="Home Assistant Configuration Example">
                     <v-expansion-panel-text>
+                      <v-alert v-if="store.amsConfigs.length === 0" type="warning" variant="tonal" class="mb-2" density="compact">
+                        Add AMS configurations below to generate the correct YAML automations.
+                      </v-alert>
                       <pre class="text-caption bg-grey-lighten-4 pa-2 rounded overflow-auto">{{ yamlExample }}</pre>
                       <v-btn size="small" variant="text" @click="copyYamlExample" class="mt-2">
                         <v-icon start>mdi-content-copy</v-icon>
@@ -370,10 +384,71 @@ const webhookUrl = computed(() => {
   return `${window.location.origin}/api/hass/webhook`;
 });
 
+// Get number of trays for AMS type
+const getAmsTrays = (amsType) => {
+  const trayConfig = {
+    'ams': 4,
+    'ams2pro': 4,
+    'amsht': 1,
+    'amslite': 4
+  };
+  return trayConfig[amsType] || 4;
+};
+
 // YAML example for Home Assistant configuration
 const yamlExample = computed(() => {
   const token = store.user?.webhookToken || 'YOUR_WEBHOOK_TOKEN';
   const url = webhookUrl.value;
+  const tray = trayName.value || 'tray';
+
+  // Collect all sensors from AMS configurations
+  const sensors = [];
+
+  if (store.amsConfigs.length > 0) {
+    store.amsConfigs.forEach(ams => {
+      if (!ams.enabled) return;
+
+      const numTrays = getAmsTrays(ams.type);
+
+      for (let i = 1; i <= numTrays; i++) {
+        const sensorId = `${ams.sensor}_${tray}_${i}`;
+        sensors.push({
+          id: `${ams.name.replace(/\s+/g, '_')}_${i}`,
+          sensor: sensorId
+        });
+      }
+    });
+  } else {
+    // Default example if no AMS configured
+    sensors.push({
+      id: 'ams_1_1',
+      sensor: `sensor.x1c_ams_1_${tray}_1`
+    });
+  }
+
+  // Generate triggers
+  let triggers = '';
+  sensors.forEach(s => {
+    triggers += `
+  - trigger: state
+    entity_id:
+      - ${s.sensor}
+    id: "${s.id}"`;
+  });
+
+  // Generate actions
+  let actions = '';
+  sensors.forEach(s => {
+    actions += `
+  - if:
+      - condition: trigger
+        id:
+          - "${s.id}"
+    then:
+      - action: rest_command.filament_sync
+        data:
+          sensor: "${s.sensor}"`;
+  });
 
   return `# configuration.yaml
 rest_command:
@@ -386,24 +461,21 @@ rest_command:
     payload: >
       {
         "tag_uid": "{{ state_attr(sensor, 'tag_uid') }}",
-        "type": "{{ state_attr(sensor, 'type') }}",
         "color": "{{ state_attr(sensor, 'color') }}",
         "remain": {{ state_attr(sensor, 'remain') | int }},
         "empty": {{ state_attr(sensor, 'empty') | lower }},
-        "name": "{{ state_attr(sensor, 'name') }}",
-        "manufacturer": "{{ state_attr(sensor, 'manufacturer') | default('BambuLab') }}"
+        "name": "{{ state_attr(sensor, 'name') }}"
       }
 
 # automations.yaml
 automation:
-  - alias: "Sync AMS Tray 1"
-    trigger:
-      - platform: state
-        entity_id: sensor.x1c_ams_1_tray_1
-    action:
-      - service: rest_command.filament_sync
-        data:
-          sensor: "sensor.x1c_ams_1_tray_1"`;
+  - alias: "Sync Filament Inventory"
+    description: "Sync all AMS trays to Filament Inventory app"
+    mode: parallel
+    max: 10
+    triggers:${triggers}
+    conditions: []
+    actions:${actions}`;
 });
 
 onMounted(async () => {
@@ -431,13 +503,13 @@ const saveHassSettings = async () => {
 
   try {
     const settings = {
-      hassMode: hassMode.value
+      hassMode: hassMode.value,
+      trayName: trayName.value || 'tray'
     };
 
-    // Only include polling settings if mode is polling
+    // Only include polling-specific settings if mode is polling
     if (hassMode.value === 'polling') {
       settings.hassUrl = hassUrl.value;
-      settings.trayName = trayName.value || 'tray';
 
       // Only send token if it's been changed
       if (hassToken.value && hassToken.value.trim() !== '') {

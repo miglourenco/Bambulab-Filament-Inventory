@@ -1,3 +1,0 @@
-ao carregar no user aparecer os detalhes do user, quantidade de spools quantidade de kg quantidade de types diferentes
-no add filament e no add material vamos adicionar o campo Variation que é no nome Bambu PLA Matte é o Matte e invez do user ter de escrever tudo, no caso do fabricante ser Bambulab o campo do nome é automaticamente intruduzito por Bambu + type + Variation, ao selecionar o type fazer um dropdown com os variations existentes e a possiblidade de criar mais 
-no edit filament ter a opção da percentagem mas também a opção em gramas do remaning, ao alterar um atualiza o outro
