@@ -213,120 +213,104 @@
         </v-card-title>
 
         <v-card-text class="pa-4">
-          <v-list>
-            <v-list-item>
-              <v-list-item-title class="text-caption text-grey">Owner(s)</v-list-item-title>
-              <v-list-item-subtitle>
-                <div class="d-flex flex-wrap gap-1">
-                  <v-chip
-                    v-for="owner in selectedFilament.ownersList"
-                    :key="owner"
-                    :color="getOwnerColor(owner)"
-                    size="small"
-                    @click="showUserStats(owner)"
-                    style="cursor: pointer;"
-                  >
-                    <v-icon start size="small">mdi-account</v-icon>
-                    {{ owner }}
-                  </v-chip>
-                </div>
-              </v-list-item-subtitle>
-            </v-list-item>
+          <div class="mb-3">
+            <div class="text-caption text-grey">Owner(s)</div>
+            <div class="d-flex flex-wrap gap-1 mt-1">
+              <v-chip
+                v-for="owner in selectedFilament.ownersList"
+                :key="owner"
+                :color="getOwnerColor(owner)"
+                size="small"
+                @click="showUserStats(owner)"
+                style="cursor: pointer;"
+              >
+                <v-icon start size="small">mdi-account</v-icon>
+                {{ owner }}
+              </v-chip>
+            </div>
+          </div>
 
-            <v-list-item>
-              <v-list-item-title class="text-caption text-grey">Manufacturer</v-list-item-title>
-              <v-list-item-subtitle class="text-h6">{{ selectedFilament.manufacturer }}</v-list-item-subtitle>
-            </v-list-item>
+          <div class="mb-3">
+            <div class="text-caption text-grey">Manufacturer</div>
+            <div class="text-h6">{{ selectedFilament.manufacturer }}</div>
+          </div>
 
-            <v-list-item>
-              <v-list-item-title class="text-caption text-grey">Material Type</v-list-item-title>
-              <v-list-item-subtitle>
-                <v-chip color="blue" size="small">{{ selectedFilament.type }}</v-chip>
-              </v-list-item-subtitle>
-            </v-list-item>
+          <div class="mb-3">
+            <div class="text-caption text-grey">Material Type</div>
+            <v-chip color="blue" size="small" class="mt-1">{{ selectedFilament.type }}</v-chip>
+          </div>
 
-            <v-list-item>
-              <v-list-item-title class="text-caption text-grey">Name</v-list-item-title>
-              <v-list-item-subtitle class="text-h6">{{ selectedFilament.name }}</v-list-item-subtitle>
-            </v-list-item>
+          <div class="mb-3">
+            <div class="text-caption text-grey">Name</div>
+            <div class="text-h6">{{ selectedFilament.name }}</div>
+          </div>
 
-            <v-list-item>
-              <v-list-item-title class="text-caption text-grey">Color</v-list-item-title>
-              <v-list-item-subtitle>
-                <div class="d-flex align-center">
-                  <v-avatar
-                    :style="{ backgroundColor: selectedFilament.color }"
-                    size="32"
-                    class="mr-2"
-                  ></v-avatar>
-                  <span>{{ selectedFilament.colorname || selectedFilament.color }}</span>
-                </div>
-              </v-list-item-subtitle>
-            </v-list-item>
+          <div class="mb-3">
+            <div class="text-caption text-grey">Color</div>
+            <div class="d-flex align-center mt-1">
+              <v-avatar
+                :style="{ backgroundColor: selectedFilament.color }"
+                size="32"
+                class="mr-2 elevation-2"
+              >
+                <v-icon v-if="selectedFilament.color === '#FFFFFF' || selectedFilament.color === '#FFFFFFFF'" color="grey-darken-1" size="small">mdi-palette</v-icon>
+              </v-avatar>
+              <span>{{ selectedFilament.colorname || selectedFilament.color }}</span>
+            </div>
+          </div>
 
-            <v-list-item>
-              <v-list-item-title class="text-caption text-grey">Size</v-list-item-title>
-              <v-list-item-subtitle class="text-h6">{{ selectedFilament.size }}g</v-list-item-subtitle>
-            </v-list-item>
+          <div class="mb-3">
+            <div class="text-caption text-grey">Size</div>
+            <div class="text-h6">{{ selectedFilament.size }}g</div>
+          </div>
 
-            <v-list-item>
-              <v-list-item-title class="text-caption text-grey">Spools</v-list-item-title>
-              <v-list-item-subtitle>
-                <v-chip color="indigo" size="small" variant="outlined">
-                  <v-icon start size="small">mdi-album</v-icon>
-                  {{ selectedFilament.spoolCount }} {{ selectedFilament.spoolCount === 1 ? 'spool' : 'spools' }}
+          <div class="mb-3">
+            <div class="text-caption text-grey">Spools</div>
+            <v-chip color="indigo" size="small" variant="outlined" class="mt-1">
+              <v-icon start size="small">mdi-album</v-icon>
+              {{ selectedFilament.spoolCount }} {{ selectedFilament.spoolCount === 1 ? 'spool' : 'spools' }}
+            </v-chip>
+          </div>
+
+          <div class="mb-3">
+            <div class="text-caption text-grey">Total Weight</div>
+            <div class="text-h6">{{ selectedFilament.weight }}g</div>
+          </div>
+
+          <div class="mb-3">
+            <div class="text-caption text-grey">Avg. Remaining</div>
+            <v-chip :color="getRemainColor(selectedFilament.remain)" size="small" class="mt-1">
+              {{ selectedFilament.remain }}%
+            </v-chip>
+          </div>
+
+          <v-divider class="my-3"></v-divider>
+
+          <div class="text-subtitle-2 font-weight-bold mb-2">Spool Details</div>
+
+          <div
+            v-for="(spool, index) in selectedFilament.spools"
+            :key="spool.tag_uid"
+            class="border-t py-2"
+          >
+            <div class="d-flex flex-column gap-1">
+              <div class="d-flex align-center gap-2 flex-wrap">
+                <v-chip size="x-small" color="grey">Spool {{ index + 1 }}</v-chip>
+                <v-chip size="x-small" :color="getOwnerColor(spool.owner)">
+                  <v-icon start size="x-small">mdi-account</v-icon>
+                  {{ spool.owner }}
                 </v-chip>
-              </v-list-item-subtitle>
-            </v-list-item>
-
-            <v-list-item>
-              <v-list-item-title class="text-caption text-grey">Total Weight</v-list-item-title>
-              <v-list-item-subtitle class="text-h6">{{ selectedFilament.weight }}g</v-list-item-subtitle>
-            </v-list-item>
-
-            <v-list-item>
-              <v-list-item-title class="text-caption text-grey">Avg. Remaining</v-list-item-title>
-              <v-list-item-subtitle>
-                <v-chip :color="getRemainColor(selectedFilament.remain)" size="small">
-                  {{ selectedFilament.remain }}%
-                </v-chip>
-              </v-list-item-subtitle>
-            </v-list-item>
-
-            <v-divider class="my-3"></v-divider>
-
-            <v-list-item>
-              <v-list-item-title class="text-subtitle-2 font-weight-bold mb-2">
-                Spool Details
-              </v-list-item-title>
-            </v-list-item>
-
-            <v-list-item
-              v-for="(spool, index) in selectedFilament.spools"
-              :key="spool.tag_uid"
-              class="border-t"
-            >
-              <v-list-item-subtitle>
-                <div class="d-flex flex-column gap-1">
-                  <div class="d-flex align-center gap-2 flex-wrap">
-                    <v-chip size="x-small" color="grey">Spool {{ index + 1 }}</v-chip>
-                    <v-chip size="x-small" :color="getOwnerColor(spool.owner)">
-                      <v-icon start size="x-small">mdi-account</v-icon>
-                      {{ spool.owner }}
-                    </v-chip>
-                    <span v-if="spool.serialNumber" class="text-caption">
-                      <v-icon size="x-small">mdi-barcode</v-icon>
-                      {{ spool.serialNumber }}
-                    </span>
-                    <span v-else class="text-caption text-grey">Manual</span>
-                  </div>
-                  <div class="text-caption">
-                    {{ spool.remain }}% remaining • {{ Math.round(spool.size * spool.remain / 100) }}g
-                  </div>
-                </div>
-              </v-list-item-subtitle>
-            </v-list-item>
-          </v-list>
+                <span v-if="spool.serialNumber" class="text-caption">
+                  <v-icon size="x-small">mdi-barcode</v-icon>
+                  {{ spool.serialNumber }}
+                </span>
+                <span v-else class="text-caption text-grey">Manual</span>
+              </div>
+              <div class="text-body-2">
+                {{ spool.remain }}% remaining • {{ Math.round(spool.size * spool.remain / 100) }}g
+              </div>
+            </div>
+          </div>
         </v-card-text>
 
         <v-card-actions>
