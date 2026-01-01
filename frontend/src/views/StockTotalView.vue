@@ -94,16 +94,39 @@
             >
               <!-- Owner Column -->
               <template v-slot:item.owner="{ item }">
+                <!-- Single owner: show chip -->
                 <v-chip
-                  :color="getOwnerColor(item.owner)"
+                  v-if="item.ownersList.length === 1"
+                  :color="getOwnerColor(item.ownersList[0])"
                   size="small"
                   class="font-weight-medium"
-                  @click="showUserStats(item.owner)"
+                  @click="showUserStats(item.ownersList[0])"
                   style="cursor: pointer;"
                 >
                   <v-icon start size="small">mdi-account</v-icon>
-                  {{ item.owner }}
+                  {{ item.ownersList[0] }}
                 </v-chip>
+                <!-- Multiple owners: show stacked avatars -->
+                <div v-else class="d-flex align-center" style="cursor: pointer;" @click="viewDetails(item)">
+                  <v-avatar
+                    v-for="(owner, idx) in item.ownersList.slice(0, 3)"
+                    :key="owner"
+                    :color="getOwnerColor(owner)"
+                    size="28"
+                    :style="{ marginLeft: idx > 0 ? '-8px' : '0', zIndex: 3 - idx }"
+                  >
+                    <span class="text-caption text-white font-weight-bold">{{ owner.charAt(0).toUpperCase() }}</span>
+                  </v-avatar>
+                  <v-chip
+                    v-if="item.ownersList.length > 3"
+                    size="x-small"
+                    color="grey"
+                    class="ml-1"
+                  >
+                    +{{ item.ownersList.length - 3 }}
+                  </v-chip>
+                  <span class="ml-2 text-caption text-grey">{{ item.ownersList.length }} owners</span>
+                </div>
               </template>
 
               <!-- Type Column -->
@@ -121,7 +144,10 @@
                 <v-avatar
                   :style="{ backgroundColor: item.color }"
                   size="32"
-                ></v-avatar>
+                  class="elevation-2"
+                >
+                  <v-icon v-if="item.color === '#FFFFFF' || item.color === '#FFFFFFFF'" color="grey-darken-1" size="small">mdi-palette</v-icon>
+                </v-avatar>
               </template>
 
               <!-- Size Column -->
@@ -189,11 +215,21 @@
         <v-card-text class="pa-4">
           <v-list>
             <v-list-item>
-              <v-list-item-title class="text-caption text-grey">Owner</v-list-item-title>
+              <v-list-item-title class="text-caption text-grey">Owner(s)</v-list-item-title>
               <v-list-item-subtitle>
-                <v-chip :color="getOwnerColor(selectedFilament.owner)" size="small">
-                  {{ selectedFilament.owner }}
-                </v-chip>
+                <div class="d-flex flex-wrap gap-1">
+                  <v-chip
+                    v-for="owner in selectedFilament.ownersList"
+                    :key="owner"
+                    :color="getOwnerColor(owner)"
+                    size="small"
+                    @click="showUserStats(owner)"
+                    style="cursor: pointer;"
+                  >
+                    <v-icon start size="small">mdi-account</v-icon>
+                    {{ owner }}
+                  </v-chip>
+                </div>
               </v-list-item-subtitle>
             </v-list-item>
 
@@ -272,8 +308,12 @@
             >
               <v-list-item-subtitle>
                 <div class="d-flex flex-column gap-1">
-                  <div class="d-flex align-center gap-2">
+                  <div class="d-flex align-center gap-2 flex-wrap">
                     <v-chip size="x-small" color="grey">Spool {{ index + 1 }}</v-chip>
+                    <v-chip size="x-small" :color="getOwnerColor(spool.owner)">
+                      <v-icon start size="x-small">mdi-account</v-icon>
+                      {{ spool.owner }}
+                    </v-chip>
                     <span v-if="spool.serialNumber" class="text-caption">
                       <v-icon size="x-small">mdi-barcode</v-icon>
                       {{ spool.serialNumber }}
@@ -375,30 +415,43 @@
 <script setup>
 import { ref, computed, onMounted, watch } from 'vue';
 import { useAppStore } from '@/store/app';
+import { normalizeColor } from '@/utils/color';
 
 const store = useAppStore();
 
 // Process filaments from store into grouped format
+// Groups by filament type across ALL users (not per user)
 const processFilaments = () => {
   const grouped = {};
 
   store.filaments.forEach(f => {
-    const key = `${f.userId}_${f.type}_${f.manufacturer}_${f.name}_${f.color}_${f.colorname}_${f.size}`;
+    // Group by filament properties only (not by userId)
+    // Note: colorname is NOT included in key because it may vary between spools
+    // (e.g., one added manually without colorname, another synced from HASS with colorname)
+    // Normalize color to ensure consistent grouping (RGB format)
+    const key = `${f.type}_${f.manufacturer}_${f.name}_${normalizeColor(f.color)}_${f.size}`;
 
     if (!grouped[key]) {
       grouped[key] = {
         ...f,
-        owner: f.username || 'Unknown',
-        spools: [f],
+        spools: [{
+          ...f,
+          owner: f.username || 'Unknown'
+        }],
         spoolCount: 1,
         totalWeight: Math.round(f.size * f.remain / 100),
-        weight: Math.round(f.size * f.remain / 100)
+        weight: Math.round(f.size * f.remain / 100),
+        owners: new Set([f.username || 'Unknown'])
       };
     } else {
-      grouped[key].spools.push(f);
+      grouped[key].spools.push({
+        ...f,
+        owner: f.username || 'Unknown'
+      });
       grouped[key].spoolCount++;
       grouped[key].totalWeight += Math.round(f.size * f.remain / 100);
       grouped[key].weight = grouped[key].totalWeight;
+      grouped[key].owners.add(f.username || 'Unknown');
 
       // Update remain to average
       const totalRemain = grouped[key].spools.reduce((sum, spool) => sum + spool.remain, 0);
@@ -408,7 +461,19 @@ const processFilaments = () => {
       if (f.serialNumber && !grouped[key].serialNumber) {
         grouped[key].serialNumber = f.serialNumber;
       }
+
+      // If colorname is empty and this spool has one, use it
+      if (!grouped[key].colorname && f.colorname) {
+        grouped[key].colorname = f.colorname;
+      }
     }
+  });
+
+  // Convert owners Set to Array for display
+  Object.values(grouped).forEach(item => {
+    item.ownersList = Array.from(item.owners).sort();
+    item.owner = item.ownersList.length === 1 ? item.ownersList[0] : `${item.ownersList.length} owners`;
+    delete item.owners;
   });
 
   allFilaments.value = Object.values(grouped);
@@ -438,10 +503,13 @@ const headers = computed(() => [
   { title: "Actions", key: 'actions', sortable: false, align: 'center' }
 ]);
 
-// Get unique owners from filaments
+// Get unique owners from filaments (flatten all ownersList arrays)
 const ownerOptions = computed(() => {
-  const owners = [...new Set(allFilaments.value.map(f => f.owner))];
-  return owners.sort();
+  const owners = new Set();
+  allFilaments.value.forEach(f => {
+    f.ownersList.forEach(owner => owners.add(owner));
+  });
+  return Array.from(owners).sort();
 });
 
 // Get unique types
@@ -461,7 +529,8 @@ const filteredFilaments = computed(() => {
   let filtered = allFilaments.value;
 
   if (filterOwner.value) {
-    filtered = filtered.filter(f => f.owner === filterOwner.value);
+    // Filter filaments that have the selected owner in their ownersList
+    filtered = filtered.filter(f => f.ownersList.includes(filterOwner.value));
   }
 
   if (filterType.value) {
@@ -486,23 +555,30 @@ const userStats = computed(() => {
     };
   }
 
-  const userFilaments = allFilaments.value.filter(f => f.owner === selectedUser.value);
+  // Filter spools belonging to the selected user
+  let totalSpools = 0;
+  let totalGrams = 0;
+  const types = new Set();
 
-  // Total spools
-  const totalSpools = userFilaments.reduce((sum, f) => sum + f.spoolCount, 0);
+  allFilaments.value.forEach(f => {
+    // Count spools that belong to this user
+    const userSpools = f.spools.filter(s => s.owner === selectedUser.value);
+    totalSpools += userSpools.length;
 
-  // Total weight in kg (weight is in grams)
-  const totalGrams = userFilaments.reduce((sum, f) => sum + f.weight, 0);
+    // Calculate weight for user's spools only
+    userSpools.forEach(s => {
+      totalGrams += Math.round(s.size * s.remain / 100);
+      types.add(f.type);
+    });
+  });
+
   const totalKg = (totalGrams / 1000).toFixed(2);
-
-  // Different types
-  const types = [...new Set(userFilaments.map(f => f.type))];
 
   return {
     totalSpools,
     totalKg,
-    differentTypes: types.length,
-    typesList: types.sort()
+    differentTypes: types.size,
+    typesList: Array.from(types).sort()
   };
 });
 

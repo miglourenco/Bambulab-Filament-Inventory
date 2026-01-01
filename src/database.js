@@ -243,9 +243,15 @@ class Database {
 
   async updateFilament(tag_uid, updates) {
     if (this.data.filaments[tag_uid]) {
+      // Normalize color if it's being updated
+      const normalizedUpdates = { ...updates };
+      if (normalizedUpdates.color) {
+        normalizedUpdates.color = normalizeColor(normalizedUpdates.color);
+      }
+
       this.data.filaments[tag_uid] = {
         ...this.data.filaments[tag_uid],
-        ...updates,
+        ...normalizedUpdates,
         updatedAt: new Date().toISOString()
       };
       await this.save();

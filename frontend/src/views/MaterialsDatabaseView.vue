@@ -39,6 +39,15 @@
               density="comfortable"
             ></v-switch>
           </v-col>
+          <v-col cols="12" md="2">
+            <v-switch
+              v-model="showOnlyDuplicateEANs"
+              label="Duplicate EANs"
+              color="error"
+              hide-details
+              density="comfortable"
+            ></v-switch>
+          </v-col>
           <v-col cols="12" md="2" class="text-right">
             <v-btn
               color="success"
@@ -376,6 +385,7 @@ import { ref, computed, onMounted, watch } from 'vue';
 import axios from 'axios';
 import { toast } from 'vue3-toastify';
 import { useAppStore } from '@/store/app';
+import { normalizeColor } from '@/utils/color';
 
 const store = useAppStore();
 
@@ -384,6 +394,7 @@ const materials = ref([]);
 const search = ref('');
 const filterMaterial = ref(null);
 const showOnlyInStock = ref(false);
+const showOnlyDuplicateEANs = ref(false);
 const dialog = ref(false);
 const deleteDialog = ref(false);
 const colorPickerDialog = ref(false);
@@ -457,6 +468,11 @@ const filteredMaterials = computed(() => {
     });
   }
 
+  // Filter by duplicate EANs
+  if (showOnlyDuplicateEANs.value) {
+    filtered = filtered.filter(m => materialsWithDuplicateEANs.value.has(m));
+  }
+
   return filtered;
 });
 
@@ -464,7 +480,8 @@ const materialsWithEAN = computed(() => {
   return materials.value.filter(m => m.ean && m.ean !== '').length;
 });
 
-const duplicateEANs = computed(() => {
+// Build a map of EANs to materials for duplicate detection
+const eanToMaterialsMap = computed(() => {
   const eanMap = {};
   materials.value.forEach(m => {
     if (m.ean && m.ean !== '') {
@@ -478,9 +495,27 @@ const duplicateEANs = computed(() => {
       });
     }
   });
+  return eanMap;
+});
 
+// Get set of materials that have duplicate EANs
+const materialsWithDuplicateEANs = computed(() => {
+  const duplicateMaterials = new Set();
+  for (const [ean, mats] of Object.entries(eanToMaterialsMap.value)) {
+    if (mats.length > 1) {
+      // Check if they are actually different materials (not same colorname/color)
+      const unique = new Set(mats.map(m => `${m.colorname}|${m.color}`));
+      if (unique.size > 1) {
+        mats.forEach(m => duplicateMaterials.add(m));
+      }
+    }
+  }
+  return duplicateMaterials;
+});
+
+const duplicateEANs = computed(() => {
   let duplicates = 0;
-  for (const [ean, mats] of Object.entries(eanMap)) {
+  for (const [ean, mats] of Object.entries(eanToMaterialsMap.value)) {
     if (mats.length > 1) {
       const unique = new Set(mats.map(m => `${m.colorname}|${m.color}`));
       if (unique.size > 1) {
@@ -555,8 +590,8 @@ const saveMaterial = async () => {
   if (!form.value.validate()) return;
 
   try {
-    // Normalize color to uppercase
-    editedMaterial.value.color = editedMaterial.value.color.toUpperCase();
+    // Normalize color to RGB format (#RRGGBB)
+    editedMaterial.value.color = normalizeColor(editedMaterial.value.color);
 
     if (editMode.value) {
       // Update existing
@@ -595,7 +630,7 @@ const deleteMaterial = async () => {
         material: materialToDelete.value.material,
         name: materialToDelete.value.name,
         colorname: materialToDelete.value.colorname,
-        color: materialToDelete.value.color
+        color: normalizeColor(materialToDelete.value.color)
       }
     });
 

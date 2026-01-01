@@ -82,6 +82,12 @@
       <v-divider class="my-4"></v-divider>
 
       <v-list-item
+        @click="goToMyInventory"
+        prepend-icon="mdi-home"
+        title="My Inventory"
+      ></v-list-item>
+
+      <v-list-item
         @click="goToStockTotal"
         prepend-icon="mdi-archive-check"
         title="Stock Total"
@@ -228,6 +234,11 @@ const toggleDrawer = () => {
 const setFilter = (filter) => {
   store.setFilter(filter);
   drawer.value = false;
+};
+
+const goToMyInventory = () => {
+  drawer.value = false;
+  window.location.hash = '#/';
 };
 
 const goToStockTotal = () => {

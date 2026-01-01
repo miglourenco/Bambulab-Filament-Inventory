@@ -10,6 +10,27 @@ import db from './src/database.js';
 import materialsDB from './src/materials-db.js';
 import { processTrayData } from './src/hass-sync.js';
 
+/**
+ * Normalize a hex color to RGB format (#RRGGBB)
+ * Handles RGBA (#RRGGBBAA), extra long formats, and lowercase
+ */
+function normalizeColor(color) {
+  if (!color || typeof color !== 'string') return '#FFFFFF';
+
+  let normalized = color.toUpperCase().trim();
+
+  if (!normalized.startsWith('#')) {
+    normalized = '#' + normalized;
+  }
+
+  // Truncate to RGB only (remove alpha channel)
+  if (normalized.length > 7) {
+    normalized = normalized.slice(0, 7);
+  }
+
+  return normalized;
+}
+
 // Initialize materials database
 await materialsDB.initialize();
 
@@ -331,12 +352,9 @@ app.post('/update', async (req, res) => {
     const userId = req.session.user.id;
     let { tag_uid, ...filamentData } = req.body;
 
-    // Normalize color
-    if (filamentData.color?.length === 7) {
-      filamentData.color = filamentData.color + 'FF';
-    }
+    // Normalize color to RGB format (#RRGGBB)
     if (filamentData.color) {
-      filamentData.color = filamentData.color.toUpperCase();
+      filamentData.color = normalizeColor(filamentData.color);
     }
 
     if (tag_uid && db.getFilament(tag_uid)) {
@@ -353,13 +371,13 @@ app.post('/update', async (req, res) => {
         await materialsDB.initialize();
         const materials = materialsDB.getAllMaterials();
 
-        // Check if material already exists
+        // Check if material already exists (normalize colors for comparison)
         const exists = materials.some(
           m => m.manufacturer === filamentData.manufacturer &&
                m.material === filamentData.type &&
                m.name === filamentData.name &&
                m.colorname === filamentData.colorname &&
-               m.color.toUpperCase() === filamentData.color.toUpperCase()
+               normalizeColor(m.color) === normalizeColor(filamentData.color)
         );
 
         if (!exists) {
@@ -370,14 +388,14 @@ app.post('/update', async (req, res) => {
             colorname: filamentData.colorname
           });
 
-          // Add material to database
+          // Add material to database (with normalized color)
           materials.push({
             manufacturer: filamentData.manufacturer,
             material: filamentData.type,
             variation: filamentData.variation || '',
             name: filamentData.name,
             colorname: filamentData.colorname,
-            color: filamentData.color.toUpperCase(),
+            color: normalizeColor(filamentData.color),
             note: '',
             ean: filamentData.ean || ''
           });
@@ -1105,14 +1123,15 @@ app.post('/materials/add', async (req, res) => {
 
     await materialsDB.initialize();
 
-    // Check if material already exists
+    // Check if material already exists (normalize colors for comparison)
     const materials = materialsDB.getAllMaterials();
+    const normalizedColor = normalizeColor(color);
     const exists = materials.some(
       m => m.manufacturer === manufacturer &&
            m.material === material &&
            m.name === name &&
            m.colorname === colorname &&
-           m.color.toUpperCase() === color.toUpperCase()
+           normalizeColor(m.color) === normalizedColor
     );
 
     if (exists) {
@@ -1121,14 +1140,14 @@ app.post('/materials/add', async (req, res) => {
       });
     }
 
-    // Add material
+    // Add material (with normalized color)
     materials.push({
       manufacturer,
       material,
       variation: variation || '',
       name,
       colorname,
-      color: color.toUpperCase(),
+      color: normalizedColor,
       note: note || '',
       ean: ean || ''
     });
@@ -1173,14 +1192,14 @@ app.put('/materials/update', async (req, res) => {
       });
     }
 
-    // Update material
+    // Update material (with normalized color)
     materials[materialIndex] = {
       manufacturer,
       material,
       variation: variation || materials[materialIndex].variation || '',
       name,
       colorname,
-      color: color.toUpperCase(),
+      color: normalizeColor(color),
       note: note || materials[materialIndex].note,
       ean: ean || materials[materialIndex].ean
     };
@@ -1210,14 +1229,15 @@ app.delete('/materials/delete', async (req, res) => {
 
     await materialsDB.initialize();
 
-    // Find and remove material
+    // Find and remove material (normalize colors for comparison)
     const materials = materialsDB.getAllMaterials();
+    const normalizedColor = normalizeColor(color);
     const materialIndex = materials.findIndex(
       m => m.manufacturer === manufacturer &&
            m.material === material &&
            m.name === name &&
            m.colorname === colorname &&
-           m.color.toUpperCase() === color.toUpperCase()
+           normalizeColor(m.color) === normalizedColor
     );
 
     if (materialIndex === -1) {

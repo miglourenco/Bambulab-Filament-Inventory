@@ -159,6 +159,7 @@ import _ from 'lodash';
 import axios from 'axios';
 import { useAppStore } from '@/store/app';
 import { toast } from 'vue3-toastify';
+import { normalizeColor } from '@/utils/color';
 
 const store = useAppStore();
 
@@ -228,7 +229,12 @@ const remove = (item) => {
 };
 
 const update = async (filament) => {
-  const result = await store.updateFilament(filament);
+  // Normalize color before sending to backend
+  const normalizedFilament = {
+    ...filament,
+    color: normalizeColor(filament.color)
+  };
+  const result = await store.updateFilament(normalizedFilament);
 
   if (result) {
     // Se for BambuLab, também atualizar/criar na base de dados de materiais
@@ -239,7 +245,7 @@ const update = async (filament) => {
           type: filament.type,
           name: filament.name,
           colorname: filament.colorname,
-          color: filament.color
+          color: normalizeColor(filament.color)
         });
         console.log('Material updated/created in database');
       } catch (error) {

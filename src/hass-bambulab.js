@@ -1,6 +1,17 @@
 import axios from 'axios';
 import fs from 'fs/promises';
 
+/**
+ * Normalize a hex color to RGB format (#RRGGBB)
+ */
+function normalizeColor(color) {
+  if (!color || typeof color !== 'string') return '#FFFFFF';
+  let normalized = color.toUpperCase().trim();
+  if (!normalized.startsWith('#')) normalized = '#' + normalized;
+  if (normalized.length > 7) normalized = normalized.slice(0, 7);
+  return normalized;
+}
+
 let usagedata;
 
 try {
@@ -34,7 +45,7 @@ const getAMSTrays = async (sensor) => {
         size: 1000,
         tag_uid: data.attributes.tag_uid,
         remain: data.attributes.remain,
-        color: data.attributes.color,
+        color: normalizeColor(data.attributes.color),
         colorname: '',
         empty: data.attributes.empty,
         name: data.attributes.name
@@ -61,23 +72,24 @@ export const getHassData = async () => {
 
   trays.forEach((tray) => {
     const tag_uid = tray.tag_uid;
-    const key = tray.color + tray.type + tray.name + tray.manufacturer;
+    // Normalize color for key comparison
+    const key = normalizeColor(tray.color) + tray.type + tray.name + tray.manufacturer;
 
     if (!usagedata[tag_uid]) {
-      let notTracked = Object.values(usagedata).find((tray) => {
-        const localkey = tray.color + tray.type + tray.name + tray.manufacturer;
+      let notTracked = Object.values(usagedata).find((existingTray) => {
+        const localkey = normalizeColor(existingTray.color) + existingTray.type + existingTray.name + existingTray.manufacturer;
 
-        if (localkey === key && !tray.tracking) {
+        if (localkey === key && !existingTray.tracking) {
           return true;
         }
 
         return false;
       });
 
-      let colorname = Object.values(usagedata).find((tray) => {
-        const localkey = tray.color + tray.type + tray.name + tray.manufacturer;
+      let colorname = Object.values(usagedata).find((existingTray) => {
+        const localkey = normalizeColor(existingTray.color) + existingTray.type + existingTray.name + existingTray.manufacturer;
 
-        if (localkey === key && tray.colorname) {
+        if (localkey === key && existingTray.colorname) {
           return true;
         }
 

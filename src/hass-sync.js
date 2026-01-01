@@ -2,6 +2,17 @@ import axios from 'axios';
 import db from './database.js';
 import materialsDB from './materials-db.js';
 
+/**
+ * Normalize a hex color to RGB format (#RRGGBB)
+ */
+function normalizeColor(color) {
+  if (!color || typeof color !== 'string') return '#FFFFFF';
+  let normalized = color.toUpperCase().trim();
+  if (!normalized.startsWith('#')) normalized = '#' + normalized;
+  if (normalized.length > 7) normalized = normalized.slice(0, 7);
+  return normalized;
+}
+
 const getAMSTrays = async (hassUrl, hassToken, sensor, trayNumber, trayName = 'tray') => {
   try {
     const { data } = await axios.get(`${hassUrl}/api/states/${sensor}_${trayName}_${trayNumber}`, {
@@ -18,7 +29,7 @@ const getAMSTrays = async (hassUrl, hassToken, sensor, trayNumber, trayName = 't
         size: 1000,
         tag_uid: data.attributes.tag_uid,
         remain: data.attributes.remain,
-        color: data.attributes.color,
+        color: normalizeColor(data.attributes.color),
         colorname: '',
         empty: data.attributes.empty,
         name: data.attributes.name,
@@ -52,11 +63,7 @@ export const processTrayData = async (userId, tray) => {
   const trayName = tray.name || '';
 
   // Normalize color to RGB format (handles RGBA from HASS like #RRGGBBAA or #RRGGBBAAAA)
-  let trayColor = tray.color || '#FFFFFF';
-  if (trayColor.length > 7) {
-    trayColor = trayColor.slice(0, 7);
-  }
-  trayColor = trayColor.toUpperCase();
+  const trayColor = normalizeColor(tray.color);
 
   console.log(`[HASS] Processing tray - Name: "${trayName}", Color: "${trayColor}" (original: "${tray.color}")`);
 

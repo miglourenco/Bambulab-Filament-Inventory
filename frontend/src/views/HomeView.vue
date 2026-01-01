@@ -355,6 +355,7 @@ import { useLocale, useDisplay } from 'vuetify';
 import FilamentDetails from '@/components/FilamentDetails.vue';
 import BarcodeScanner from '@/components/BarcodeScanner.vue';
 import axios from 'axios';
+import { normalizeColor } from '@/utils/color';
 
 const { mobile } = useDisplay()
 
@@ -529,7 +530,12 @@ const resetAddModel = () => {
 };
 
 const addFilament = async () => {
-  let success = store.addFilament(addModel.value);
+  // Normalize color before sending to backend
+  const filamentData = {
+    ...addModel.value,
+    color: normalizeColor(addModel.value.color)
+  };
+  let success = store.addFilament(filamentData);
 
   if (success) {
     // If EAN is provided and BambuLab, save to database with EAN
@@ -588,7 +594,7 @@ const additionalFilament = async (item) => {
     manufacturer: item.manufacturer,
     type: item.type,
     name: item.name,
-    color: item.color,
+    color: normalizeColor(item.color),
     colorname: item.colorname,
     size: 1000,
     remain: 100,

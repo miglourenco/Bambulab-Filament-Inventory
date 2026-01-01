@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import axios from 'axios';
 import router from '../router';
+import { normalizeColor } from '@/utils/color';
 
 const host = import.meta.env.DEV ? 'http://localhost:3000' : '';
 
@@ -54,7 +55,8 @@ export const useAppStore = defineStore('app', {
 
         return e.type === state.filter;
       }).reduce((acc, filament) => {
-        let key = filament.color + filament.type + filament.name + filament.manufacturer;
+        // Normalize color to ensure consistent grouping (RGB format)
+        let key = normalizeColor(filament.color) + filament.type + filament.name + filament.manufacturer;
 
         if (!acc[key]) {
           acc[key] = {
