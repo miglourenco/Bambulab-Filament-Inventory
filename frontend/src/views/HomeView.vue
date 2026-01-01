@@ -512,6 +512,9 @@ const closeAddDialog = () => {
   openAddDialog.value = false;
   eanError.value = false;
   eanErrorMessage.value = '';
+  // Clear cached colors and variations to force reload on next open
+  availableColors.value = [];
+  availableVariations.value = [];
 };
 
 const resetAddModel = () => {
@@ -573,6 +576,7 @@ const addFilament = async () => {
         await axios.post('/materials/update-from-filament', {
           manufacturer: addModel.value.manufacturer,
           type: addModel.value.type,
+          variation: addModel.value.variation,
           name: addModel.value.name,
           colorname: addModel.value.colorname,
           color: hexColor

@@ -1,5 +1,7 @@
 # BambuLab Filament Inventory
 
+> **Note:** This project is a fork of [myMartek/Bambulab-Filament-Inventory](https://github.com/myMartek/Bambulab-Filament-Inventory)
+
 [![Docker Pulls](https://img.shields.io/docker/pulls/azmonsterkill/bambulab-filament-inventory)](https://hub.docker.com/r/azmonsterkill/bambulab-filament-inventory)
 [![Docker Image Size](https://img.shields.io/docker/image-size/azmonsterkill/bambulab-filament-inventory/latest)](https://hub.docker.com/r/azmonsterkill/bambulab-filament-inventory)
 

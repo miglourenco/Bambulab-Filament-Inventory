@@ -362,10 +362,10 @@ class MaterialsDB {
 
   // Update or create material from filament data
   async updateOrCreateMaterial(filamentData) {
-    const { manufacturer, type, name, colorname, color } = filamentData;
+    const { manufacturer, type, variation, name, colorname, color } = filamentData;
     const normalizedInputColor = normalizeColor(color);
 
-    console.log(`[MaterialsDB] updateOrCreateMaterial - Manufacturer: ${manufacturer}, Type: ${type}, Name: ${name}, ColorName: ${colorname}, Color: ${normalizedInputColor}`);
+    console.log(`[MaterialsDB] updateOrCreateMaterial - Manufacturer: ${manufacturer}, Type: ${type}, Variation: ${variation || 'none'}, Name: ${name}, ColorName: ${colorname}, Color: ${normalizedInputColor}`);
 
     // Check if material already exists by manufacturer + material + name + colorname + color
     const existing = this.materials.find(
@@ -401,6 +401,7 @@ class MaterialsDB {
     const newMaterial = {
       manufacturer,
       material: type,
+      variation: variation || '',
       name,
       colorname,
       color: normalizedInputColor,

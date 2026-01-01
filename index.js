@@ -1065,6 +1065,9 @@ app.post('/materials/update-ean', async (req, res) => {
       color
     });
 
+    // Reload EAN database to include the new/updated material
+    await reloadEANDatabase();
+
     res.json({ success: true, ...result });
   } catch (error) {
     console.error('Update EAN error:', error);
@@ -1075,7 +1078,7 @@ app.post('/materials/update-ean', async (req, res) => {
 // Update or create material from filament edit
 app.post('/materials/update-from-filament', async (req, res) => {
   try {
-    const { manufacturer, type, name, colorname, color } = req.body;
+    const { manufacturer, type, variation, name, colorname, color } = req.body;
 
     if (!manufacturer || !type || !name || !colorname || !color) {
       return res.status(400).json({
@@ -1086,10 +1089,14 @@ app.post('/materials/update-from-filament', async (req, res) => {
     const result = await materialsDB.updateOrCreateMaterial({
       manufacturer,
       type,
+      variation,
       name,
       colorname,
       color
     });
+
+    // Reload EAN database to include the new/updated material
+    await reloadEANDatabase();
 
     res.json({ success: true, ...result });
   } catch (error) {
