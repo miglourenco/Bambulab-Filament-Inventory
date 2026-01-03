@@ -1,5 +1,5 @@
 <template>
-  <v-dialog width="1400" v-model="show" scrollable>
+  <v-dialog v-model="show" scrollable :fullscreen="mobile" :max-width="mobile ? undefined : 1200">
     <v-card>
       <v-card-title class="bg-primary text-white pa-4">
         <v-icon left class="mr-2">mdi-pencil</v-icon>
@@ -8,28 +8,107 @@
 
       <v-divider></v-divider>
 
-      <v-card-text class="pa-6">
-        <v-table>
+      <v-card-text class="pa-4">
+        <!-- Mobile: Cards layout -->
+        <div v-if="mobile">
+          <v-card
+            v-for="(item, i) in filamentList"
+            :key="item.tag_uid"
+            class="mb-4"
+            variant="outlined"
+          >
+            <v-card-title class="text-subtitle-1 pb-0">
+              <div class="d-flex align-center justify-space-between w-100">
+                <span>#{{ i + 1 }} - {{ item.name }}</span>
+                <v-btn size="small" icon variant="text" color="error" @click="remove(item)">
+                  <v-icon>mdi-delete</v-icon>
+                </v-btn>
+              </div>
+            </v-card-title>
+            <v-card-text class="pt-2">
+              <v-text-field
+                v-model="item.name"
+                label="Name"
+                variant="outlined"
+                density="compact"
+                hide-details
+                class="mb-3"
+                @update:modelValue="debouncedUpdate(item)"
+              ></v-text-field>
+
+              <v-combobox
+                v-model="item.colorname"
+                :items="getAvailableColorsForFilament(item)"
+                label="Color"
+                variant="outlined"
+                density="compact"
+                hide-details
+                class="mb-3"
+                @update:modelValue="debouncedUpdate(item)"
+              >
+                <template v-slot:prepend-inner>
+                  <div
+                    :style="{
+                      width: '24px',
+                      height: '24px',
+                      backgroundColor: item.color || '#FFFFFF',
+                      border: '1px solid #ccc',
+                      borderRadius: '4px'
+                    }"
+                  ></div>
+                </template>
+              </v-combobox>
+
+              <v-combobox
+                v-model="item.size"
+                :items="[1000, 500, 250]"
+                label="Size"
+                variant="outlined"
+                density="compact"
+                suffix="g"
+                hide-details
+                class="mb-3"
+                @update:modelValue="onSizeChange(item)"
+              ></v-combobox>
+
+              <div class="text-caption text-grey mb-1">Remaining: {{ item.remain }}%</div>
+              <v-slider
+                v-model="item.remain"
+                :min="0"
+                :max="100"
+                :disabled="item.tracking"
+                :step="1"
+                color="primary"
+                hide-details
+                class="mb-2"
+                @update:modelValue="onPercentageChange(item)"
+              ></v-slider>
+
+              <v-text-field
+                v-model="item.grams"
+                label="Grams"
+                variant="outlined"
+                density="compact"
+                suffix="g"
+                type="number"
+                hide-details
+                :disabled="item.tracking"
+                @update:modelValue="onGramsInput(item)"
+              ></v-text-field>
+            </v-card-text>
+          </v-card>
+        </div>
+
+        <!-- Desktop: Table layout -->
+        <v-table v-else>
           <thead>
             <tr>
-              <th class="text-left">
-                Number
-              </th>
-              <th class="text-left">
-                Name
-              </th>
-              <th class="text-left">
-                Color
-              </th>
-              <th class="text-left">
-                Size
-              </th>
-              <th class="text-left">
-                Remaining
-              </th>
-              <th class="text-left">
-                Actions
-              </th>
+              <th class="text-left">#</th>
+              <th class="text-left">Name</th>
+              <th class="text-left">Color</th>
+              <th class="text-left">Size</th>
+              <th class="text-left">Remaining</th>
+              <th class="text-left">Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -37,7 +116,7 @@
               v-for="(item, i) in filamentList"
               :key="item.tag_uid"
             >
-              <td width="10">
+              <td>
                 <v-tooltip :text="item.tag_uid">
                   <template v-slot:activator="{ props }">
                     <div v-bind="props">#{{ i + 1 }}</div>
@@ -51,11 +130,11 @@
                   variant="outlined"
                   density="compact"
                   hide-details
-                  required
+                  style="min-width: 200px"
                   @update:modelValue="debouncedUpdate(item)"
                 ></v-text-field>
               </td>
-              <td width="150">
+              <td>
                 <v-combobox
                   v-model="item.colorname"
                   :items="getAvailableColorsForFilament(item)"
@@ -63,6 +142,7 @@
                   variant="outlined"
                   density="compact"
                   hide-details
+                  style="min-width: 150px"
                   @update:modelValue="debouncedUpdate(item)"
                 >
                   <template v-slot:prepend-inner>
@@ -78,7 +158,7 @@
                   </template>
                 </v-combobox>
               </td>
-              <td width="150">
+              <td>
                 <v-combobox
                   v-model="item.size"
                   :items="[1000, 500, 250]"
@@ -87,45 +167,40 @@
                   density="compact"
                   suffix="g"
                   hide-details
-                  required
-                  @update:modelValue="update(item)"
+                  style="min-width: 100px"
+                  @update:modelValue="onSizeChange(item)"
                 ></v-combobox>
               </td>
-              <td width="450">
-                <div class="d-flex flex-column gap-2">
+              <td style="min-width: 300px">
+                <div class="d-flex align-center gap-2">
                   <v-slider
                     v-model="item.remain"
-                    type="number"
                     :min="0"
                     :max="100"
                     :disabled="item.tracking"
                     :step="1"
-                    label="Remaining"
                     color="primary"
-                    required
-                    thumb-label="always"
+                    hide-details
+                    thumb-label
+                    style="min-width: 150px"
                     @update:modelValue="onPercentageChange(item)"
-                  >
-                    <template v-slot:thumb-label>
-                      <span style="white-space: nowrap;">{{ item.remain }} %</span>
-                    </template>
-                  </v-slider>
+                  ></v-slider>
                   <v-text-field
-                    :model-value="calculateGrams(item)"
-                    @update:model-value="(val) => onGramsChange(item, val)"
-                    label="Grams"
+                    v-model="item.grams"
+                    label="g"
                     variant="outlined"
                     density="compact"
-                    suffix="g"
                     type="number"
                     hide-details
                     :disabled="item.tracking"
+                    style="max-width: 100px"
+                    @update:modelValue="onGramsInput(item)"
                   ></v-text-field>
                 </div>
               </td>
-              <td width="150">
-                <v-btn size="x-small" flat icon @click="remove(item)">
-                  <v-icon color="red">mdi-delete</v-icon>
+              <td>
+                <v-btn size="small" icon variant="text" color="error" @click="remove(item)">
+                  <v-icon>mdi-delete</v-icon>
                 </v-btn>
               </td>
             </tr>
@@ -137,12 +212,9 @@
 
       <v-card-actions class="pa-4">
         <v-spacer></v-spacer>
-
         <v-btn
-          text="Close"
           color="primary"
           variant="elevated"
-          size="large"
           @click="show = false"
         >
           <v-icon left>mdi-close</v-icon>
@@ -158,10 +230,12 @@ import { ref } from 'vue';
 import _ from 'lodash';
 import axios from 'axios';
 import { useAppStore } from '@/store/app';
+import { useDisplay } from 'vuetify';
 import { toast } from 'vue3-toastify';
 import { normalizeColor } from '@/utils/color';
 
 const store = useAppStore();
+const { mobile } = useDisplay();
 
 // Store para cores disponíveis por tipo de material
 const availableColorsByType = ref({});
@@ -170,7 +244,11 @@ const filamentList = ref([]);
 const show = ref(false);
 
 const open = async (list) => {
-  filamentList.value = _.cloneDeep(list);
+  // Clone list and add grams property for each item
+  filamentList.value = _.cloneDeep(list).map(item => ({
+    ...item,
+    grams: Math.round((item.size * item.remain) / 100)
+  }));
   show.value = true;
 
   // Carregar cores disponíveis para cada tipo de material único na lista
@@ -234,6 +312,9 @@ const update = async (filament) => {
     ...filament,
     color: normalizeColor(filament.color)
   };
+  // Remove the grams property before sending (it's only for UI)
+  delete normalizedFilament.grams;
+
   const result = await store.updateFilament(normalizedFilament);
 
   if (result) {
@@ -259,20 +340,21 @@ const update = async (filament) => {
   }
 };
 
-// Calculate grams from percentage
-const calculateGrams = (item) => {
-  if (!item.size || !item.remain) return 0;
-  return Math.round((item.size * item.remain) / 100);
+// When size changes, recalculate grams
+const onSizeChange = (item) => {
+  item.grams = Math.round((item.size * item.remain) / 100);
+  update(item);
 };
 
-// When percentage changes via slider
+// When percentage changes via slider, update grams
 const onPercentageChange = (item) => {
+  item.grams = Math.round((item.size * item.remain) / 100);
   debouncedUpdate(item);
 };
 
-// When grams value changes
-const onGramsChange = (item, grams) => {
-  const gramsValue = parseInt(grams) || 0;
+// When grams input changes, update percentage
+const onGramsInput = (item) => {
+  const gramsValue = parseInt(item.grams) || 0;
   if (!item.size || item.size === 0) return;
 
   // Calculate new percentage from grams

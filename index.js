@@ -1174,17 +1174,23 @@ app.post('/materials/add', async (req, res) => {
 // Update existing material in database
 app.put('/materials/update', async (req, res) => {
   try {
-    const { manufacturer, material, variation, name, colorname, color, note, ean } = req.body;
+    const { original, updated } = req.body;
 
-    if (!manufacturer || !material || !name || !colorname || !color) {
+    // Support both old format (flat) and new format (original/updated)
+    const lookupData = original || req.body;
+    const newData = updated || req.body;
+
+    const { manufacturer, material, name, colorname } = lookupData;
+
+    if (!manufacturer || !material || !name || !colorname) {
       return res.status(400).json({
-        error: 'Manufacturer, material, name, colorname, and color are required'
+        error: 'Manufacturer, material, name, and colorname are required'
       });
     }
 
     await materialsDB.initialize();
 
-    // Find and update material
+    // Find material using original data
     const materials = materialsDB.getAllMaterials();
     const materialIndex = materials.findIndex(
       m => m.manufacturer === manufacturer &&
@@ -1199,16 +1205,16 @@ app.put('/materials/update', async (req, res) => {
       });
     }
 
-    // Update material (with normalized color)
+    // Update material with new data (with normalized color)
     materials[materialIndex] = {
-      manufacturer,
-      material,
-      variation: variation || materials[materialIndex].variation || '',
-      name,
-      colorname,
-      color: normalizeColor(color),
-      note: note || materials[materialIndex].note,
-      ean: ean || materials[materialIndex].ean
+      manufacturer: newData.manufacturer || manufacturer,
+      material: newData.material || material,
+      variation: newData.variation || materials[materialIndex].variation || '',
+      name: newData.name || name,
+      colorname: newData.colorname || colorname,
+      color: normalizeColor(newData.color || materials[materialIndex].color),
+      note: newData.note !== undefined ? newData.note : materials[materialIndex].note,
+      ean: newData.ean !== undefined ? newData.ean : materials[materialIndex].ean
     };
 
     await materialsDB.save();
@@ -1300,6 +1306,12 @@ app.post('/api/hass/webhook', async (req, res) => {
       return res.status(400).json({ error: 'Missing required field: tag_uid' });
     }
 
+    // Ignore tray data with remain = -1 (empty/unknown state from HASS)
+    if (trayData.remain === -1 || trayData.remain === '-1') {
+      console.log(`[HASS Webhook] Ignoring tray with remain=-1 from user ${user.username}:`, trayData.tag_uid);
+      return res.json({ success: true, action: 'ignored', reason: 'remain is -1' });
+    }
+
     console.log(`[HASS Webhook] Received data from user ${user.username}:`, trayData.tag_uid);
 
     const result = await processTrayData(user.id, trayData);
@@ -1341,11 +1353,21 @@ app.post('/api/hass/sync', async (req, res) => {
     console.log(`[HASS Webhook] Received bulk sync from user ${user.username}: ${trays.length} trays`);
 
     const results = [];
+    let ignored = 0;
     for (const tray of trays) {
       if (tray.tag_uid) {
+        // Ignore tray data with remain = -1 (empty/unknown state from HASS)
+        if (tray.remain === -1 || tray.remain === '-1') {
+          ignored++;
+          continue;
+        }
         const result = await processTrayData(user.id, tray);
         results.push(result);
       }
+    }
+
+    if (ignored > 0) {
+      console.log(`[HASS Webhook] Ignored ${ignored} trays with remain=-1`);
     }
 
     res.json({

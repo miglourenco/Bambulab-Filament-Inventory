@@ -416,6 +416,7 @@ const defaultMaterial = {
 };
 
 const editedMaterial = ref({ ...defaultMaterial });
+const originalMaterial = ref(null); // Store original material for update lookup
 const editedIndex = ref(-1);
 
 // Table headers
@@ -568,9 +569,23 @@ const openAddDialog = () => {
   dialog.value = true;
 };
 
-const openEditDialog = (item) => {
+const openEditDialog = async (item) => {
   editMode.value = true;
   editedIndex.value = materials.value.indexOf(item);
+  originalMaterial.value = { ...item }; // Store original for lookup
+
+  // Pre-load variations for BambuLab materials before setting editedMaterial
+  if (item.manufacturer && item.manufacturer.toLowerCase().includes('bambu') && item.material) {
+    try {
+      const response = await axios.get(`/materials/${encodeURIComponent(item.material)}/variations`);
+      availableVariations.value = response.data;
+    } catch (error) {
+      console.error('Error loading variations:', error);
+      availableVariations.value = [];
+    }
+  }
+
+  // Set editedMaterial after loading variations (watcher won't clear variation now)
   editedMaterial.value = { ...item };
   dialog.value = true;
 };
@@ -579,6 +594,7 @@ const closeDialog = () => {
   dialog.value = false;
   setTimeout(() => {
     editedMaterial.value = { ...defaultMaterial };
+    originalMaterial.value = null;
     editedIndex.value = -1;
     if (form.value) {
       form.value.reset();
@@ -594,8 +610,19 @@ const saveMaterial = async () => {
     editedMaterial.value.color = normalizeColor(editedMaterial.value.color);
 
     if (editMode.value) {
-      // Update existing
-      const response = await axios.put('/materials/update', editedMaterial.value);
+      // Update existing - send both original and new data
+      const response = await axios.put('/materials/update', {
+        // Original data for lookup
+        original: {
+          manufacturer: originalMaterial.value.manufacturer,
+          material: originalMaterial.value.material,
+          name: originalMaterial.value.name,
+          colorname: originalMaterial.value.colorname,
+          color: normalizeColor(originalMaterial.value.color)
+        },
+        // New data to save
+        updated: editedMaterial.value
+      });
       if (response.data.success) {
         Object.assign(materials.value[editedIndex.value], editedMaterial.value);
         toast.success('Material updated successfully');
@@ -665,7 +692,10 @@ const openColorPicker = () => {
 
 // Watchers
 watch(() => editedMaterial.value.material, async (newVal, oldVal) => {
-  if (newVal !== oldVal) {
+  // Only clear variation when user actively changes material type (not on initial load)
+  // oldVal will be '' or undefined when dialog first opens in add mode
+  // In edit mode, variations are pre-loaded, so we only clear if user changes the type
+  if (newVal !== oldVal && oldVal) {
     editedMaterial.value.variation = '';
     availableVariations.value = [];
     updateBambuLabName();

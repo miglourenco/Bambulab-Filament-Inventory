@@ -9,7 +9,34 @@
         single-line
         variant="outlined"
         hide-details
+        style="max-width: 300px"
       ></v-text-field>
+
+      <v-spacer v-if="!mobile" />
+
+      <!-- User Statistics -->
+      <div v-if="!mobile" class="d-flex align-center gap-2 mx-4">
+        <v-chip color="blue" variant="flat" size="small">
+          <v-icon start size="small">mdi-package-variant</v-icon>
+          {{ userStats.totalSpools }} spools
+        </v-chip>
+        <v-chip color="green" variant="flat" size="small">
+          <v-icon start size="small">mdi-weight-kilogram</v-icon>
+          {{ userStats.remainingWeightKg }} kg
+        </v-chip>
+        <v-chip color="purple" variant="flat" size="small">
+          <v-icon start size="small">mdi-cube-outline</v-icon>
+          {{ userStats.materialTypes }} types
+        </v-chip>
+        <v-chip color="teal" variant="flat" size="small">
+          <v-icon start size="small">mdi-palette</v-icon>
+          {{ userStats.uniqueColors }} colors
+        </v-chip>
+        <v-chip color="error" variant="flat" size="small" v-if="userStats.lowStock > 0">
+          <v-icon start size="small">mdi-alert</v-icon>
+          {{ userStats.lowStock }} low
+        </v-chip>
+      </div>
 
       <v-spacer v-if="!mobile" />
 
@@ -134,7 +161,7 @@
 
                   <!-- Size and Remain Row -->
                   <v-row>
-                    <v-col cols="12" md="6">
+                    <v-col cols="12" md="4">
                       <v-combobox
                         v-model="addModel.size"
                         :items="[1000, 500, 250]"
@@ -145,29 +172,36 @@
                         density="comfortable"
                         suffix="g"
                         required
+                        @update:model-value="onAddSizeChange"
                       ></v-combobox>
                     </v-col>
 
-                    <v-col cols="12" md="6" class="d-flex align-center">
-                      <div style="width: 100%;">
-                        <v-slider
-                          v-model="addModel.remain"
-                          :rules="requiredRules"
-                          type="number"
-                          :min="0"
-                          :max="100"
-                          :step="1"
-                          label="Remaining"
-                          color="primary"
-                          required
-                          thumb-label="always"
-                          prepend-icon="mdi-gauge"
-                        >
-                          <template v-slot:thumb-label>
-                            <span style="white-space: nowrap;">{{ addModel.remain }} %</span>
-                          </template>
-                        </v-slider>
-                      </div>
+                    <v-col cols="12" md="4">
+                      <v-text-field
+                        v-model="addModel.grams"
+                        label="Remaining (g)"
+                        prepend-inner-icon="mdi-scale"
+                        variant="outlined"
+                        density="comfortable"
+                        suffix="g"
+                        type="number"
+                        @update:model-value="onAddGramsChange"
+                      ></v-text-field>
+                    </v-col>
+
+                    <v-col cols="12" md="4">
+                      <div class="text-caption text-grey mb-1">Remaining: {{ addModel.remain }}%</div>
+                      <v-slider
+                        v-model="addModel.remain"
+                        :rules="requiredRules"
+                        :min="0"
+                        :max="100"
+                        :step="1"
+                        color="primary"
+                        required
+                        thumb-label
+                        @update:model-value="onAddRemainChange"
+                      ></v-slider>
                     </v-col>
                   </v-row>
 
@@ -234,6 +268,34 @@
         </template>
       </v-dialog>
     </div>
+
+    <!-- Mobile Statistics Card -->
+    <v-card v-if="mobile" class="mt-4" variant="outlined">
+      <v-card-text class="pa-3">
+        <div class="d-flex flex-wrap gap-2 justify-center">
+          <v-chip color="blue" variant="flat" size="small">
+            <v-icon start size="small">mdi-package-variant</v-icon>
+            {{ userStats.totalSpools }} spools
+          </v-chip>
+          <v-chip color="green" variant="flat" size="small">
+            <v-icon start size="small">mdi-weight-kilogram</v-icon>
+            {{ userStats.remainingWeightKg }} kg
+          </v-chip>
+          <v-chip color="purple" variant="flat" size="small">
+            <v-icon start size="small">mdi-cube-outline</v-icon>
+            {{ userStats.materialTypes }} types
+          </v-chip>
+          <v-chip color="teal" variant="flat" size="small">
+            <v-icon start size="small">mdi-palette</v-icon>
+            {{ userStats.uniqueColors }} colors
+          </v-chip>
+          <v-chip color="error" variant="flat" size="small" v-if="userStats.lowStock > 0">
+            <v-icon start size="small">mdi-alert</v-icon>
+            {{ userStats.lowStock }} low
+          </v-chip>
+        </div>
+      </v-card-text>
+    </v-card>
 
     <v-data-table
       :headers="headers"
@@ -413,6 +475,66 @@ const availableColorNames = computed(() => {
 // Available variations from database
 const availableVariations = ref([]);
 
+// User statistics computed from filament list
+const userStats = computed(() => {
+  const filaments = store.filamentList || [];
+
+  // Flatten all individual spools from grouped filaments
+  const allSpools = filaments.flatMap(group => group.filaments || []);
+
+  const totalSpools = allSpools.length;
+
+  // Calculate total weight (sum of all spool sizes in kg)
+  const totalWeightGrams = allSpools.reduce((sum, spool) => sum + (spool.size || 0), 0);
+  const totalWeightKg = (totalWeightGrams / 1000).toFixed(2);
+
+  // Calculate remaining weight (size * remain% for each spool)
+  const remainingWeightGrams = allSpools.reduce((sum, spool) => {
+    const remain = spool.remain || 0;
+    const size = spool.size || 0;
+    return sum + (size * remain / 100);
+  }, 0);
+  const remainingWeightKg = (remainingWeightGrams / 1000).toFixed(2);
+
+  // Calculate average remaining percentage
+  const avgRemaining = totalSpools > 0
+    ? Math.round(allSpools.reduce((sum, spool) => sum + (spool.remain || 0), 0) / totalSpools)
+    : 0;
+
+  // Count unique material types
+  const materialTypes = new Set(filaments.map(group => group.type)).size;
+
+  // Count unique colors (by colorname)
+  const uniqueColors = new Set(filaments.map(group => group.colorname)).size;
+
+  // Count unique manufacturers
+  const manufacturers = new Set(filaments.map(group => group.manufacturer)).size;
+
+  // Count low stock spools (less than 25%)
+  const lowStock = allSpools.filter(spool => (spool.remain || 0) < 25).length;
+
+  // Count full spools (100%)
+  const fullSpools = allSpools.filter(spool => (spool.remain || 0) === 100).length;
+
+  // Calculate average spool size
+  const avgSpoolSize = totalSpools > 0
+    ? Math.round(totalWeightGrams / totalSpools)
+    : 0;
+
+  return {
+    totalSpools,
+    totalWeightKg,
+    remainingWeightKg,
+    avgRemaining,
+    materialTypes,
+    uniqueColors,
+    manufacturers,
+    lowStock,
+    fullSpools,
+    avgSpoolSize
+  };
+});
+
 const headers = [
   { title: "Manufacturer", key: 'manufacturer' },
   { title: "Material Type", key: 'type' },
@@ -526,10 +648,30 @@ const resetAddModel = () => {
     color: '#ffffffff',
     colorname: '',
     size: 1000,
+    grams: 1000,
     remain: 100,
     empty: false,
     ean: ''
   };
+};
+
+// When size changes in add dialog, recalculate grams
+const onAddSizeChange = () => {
+  addModel.value.grams = Math.round((addModel.value.size * addModel.value.remain) / 100);
+};
+
+// When grams changes in add dialog, recalculate percentage
+const onAddGramsChange = () => {
+  const gramsValue = parseInt(addModel.value.grams) || 0;
+  if (!addModel.value.size || addModel.value.size === 0) return;
+
+  const newPercentage = Math.round((gramsValue / addModel.value.size) * 100);
+  addModel.value.remain = Math.max(0, Math.min(100, newPercentage));
+};
+
+// When percentage changes in add dialog, recalculate grams
+const onAddRemainChange = () => {
+  addModel.value.grams = Math.round((addModel.value.size * addModel.value.remain) / 100);
 };
 
 const addFilament = async () => {
@@ -538,6 +680,9 @@ const addFilament = async () => {
     ...addModel.value,
     color: normalizeColor(addModel.value.color)
   };
+  // Remove grams property (it's only for UI calculation)
+  delete filamentData.grams;
+
   let success = store.addFilament(filamentData);
 
   if (success) {

@@ -1928,5 +1928,123 @@
     "color": "#F99963",
     "note": "",
     "ean": "6975337032380"
+  },
+  {
+    "manufacturer": "BambuLab",
+    "material": "PLA",
+    "variation": "Matte",
+    "name": "Bambu PLA Matte",
+    "colorname": "Scarlet Red",
+    "color": "#DE4343FF",
+    "note": "",
+    "ean": ""
+  },
+  {
+    "manufacturer": "BambuLab",
+    "material": "PLA",
+    "variation": "",
+    "name": "Bambu PLA Basic",
+    "colorname": "Sunflower Yellow",
+    "color": "#FEC600FF",
+    "note": "",
+    "ean": ""
+  },
+  {
+    "manufacturer": "BambuLab",
+    "material": "PLA",
+    "name": "Bambu PLA Marble",
+    "colorname": "Bright Green",
+    "color": "#BECF00",
+    "note": "Custom",
+    "ean": ""
+  },
+  {
+    "manufacturer": "BambuLab",
+    "material": "PLA",
+    "variation": "Marble",
+    "name": "Bambu PLA Marble",
+    "colorname": "Bright Green",
+    "color": "#BECF00FF",
+    "note": "",
+    "ean": ""
+  },
+  {
+    "manufacturer": "BambuLab",
+    "material": "PLA",
+    "variation": "Basic",
+    "name": "Bambu PLA Basic",
+    "colorname": "Jade White",
+    "color": "#FFFFFFFF",
+    "note": "",
+    "ean": ""
+  },
+  {
+    "manufacturer": "BambuLab",
+    "material": "PLA",
+    "variation": "Basic",
+    "name": "Bambu PLA Basic",
+    "colorname": "Beige",
+    "color": "#F7E6DEFF",
+    "note": "",
+    "ean": ""
+  },
+  {
+    "manufacturer": "BambuLab",
+    "material": "PLA",
+    "variation": "Basic",
+    "name": "Bambu PLA Basic",
+    "colorname": "Hot Pink",
+    "color": "#F5547CFF",
+    "note": "",
+    "ean": ""
+  },
+  {
+    "manufacturer": "BambuLab",
+    "material": "PLA",
+    "variation": "Basic",
+    "name": "Bambu PLA Basic",
+    "colorname": "Pumpkin Orange",
+    "color": "#FF9016FF",
+    "note": "",
+    "ean": ""
+  },
+  {
+    "manufacturer": "BambuLab",
+    "material": "PLA",
+    "variation": "Basic",
+    "name": "Bambu PLA Basic",
+    "colorname": "Bambu Green",
+    "color": "#00AE42FF",
+    "note": "",
+    "ean": ""
+  },
+  {
+    "manufacturer": "BambuLab",
+    "material": "PLA",
+    "variation": "Matte",
+    "name": "Bambu PLA Matte",
+    "colorname": "Charcoal",
+    "color": "#000000FF",
+    "note": "",
+    "ean": ""
+  },
+  {
+    "manufacturer": "BambuLab",
+    "material": "PLA",
+    "name": "Bambu PLA Glow",
+    "colorname": "Glow Green",
+    "color": "#A1FFAC",
+    "note": "Custom",
+    "ean": ""
+  },
+  {
+    "manufacturer": "BambuLab",
+    "material": "PLA",
+    "variation": "",
+    "name": "Bambu PLA Silk",
+    "colorname": "South Beach",
+    "color": "#F772A4",
+    "note": "Custom",
+    "ean": ""
   }
 ]
